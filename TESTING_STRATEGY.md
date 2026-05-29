@@ -62,9 +62,7 @@ Playback use case tests verify the fallback chain defined in
   (per ADR-0014).
 * Rapid `SearchStations` events within 350 ms collapse to a single
   use-case call (per ADR-0014).
-* An in-flight request is cancelled when a new `SearchStations`,
-  `FilterByCountry`, or `FilterByGenre` event arrives
-  (per ADR-0014).
+* `CancelSearchUseCase` is invoked to cancel in-flight remote requests when a new search/filter event arrives, when a station play is requested, or when the BLoC is disposed (per ADR-0014).
 * A `SearchStations("")` event maps to the popular-stations
   behaviour (per ADR-0014).
 

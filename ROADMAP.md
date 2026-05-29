@@ -11,10 +11,11 @@ is governed there.
 
 Tasks:
 
-* [ ] Run `flutter create --org com.labhouse.davidruizassessment --project-name radio_app --platforms=android,ios .`
-  (per ADR-0003).
-* [ ] Move polished documentation (`*.md`, `docs/`, `TODO.md`,
-  `CONVENTIONS.md`) into the new project directory.
+* [ ] Clean up and configure the existing Flutter project scaffold (per ADR-0003):
+  * Delete out-of-scope platform folders (`web/`, `macos/`, `linux/`, `windows/`) to conform to ADR-0001.
+  * Update package name in `pubspec.yaml` to `radio_app`.
+  * Update native package identifier to `com.labhouse.davidruizassessment.radioapp`.
+  * Remove the default counter app code in `lib/main.dart` and maintain a clean minimal Material/Cupertino shell (UI work blocked).
 * [ ] Initialise the git repository and create the private GitHub
   remote (per ADR-0009).
 * [ ] Configure local SSH commit signing (per ADR-0008).
@@ -87,8 +88,7 @@ Station use cases:
 * [ ] `SearchStationsUseCase`
 * [ ] `CancelSearchUseCase` (per ADR-0014)
 * [ ] `GetStationByUuidUseCase`
-* [ ] `LoadTopClickStationsUseCase`
-* [ ] `LoadTopVoteStationsUseCase`
+* [ ] `LoadPopularStationsUseCase` (parameterizes unified search sorting, per ADR-0027)
 
 Favorites use cases:
 
@@ -268,7 +268,7 @@ matrix):
 * [ ] Error propagation.
 * [ ] Pagination edge cases.
 * [ ] Playback failure handling, including buffering, Icy, and
-  connectivity transitions.
+  connectivity transitions (such as verifying Buffering -> Error on offline play requests, per ADR-0025).
 
 ---
 

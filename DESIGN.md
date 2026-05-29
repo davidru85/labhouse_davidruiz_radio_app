@@ -85,7 +85,7 @@ Required shell behavior:
 When UI work is approved, the app shell will define:
 
 * `AppShell`
-* `StationsScreen`
+* `StationsScreen` (which includes a "Recently Played" section when no search query or filter is active, per ADR-0029)
 * `FavoritesScreen`
 * `FullPlayerScreen`
 

@@ -42,3 +42,7 @@ decisions made for RadioApp.
 | 0023 | [API mirrors static list](0023-api-mirrors-list.md) | Accepted | 2026-05-29 |
 | 0024 | [Now-playing metadata parsing rules](0024-now-playing-parsing-rules.md) | Accepted | 2026-05-29 |
 | 0025 | [Offline playback state transitions](0025-offline-playback-state-transitions.md) | Accepted | 2026-05-29 |
+| 0026 | [Recently played history triggers](0026-recently-played-history-triggers.md) | Accepted | 2026-05-29 |
+| 0027 | [Popular stations strategy](0027-popular-stations-strategy.md) | Accepted | 2026-05-29 |
+| 0028 | [Error observability and crash reporting](0028-error-observability-crash-reporting.md) | Accepted | 2026-05-29 |
+| 0029 | [Recently played history presentation surface](0029-recently-played-history-presentation-surface.md) | Accepted | 2026-05-29 |

@@ -50,16 +50,19 @@ to ADRs if revisited.
 | [0021](docs/adr/0021-recently-played-history-limit.md) | Enforce a strict FIFO cap of 50 items on recently played history | 2026-05-29 |
 | [0022](docs/adr/0022-background-playback-controls.md) | Limit background media notification to Play/Pause/Stop and configure title/subtitle metadata | 2026-05-29 |
 | [0023](docs/adr/0023-api-mirrors-list.md) | Pre-configure a static list of four default HTTPS API mirrors (DE, AT, NL, FR) | 2026-05-29 |
-| [0024](docs/adr/0024-now-playing-parsing-rules.md) | Split raw Icy metatada on the first space-hyphen-space separator | 2026-05-29 |
+| [0024](docs/adr/0024-now-playing-parsing-rules.md) | Split raw Icy metadata on the first space-hyphen-space separator | 2026-05-29 |
 | [0025](docs/adr/0025-offline-playback-state-transitions.md) | Transition through Buffering before emitting PlayerErrorState on offline playback request | 2026-05-29 |
+| [0026](docs/adr/0026-recently-played-history-triggers.md) | Recently played history triggers: successful PlayerPlayingState | 2026-05-29 |
+| [0027](docs/adr/0027-popular-stations-strategy.md) | Popular stations strategy: re-use search endpoint with clickcount/votes | 2026-05-29 |
+| [0028](docs/adr/0028-error-observability-crash-reporting.md) | Error observability: standard console logging for v1, no third-party services | 2026-05-29 |
+| [0029](docs/adr/0029-recently-played-history-presentation-surface.md) | Recently played history presentation surface: StationsScreen empty query section | 2026-05-29 |
 
 ---
 
 ## Current Progress Tracker
 
-* **Current Phase:** Phase 1 - Infrastructure And Project Bootstrapping.
-* **Current Task:** Present Phase 1 PHASE RED testing strategy before production implementation.
-* **Last Completed Task:** Split original project setup prompt into concern-specific markdown files.
+* **Current Task:** Clean up and align the non-conforming Flutter scaffold (Phase 1 execution).
+* **Last Completed Task:** Align pre-coding documentation and register architectural decisions ADR-0026 to ADR-0029.
 
 ---
 
@@ -76,5 +79,4 @@ to ADRs if revisited.
 ## Pending Questions
 
 * What exact visual design system will be used once UI work is approved?
-* Should popular stations rely on explicit top endpoints or search with `order=clickcount`?
 

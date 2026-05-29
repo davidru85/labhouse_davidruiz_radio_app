@@ -132,10 +132,10 @@ for explicit user approval before writing code.
 
 ## Current Project State
 
-Pre-implementation polish phase. The Flutter project has not been
-scaffolded yet. The repository currently contains only specification,
-operational, and ADR documents. The first concrete code change is
-governed by Phase 1 of `ROADMAP.md`.
+Pre-implementation polish phase. A basic Flutter project scaffold exists
+but remains non-conforming. The repository contains specification,
+operational, and ADR documents. The first concrete code configuration and
+cleanup is governed by Phase 1 of `ROADMAP.md`.
 
 The live phase, current task, and last completed task are tracked in
 `MEMORY.md` §"Current Progress Tracker" and MUST be consulted at the

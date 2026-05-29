@@ -11,7 +11,7 @@
 
 ## Context
 
-When a device is offline, attempting to start playback or losing network connectivity mid-playback triggers a playback failure. [ADR-0013](docs/adr/0013-offline-behavior.md) and [ADR-0015](docs/adr/0015-player-buffering-state.md) establish that the player BLoC (`RadioPlayerBloc`) transitions to `PlayerErrorState` on these failures. 
+When a device is offline, attempting to start playback or losing network connectivity mid-playback triggers a playback failure. [ADR-0013](0013-offline-behavior.md) and [ADR-0015](0015-player-buffering-state.md) establish that the player BLoC (`RadioPlayerBloc`) transitions to `PlayerErrorState` on these failures. 
 
 However, the previous specification did not define whether the BLoC should transition directly to `PlayerErrorState` or go through `PlayerBufferingState` first when a play request is initiated in an offline state. 
 

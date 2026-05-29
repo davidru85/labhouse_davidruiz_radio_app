@@ -5,8 +5,9 @@ Flutter, backed exclusively by the
 [Radio Browser](https://api.radio-browser.info/) public community-
 maintained API.
 
-> **Status:** Pre-implementation polish phase. The Flutter project
-> has not been scaffolded yet. The repository currently contains the
+> **Status:** Pre-implementation polish phase. A basic Flutter project
+> has been scaffolded, but is currently non-conforming and is being
+> cleaned up and configured in Phase 1. The repository contains the
 > specification suite, ADRs, and operational documents that the
 > implementation will be built from. See `MEMORY.md` for the live
 > phase tracker.
@@ -96,7 +97,7 @@ maintained API.
 
 ## Decision summary
 
-The polish phase produced **19 accepted ADRs** and **6 inherited
+The polish phase produced **29 accepted ADRs** and **6 inherited
 foundational decisions**. The full index and links live in
 `MEMORY.md` §"Decision Log" and `docs/adr/README.md`. Highlights:
 
@@ -125,7 +126,7 @@ foundational decisions**. The full index and links live in
   catalogue and no-op default; real provider, adapter, and GDPR
   consent flow tracked in `TODO.md`.
 
-14 features (including the analytics provider choice and GDPR
+21 features (including the analytics provider choice, remote crash reporting, and GDPR
 consent flow) have been **deliberately deferred** to a future version
 and are tracked in [`TODO.md`](TODO.md).
 
@@ -133,8 +134,8 @@ and are tracked in [`TODO.md`](TODO.md).
 
 ## Getting started
 
-The Flutter project is not yet scaffolded. Phase 1 of `ROADMAP.md`
-covers the bootstrap. Once it has been run, the canonical workflow
+The Flutter project scaffold has been created, and Phase 1 of `ROADMAP.md`
+covers configuring and aligning it. Once aligned, the canonical workflow
 is:
 
 ```bash

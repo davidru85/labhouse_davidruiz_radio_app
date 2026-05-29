@@ -117,3 +117,9 @@ polish phase, see `MEMORY.md` §Pending Questions instead.
 - **Predictive segment caching.** Not feasible for live radio in
   general; tracked here so the deferral is explicit.
   Source: [ADR-0013](docs/adr/0013-offline-behavior.md).
+
+## Error observability and crash reporting
+
+- **Remote crash reporting integration.** Integrate a production crash reporting service (such as Sentry or Firebase Crashlytics) to monitor unhandled exceptions and diagnostics. Formally deferred to maintain a zero-dependency telemetry profile at launch.
+  Source: [ADR-0028](docs/adr/0028-error-observability-crash-reporting.md).
+
