@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#e4e2e4",
+                    "secondary-container": "#332dbd",
+                    "glass-stroke": "rgba(255,255,255,0.12)",
+                    "outline": "#8e909a",
+                    "tertiary-fixed": "#ffdea7",
+                    "background": "#131315",
+                    "surface": "#121317",
+                    "outline-variant": "#43474f",
+                    "on-surface-variant": "#c4c6d0",
+                    "surface-container-highest": "#343538",
+                    "primary-fixed": "#d6e3ff",
+                    "surface-tint": "#aac7ff",
+                    "on-secondary-fixed": "#0b006b",
+                    "favorite-active": "#FF2D55",
+                    "surface-container": "#1f1f21",
+                    "tertiary": "#ffdea7",
+                    "tertiary-container": "#edc06d",
+                    "surface-dim": "#121317",
+                    "playback-accent": "#30D158",
+                    "on-tertiary-fixed-variant": "#5e4200",
+                    "primary-fixed-dim": "#aac7ff",
+                    "on-primary-container": "#355283",
+                    "on-secondary": "#1800a7",
+                    "secondary": "#c2c1ff",
+                    "inverse-primary": "#415f90",
+                    "surface-bright": "#38393d",
+                    "surface-container-high": "#292a2d",
+                    "on-secondary-container": "#aeadff",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#aac7ff",
+                    "primary": "#d6e2ff",
+                    "surface-container-low": "#1a1b1f",
+                    "on-primary-fixed": "#001b3e",
+                    "on-tertiary-container": "#6d4d00",
+                    "inverse-surface": "#e3e2e6",
+                    "on-background": "#e3e2e6",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#2f3034",
+                    "on-primary-fixed-variant": "#284777",
+                    "on-secondary-fixed-variant": "#332dbd",
+                    "tertiary-fixed-dim": "#edc06d",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed": "#271900",
+                    "on-primary": "#0c305f",
+                    "surface-elevated": "#2C2C2E",
+                    "surface-container-lowest": "#0d0e11",
+                    "on-tertiary": "#412d00",
+                    "surface-variant": "#343538",
+                    "secondary-fixed-dim": "#c2c1ff",
+                    "secondary-fixed": "#e2dfff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "player-control-gap": "24px",
+                    "card-padding": "16px",
+                    "gutter": "12px",
+                    "margin-edge": "16px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "label-sm": ["10px", {"lineHeight": "12px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pulse-dot {
+            box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(48, 209, 88, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(48, 209, 88, 0); }
+        }
+        body {
+            background-color: #131315;
+            color: #e4e2e4;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased overflow-x-hidden pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-edge h-16 bg-surface-elevated/95 backdrop-blur-[20px] dark:bg-surface-elevated/95 border-b border-glass-stroke">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="radio">radio</span>
+<h1 class="text-headline-md font-headline-md tracking-tight text-on-surface dark:text-on-surface">SonicStream</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<!-- Search Section -->
+<main class="mt-20 px-margin-edge">
+<div class="mb-6">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full h-12 pl-12 pr-4 rounded-xl bg-surface-container-high border-none text-on-surface placeholder:text-on-surface-variant focus:ring-2 focus:ring-primary/30 font-body-md text-body-md" placeholder="Search stations, genres, moods..." type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Featured Stations</h2>
+<button class="text-primary font-label-lg text-label-lg">View All</button>
+</div>
+<!-- Vertical Station List -->
+<div class="space-y-4">
+<!-- Station Card 1 -->
+<div class="flex items-center p-card-padding bg-surface-container/40 backdrop-blur-md rounded-xl border border-glass-stroke hover:bg-white/5 transition-colors group">
+<img alt="Neon Radio" class="w-16 h-16 rounded-lg object-cover" data-alt="A close-up shot of a vintage futuristic radio station logo with glowing neon blue and deep violet accents. The aesthetic is clean and high-fidelity, set against a dark, moody background with subtle lens flares. The lighting is dramatic, emphasizing the sharp, professional lines of the equipment in a modern broadcast studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYW9u9FNVNMjRoGUHlXX1zkB1QiUS-yUBQjUV4YQSWXxYLNc2hXpkwi0VAuqedtpuDJkDUkeBSQl3inV6-sGium40vQqYfQN-WJxPgLN4Yl2C5tasSyMSuIByp7oGBzf__Ak1PCAM0oOS9leL3a_OPX5yG8ZyD23zUOagEh-GKz8SJYbcAYtoAjR-GUD9U5zB706S4X_Dpuxw9v2kpN7XHUaioZf9YZhXXQ9CZA7cJUNElR0Yl08UVn5TFqyEk5hFlLmbizD4Ljgs"/>
+<div class="ml-4 flex-1">
+<h3 class="font-headline-md text-[18px] text-on-surface">Neon Horizon</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">101.9 MHz • Ambient Synth</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-outline hover:text-favorite-active transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center bg-primary rounded-full text-on-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Station Card 2 -->
+<div class="flex items-center p-card-padding bg-surface-container/40 backdrop-blur-md rounded-xl border border-glass-stroke hover:bg-white/5 transition-colors group">
+<img alt="Midnight Jazz" class="w-16 h-16 rounded-lg object-cover" data-alt="A sophisticated jazz-themed station artwork featuring a blurred silhouette of a saxophone under warm amber stage lights. The color palette is rich with deep blacks, golden glows, and smoky textures, evoking a premium, late-night lounge atmosphere. The lighting is soft and atmospheric, highlighting the elegant textures of brass and velvet in a high-end music studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUY7G1fhs7hddbq0iFWig7c9WfYYhi4q9KUSYTckUmBSAmLtad4BX3iF4gkDZcpnNjmK8HkEPIuXomydF4ihwweie78t9f5yGHIsWVJVfc9Om6XfMjeRP-bM_T4qsQYNYLZvbKhWePhVVfoS1BVIL4dc2Qk-RUO7HpBI6mpoeZWIJh9tB5I6egH9GyiCUzjI7SizweXjdr3K3Wn35E9-oTzZy0tyxdc6f8W_4vFzDY8mXMQUe5ILBdfN6pzxFM7lUYYkJOoRP4GAQ"/>
+<div class="ml-4 flex-1">
+<h3 class="font-headline-md text-[18px] text-on-surface">Midnight Velvet</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">94.5 MHz • Smooth Jazz</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-favorite-active">
+<span class="material-symbols-outlined" data-icon="favorite" data-weight="fill" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center bg-primary rounded-full text-on-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Station Card 3 -->
+<div class="flex items-center p-card-padding bg-surface-container/40 backdrop-blur-md rounded-xl border border-glass-stroke hover:bg-white/5 transition-colors group">
+<img alt="Techno Pulse" class="w-16 h-16 rounded-lg object-cover" data-alt="A minimalist digital art design representing an electronic dance music station, featuring sharp geometric lines in vibrant green and electric blue pulsing against a dark slate background. The mood is high-energy and technically precise, using a glassmorphic aesthetic with subtle blurs and hairline strokes. The lighting is cool and clinical, evoking a high-performance audio console." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4c5cqWKnML2_vZ9qPTufvbrr2GNGHvW-3ZhsVPCsJ9XDrJfW_b_HtZmp_iKJr9G7-AR6VUT4coKpR2FGYEGDx-brlv3uFz7B60BMDbMq_nZrtEd6POQyEbcftvJ5YrdOzG-RUuNvg0178xp8qX7rtKfrI66BEk2iaxQe7pc6k5CCjB5FfIv4gSlDghMgoZ6aOVRlQVZnaQBdfQsnBaIMxKUjsKzWOyIbo2uy26K9OUH9rPB1KiryTLEei7AujVZi8CktagMhctks"/>
+<div class="ml-4 flex-1">
+<h3 class="font-headline-md text-[18px] text-on-surface">Pulse 808</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">107.2 MHz • Techno &amp; House</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-outline hover:text-favorite-active transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center bg-primary rounded-full text-on-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Station Card 4 -->
+<div class="flex items-center p-card-padding bg-surface-container/40 backdrop-blur-md rounded-xl border border-glass-stroke hover:bg-white/5 transition-colors group">
+<img alt="Indie Wave" class="w-16 h-16 rounded-lg object-cover" data-alt="An artistic station cover for an indie rock channel, featuring a stylized mountain landscape in desaturated earthy tones and muted teal skies. The style is modern minimalist with a grain texture that feels organic yet professional. The lighting is reminiscent of a late autumn sunset, soft and diffused, creating a serene and introspective mood suitable for premium streaming." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdwg8PUMJP2nAYxZ7MmtSMw86YbPDWe0ke0x_7-e_9yw5So5GsulQ_inIwmGcGoWUu3i7V0Wrblfi4sgoxpLz7Gov1lwq4Um_BL3sm6DOMrwzhpjbRLX4yXZWYye3zO0VzIIuiaIBAL7GB3RM6TAS0r0hBbF89rkouAnxAkhU640NvfP6DH1mcFnuAjI8ZuVgBaF9DJ-NW_TjBjTtHWth2vh9NAvCR_ehu2h2JV6cub4Iy2j7JboxVpSg6YnxD6zrkh6VKgr7Gyn8"/>
+<div class="ml-4 flex-1">
+<h3 class="font-headline-md text-[18px] text-on-surface">The Drift</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">88.1 MHz • Indie Rock</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-outline hover:text-favorite-active transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center bg-primary rounded-full text-on-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Mini-Player -->
+<div class="fixed bottom-24 left-margin-edge right-margin-edge z-40 bg-surface-elevated/95 backdrop-blur-[24px] border border-glass-stroke rounded-2xl p-3 flex items-center shadow-2xl">
+<div class="relative">
+<img alt="Current Playing" class="w-12 h-12 rounded-lg object-cover" data-alt="A small, high-fidelity album art thumbnail for a currently playing synthwave track, featuring glowing grid lines and a stylized digital sun in magenta and cyan. The visual style is crisp and modern, fitting perfectly within a glassmorphic interface. The lighting is vibrant and energetic, radiating from the center of the geometric artwork." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArTm7o_JGKh4nmEQBQA16vN6pOK2ufvG9fCZw7U0FAxL0RfwGaAEmjre_tyMh9aOEGG8AlHp87V0Y0xh11-1k8o-e_V4ZFc5ECFM8I4a0HL-PhkskHPwyxYtw0Z-71DhLXfY5RN2b_SU3ix5BRBVzeaz5JNVC0_uVfBQHQ_Q-QKLP4cunnAzOx0htpwl6Nhf0iDy30J17qFEPoeMdcgBfmi5w0ywrsktQX1WiuGh1jL6dHCMa109ykgGzlN6Aq__dd1XtD5NrhvmM"/>
+<div class="absolute -top-1 -right-1 w-3 h-3 bg-playback-accent rounded-full border-2 border-surface-elevated pulse-dot"></div>
+</div>
+<div class="ml-4 flex-1 overflow-hidden">
+<p class="text-label-lg font-label-lg text-primary uppercase tracking-widest text-[10px] mb-0.5 flex items-center gap-1.5">
+                Live Now
+            </p>
+<p class="font-headline-md text-[14px] text-on-surface truncate">Neon Horizon - Synth Drift</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="pause" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Progress Bar ( pinned to bottom ) -->
+<div class="absolute bottom-0 left-0 h-0.5 bg-primary rounded-full transition-all duration-1000" style="width: 65%;"></div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface-elevated/95 backdrop-blur-[20px] dark:bg-surface-elevated/95 border-t border-glass-stroke">
+<!-- Stations Active -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 duration-150 group" href="#">
+<span class="material-symbols-outlined" data-icon="radio" data-weight="fill" style="font-variation-settings: 'FILL' 1;">radio</span>
+<span class="text-label-sm font-label-sm mt-0.5">Stations</span>
+</a>
+<!-- Favorites Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="text-label-sm font-label-sm mt-0.5">Favorites</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Haptic feedback simulation or ripple could go here
+            });
+        });
+
+        // Simulating the Live Dot pulse and Progress bar movement
+        const progressBar = document.querySelector('.absolute.bottom-0.left-0');
+        let progress = 65;
+        setInterval(() => {
+            progress = (progress + 0.1) % 100;
+            progressBar.style.width = progress + '%';
+        }, 1000);
+    </script>
+</body></html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#e4e2e4",
+                    "secondary-container": "#332dbd",
+                    "glass-stroke": "rgba(255,255,255,0.12)",
+                    "outline": "#8e909a",
+                    "tertiary-fixed": "#ffdea7",
+                    "background": "#131315",
+                    "surface": "#121317",
+                    "outline-variant": "#43474f",
+                    "on-surface-variant": "#c4c6d0",
+                    "surface-container-highest": "#343538",
+                    "primary-fixed": "#d6e3ff",
+                    "surface-tint": "#aac7ff",
+                    "on-secondary-fixed": "#0b006b",
+                    "favorite-active": "#FF2D55",
+                    "surface-container": "#1f1f21",
+                    "tertiary": "#ffdea7",
+                    "tertiary-container": "#edc06d",
+                    "surface-dim": "#121317",
+                    "playback-accent": "#30D158",
+                    "on-tertiary-fixed-variant": "#5e4200",
+                    "primary-fixed-dim": "#aac7ff",
+                    "on-primary-container": "#355283",
+                    "on-secondary": "#1800a7",
+                    "secondary": "#c2c1ff",
+                    "inverse-primary": "#415f90",
+                    "surface-bright": "#38393d",
+                    "surface-container-high": "#292a2d",
+                    "on-secondary-container": "#aeadff",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#aac7ff",
+                    "primary": "#d6e2ff",
+                    "surface-container-low": "#1a1b1f",
+                    "on-primary-fixed": "#001b3e",
+                    "on-tertiary-container": "#6d4d00",
+                    "inverse-surface": "#e3e2e6",
+                    "on-background": "#e3e2e6",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#2f3034",
+                    "on-primary-fixed-variant": "#284777",
+                    "on-secondary-fixed-variant": "#332dbd",
+                    "tertiary-fixed-dim": "#edc06d",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed": "#271900",
+                    "on-primary": "#0c305f",
+                    "surface-elevated": "#2C2C2E",
+                    "surface-container-lowest": "#0d0e11",
+                    "on-tertiary": "#412d00",
+                    "surface-variant": "#343538",
+                    "secondary-fixed-dim": "#c2c1ff",
+                    "secondary-fixed": "#e2dfff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "player-control-gap": "24px",
+                    "card-padding": "16px",
+                    "gutter": "12px",
+                    "margin-edge": "16px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "label-sm": ["10px", {"lineHeight": "12px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131315;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .station-card:active {
+            transform: scale(0.97);
+        }
+        .progress-glow {
+            box-shadow: 0 0 10px rgba(214, 226, 255, 0.4);
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+        .pulse-live {
+            animation: pulse-dot 2s infinite ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface antialiased overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-edge h-16 bg-surface-elevated/95 backdrop-blur-[20px] dark:bg-surface-elevated/95 border-b border-glass-stroke">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="radio">radio</span>
+<span class="text-headline-md font-headline-md tracking-tight text-on-surface dark:text-on-surface">SonicStream</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-40 px-margin-edge min-h-screen">
+<!-- Headline -->
+<div class="mb-6">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface mb-4">Your Favorites</h1>
+<!-- Search Field -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="search">search</span>
+</div>
+<input class="w-full h-12 bg-surface-container-high border-none rounded-xl pl-12 pr-4 text-on-surface placeholder:text-on-surface-variant focus:ring-1 focus:ring-primary/30 transition-all outline-none" placeholder="Search your library" type="text"/>
+</div>
+</div>
+<!-- Favorites Grid -->
+<div class="grid grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="station-card transition-all duration-200 cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 border border-glass-stroke shadow-lg group">
+<img alt="Cyberpunk Synthwave Station" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A cinematic 3D render of a futuristic cyberpunk cityscape at night, with neon purple and electric blue lights reflecting off rainy streets. High-contrast lighting with a moody, atmospheric deep-space aesthetic. The visual style is polished and professional, using a glassmorphic color palette with deep blacks and vibrant neon accents to match a premium audio streaming brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2oCq9fxhKSChzx4EZYPrps_oYX7XqBXVarzh2zQJTpc38Otv6gEUh4h5FUizgRTesb66VlWH_YUJYv-niBey3KeB2wALe7DKI7UMiRf4WEgpcbesYMoOfry1jEQq9FKctmaECjMmPeNCAYB08peerNzMLrroHFQr1k9GOPYNh3Uhudg3EpBSjYjn982Kb3ZneuVk6pFypPhoulIV-XU_iqqry0ORsRW_fXZDlle1NP-naDImSQ9Q51onGVLxe466Y5Klq71M5MQ4"/>
+<div class="absolute top-2 right-2 p-1.5 rounded-full glass-panel bg-black/30 border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-favorite-active text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="px-1">
+<h3 class="text-body-md font-semibold text-on-surface truncate">Night City Drive</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate uppercase tracking-wider">Synthwave • Tokyo</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="station-card transition-all duration-200 cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 border border-glass-stroke shadow-lg group">
+<img alt="Deep House Underground Station" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Abstract fluid art featuring undulating waves of deep blue and midnight black liquid silk. Soft, ethereal lighting catches the peaks of the waves, creating a sense of rhythmic movement and sonic depth. The style is minimalist and immersive, reflecting a high-end electronic music aesthetic with a focus on dark-mode gradients and translucent textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuVERHG3sZKJGrwYAYqCXJDNe_pSqi3uWArYDVKjlGAY8c_IPrXvOQhBnrvS8G4Oh8sq4Hu0K7DJ2NOv-n9v0Mjrx7ExQZRioIcv6jPCOeXAOJ-qZGsLb_gUm7fCQnngH_Vs9uh7q2eMv8LcpdGN1jTUdnnMlnDDowXQm3OG3TWGU3mMtYGJ-kIIRLsgTvVwBpJEl4RvCqcPlzTH4GYYuePqhvshLmfzUrVrAGhTPBuEX2040DzOdU9AzXytqO75g1F50JnO3sj0c"/>
+<div class="absolute top-2 right-2 p-1.5 rounded-full glass-panel bg-black/30 border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-favorite-active text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="px-1">
+<h3 class="text-body-md font-semibold text-on-surface truncate">Basement Sessions</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate uppercase tracking-wider">Deep House • Berlin</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="station-card transition-all duration-200 cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 border border-glass-stroke shadow-lg group">
+<img alt="Acoustic Morning Station" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A serene, soft-focus photograph of sunlight filtering through large glass windows onto a minimalist wooden stool with a professional condenser microphone. Warm, golden-hour lighting creates long shadows and a peaceful, intimate atmosphere. The visual identity is sophisticated and clean, using organic textures and high-fidelity lighting to represent premium acoustic content." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOTpYJOprl6-87s2Im0FWKhdFwDE06Et7UawKqbLU10ZE1iL62zYy3AGNPiw-K-eTap_6E-IG4JWRzkIsUNwC1Le3Jt7orenIfsA_7U15z95cHShxHPEH0iKmVS8-7tiV3JQ0uQysbWpHiHkcskWrVBMoeQ5hJh7E4GOxmTjjUcleRXpU4gnc9gSl9yRxyJh2ElNW2X_UXbDHsbknsiyRb19B7ojoVog2CUt966OAKlRsNIb6QFO6t2TaDCkS-mxNU7IzRbNA8zTs"/>
+<div class="absolute top-2 right-2 p-1.5 rounded-full glass-panel bg-black/30 border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-favorite-active text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="px-1">
+<h3 class="text-body-md font-semibold text-on-surface truncate">Coffee &amp; Chords</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate uppercase tracking-wider">Acoustic • Portland</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="station-card transition-all duration-200 cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 border border-glass-stroke shadow-lg group">
+<img alt="Jazz Essentials Station" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close-up macro photography of a vintage brass saxophone bell, catching warm amber stage lighting. The background is a deeply blurred jazz club environment with hints of smoke and dark wood. The aesthetic is timeless and high-fidelity, focusing on the precision of metallic textures and the moody atmosphere of a live performance space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmzw_6TONVYfIyENDpW0NEuqvhEo2Co-tvE3tiZ0sssvZx0dWilgJui5Q3K2aaUP5mqa16RcxheYAZC5sOpYDi4nzqJ2DKybV6lnZ1m3RraMjRHyjBYrPibnwtn8c2LsZC2eZcBrRMzKbJvV_OfpBES2wBXx-5Npfve5UgN1gRr5GIbWus0-xMFp8V2gnzQ2bNiQ-9KseuQgjucerjNHmQOXWQ9EdM6uEjvUqlTpnivoXGFGCX81vf1WAwqweUwexMEeJ8IsqgU_s"/>
+<div class="absolute top-2 right-2 p-1.5 rounded-full glass-panel bg-black/30 border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-favorite-active text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="px-1">
+<h3 class="text-body-md font-semibold text-on-surface truncate">Midnight Jazz</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate uppercase tracking-wider">Jazz • New Orleans</p>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="station-card transition-all duration-200 cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 border border-glass-stroke shadow-lg group">
+<img alt="Techno Warehouse Station" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A high-intensity warehouse party scene with dramatic laser beams cutting through a dark, hazy atmosphere. The color palette is dominated by sharp white light and deep shadows, creating a gritty, energetic techno vibe. The image uses sharp focus on the light architecture, representing a technically precise and powerful audio environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHCJxn-RW21H6qBDQj5bsJwi3WDrFvw08zxwniiDeX8vMEYW4wNt6-XFet3fR91eRKq1dFyOP77HyZbQz0GFDXazNvQNamRvsSTnU0N5bqIFstFTUGoC_WFBI34sSEg9VS70JnqiySgwCz8uN89dfUH3Ds4yUmYCc9cMrOuwkfkipZEt4sPtKGU1KUUTfUCGPa3Munf8osRa7-lU8rWeJL4n8W5TTKu4QJSNz55PkcY71aFI6GcenEZwtWxCJeOzw_JQwFvioixvg"/>
+<div class="absolute top-2 right-2 p-1.5 rounded-full glass-panel bg-black/30 border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-favorite-active text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="px-1">
+<h3 class="text-body-md font-semibold text-on-surface truncate">Industrial Pulse</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate uppercase tracking-wider">Techno • Detroit</p>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="station-card transition-all duration-200 cursor-pointer">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 border border-glass-stroke shadow-lg group">
+<img alt="Ambient Chill Station" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A minimalist digital landscape of soft, pastel-colored mountain silhouettes at dawn. The lighting is diffused and foggy, creating a sense of infinite space and calm. The visual style uses a clean, contemporary aesthetic with a focus on tonal depth and atmospheric blurs, perfect for an ambient music listener's premium experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvOLPtJyiL3XVlUrogHtHTum2AaQ3vLJohKOow1Ldb9xl5mAopmT3OkHnT0vZyfmay4HtoTNnhJ2Ncu7MGf9nQWhPKalBOn-CUrGAkhnXi8KZmMChGUaQGb46LgH0xwogasI6c4rspZdV7RbBtymYKCN32jCRrgukJTZZZ2EroRtsRYtZcyCEXSWPaqeY7CF3fZN4iflIMHlu9AVDvVB6grTKxugockLqVknYD6VMArF2gyOt6itqXYnBxGw_awVj92kdoJtBpufw"/>
+<div class="absolute top-2 right-2 p-1.5 rounded-full glass-panel bg-black/30 border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-favorite-active text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="px-1">
+<h3 class="text-body-md font-semibold text-on-surface truncate">Etheric Drift</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate uppercase tracking-wider">Ambient • Reykjavik</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Mini-Player & Bottom Nav Container -->
+<div class="fixed bottom-0 left-0 w-full z-[60]">
+<!-- Mini-Player -->
+<div class="mx-margin-edge mb-4 glass-panel bg-surface-elevated/95 border border-glass-stroke rounded-xl overflow-hidden flex items-center h-16 shadow-2xl">
+<div class="w-12 h-12 ml-2 rounded-lg overflow-hidden border border-glass-stroke flex-shrink-0">
+<img alt="Currently Playing Artwork" class="w-full h-full object-cover" data-alt="A focused close-up of neon city lights reflected in a camera lens, with vibrant pink and blue highlights. The background is a soft bokeh of city lights. This serves as the mini-player artwork, maintaining the brand's atmospheric and high-fidelity visual narrative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh2byjS3cdpHfjP-EB7cAZmIgBRaOzX4wKIuHjCeJtkG7EOQhlJ5rDLm5pp7dMmQ5aZnRVioVvFFxCfoBDn1Qxxr_5HMBRW32DRyxG8AimdXU5REjon2313tEnDy9dvwi6G4v-sx7uVylVhgKBMwiPXNoq59PN8EZNi_UZXr4Y6F2dLToGGj7BpPQzrsVRdSjBO1XoOIrXMhnsLk9CcQoYT-6i4gcv-BNFuPEVM47_bKwarzMhNWv6IYJbpXgxrl5FHiKOraJZhQY"/>
+</div>
+<div class="flex-1 min-w-0 px-3">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-playback-accent pulse-live"></div>
+<h4 class="text-body-md font-bold text-on-surface truncate">Night City Drive</h4>
+</div>
+<p class="text-label-sm text-on-surface-variant truncate">Playing: Tokyo Underground</p>
+</div>
+<div class="flex items-center pr-4 gap-4">
+<button class="w-10 h-10 flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-surface text-[28px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center bg-primary text-on-primary rounded-full shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="pause">pause</span>
+</button>
+</div>
+<!-- Progress Bar -->
+<div class="absolute bottom-0 left-0 w-full h-0.5 bg-white/10">
+<div class="h-full bg-primary progress-glow w-[65%]"></div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="w-full h-16 bg-surface-elevated/95 backdrop-blur-[20px] dark:bg-surface-elevated/95 border-t border-glass-stroke flex justify-around items-center px-4 pb-safe shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="radio">radio</span>
+<span class="text-label-sm font-label-sm mt-1">Stations</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-label-sm font-label-sm">Favorites</span>
+</a>
+</nav>
+</div>
+<script>
+        // Simple micro-interaction for the station cards
+        document.querySelectorAll('.station-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Potential navigation logic
+            });
+        });
+
+        // Add extra padding-bottom for iOS safe area if needed
+        const pbSafe = 'padding-bottom: env(safe-area-inset-bottom);';
+        document.querySelector('.pb-safe').style.cssText += pbSafe;
+    </script>
+</body></html>
