@@ -25,10 +25,11 @@ abstract this away from all layers above the networking client.
 
 The networking layer MUST:
 
-* Maintain a list of known-good mirrors, for example:
-  * `de1.api.radio-browser.info`
-  * `nl1.api.radio-browser.info`
-  * `at1.api.radio-browser.info`
+* Maintain a static list of default HTTPS mirrors (per ADR-0023):
+  * `https://de1.api.radio-browser.info` (Germany)
+  * `https://at1.api.radio-browser.info` (Austria)
+  * `https://nl1.api.radio-browser.info` (Netherlands)
+  * `https://fr1.api.radio-browser.info` (France)
 * Encapsulate active mirror selection inside the networking layer,
   specifically the `dio` client factory in `core/network/`.
 * Automatically retry on the next available mirror when any request
@@ -346,12 +347,9 @@ class NowPlayingInfo {
 
 Parsing rules MUST follow:
 
-* If `raw` is null or empty, both `artist` and `track` MUST be null.
-* If `raw` contains exactly one ` - ` (space-hyphen-space) separator,
-  the left side MUST map to `artist` and the right side MUST map to
-  `track`.
-* If `raw` cannot be split, `raw` MUST be exposed verbatim and both
-  `artist` and `track` MUST be null.
+* If `raw` is null or empty, all fields MUST be null.
+* If `raw` contains one or more ` - ` (space-hyphen-space) separators, the substring to the left of the FIRST separator MUST map to `artist` (trimmed) and the substring to the right of the FIRST separator MUST map to `track` (trimmed, per ADR-0024).
+* If `raw` contains no ` - ` separator, `raw` MUST be exposed verbatim and both `artist` and `track` MUST be null.
 
 ---
 
@@ -390,6 +388,7 @@ Requirements:
   * stream URL
 * On startup or when loading the Favorites screen, the application MAY
   re-fetch fresh station data through `/stations/byuuid`.
+* If a favorited station is no longer returned by the remote API during this synchronization, the repository/usecase MUST NOT silently delete it from local storage. Instead, the application MUST retain the cached station and update its state to `lastCheckOk = false`. Playback attempts will then fail gracefully, prompting the user with an option to remove the favorite manually.
 
 ---
 

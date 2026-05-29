@@ -36,3 +36,9 @@ decisions made for RadioApp.
 | 0017 | [`core/utils/` folder in the mandatory structure](0017-core-utils-folder.md) | Accepted | 2026-05-28 |
 | 0018 | [Official dependency list (consolidated)](0018-official-dependency-list.md) | Accepted | 2026-05-28 |
 | 0019 | [Analytics interface (provider-agnostic)](0019-analytics-interface.md) | Accepted | 2026-05-28 |
+| 0020 | [Favorites synchronization resilience](0020-favorites-sync-resilience.md) | Accepted | 2026-05-29 |
+| 0021 | [Recently played history limit](0021-recently-played-history-limit.md) | Accepted | 2026-05-29 |
+| 0022 | [Background playback notification controls](0022-background-playback-controls.md) | Accepted | 2026-05-29 |
+| 0023 | [API mirrors static list](0023-api-mirrors-list.md) | Accepted | 2026-05-29 |
+| 0024 | [Now-playing metadata parsing rules](0024-now-playing-parsing-rules.md) | Accepted | 2026-05-29 |
+| 0025 | [Offline playback state transitions](0025-offline-playback-state-transitions.md) | Accepted | 2026-05-29 |

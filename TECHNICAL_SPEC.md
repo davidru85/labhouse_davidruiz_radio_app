@@ -79,7 +79,7 @@ This section MUST NOT diverge from them.
 | `RadioPlayerBloc` | Manage playback lifecycle using an `AudioPlayerRepository`, which abstracts `just_audio` and `audio_service`. Subscribes to the now-playing stream while playing. | `PlayRequested`, `PauseRequested`, `StopRequested`, `PlayStationFailed` | `PlayerIdleState`, `PlayerBufferingState`, `PlayerPlayingState`, `PlayerPausedState`, `PlayerErrorState` |
 | `StationsBloc` | Fetch, filter, search, and paginate stations from Radio Browser API. `SearchStations` is debounced 350 ms with a minimum query length of 3 characters (per ADR-0014). | `SearchStations`, `LoadMoreStations`, `FilterByCountry`, `FilterByGenre`, `StationPlayRequested` | `StationsInitial`, `StationsLoadingState`, `StationsLoadedState`, `StationsErrorState` |
 | `FavoritesBloc` | Manage favorites list persisted in Hive. | `ToggleFavorite`, `RefreshFavorites`, `RemoveFavorite` | `FavoritesInitial`, `FavoritesLoadedState`, `FavoritesErrorState` |
-| `HistoryBloc` | Manage recently played stations history persisted in Hive. | `AddToHistory`, `ClearHistory`, `GetHistory` | `HistoryInitial`, `HistoryLoadedState`, `HistoryErrorState` |
+| `HistoryBloc` | Manage recently played stations history persisted in Hive, capped at 50 items using FIFO (per ADR-0021). | `AddToHistory`, `ClearHistory`, `GetHistory` | `HistoryInitial`, `HistoryLoadedState`, `HistoryErrorState` |
 | `GenresBloc` | Load genre list for filter UI from `/tags`. | `LoadGenres`, `FilterByGenre` | `GenresInitial`, `GenresLoadedState`, `GenresErrorState` |
 | `CountriesBloc` | Load country list for filter UI from `/countrycodes`. | `LoadCountries`, `FilterByCountry` | `CountriesInitial`, `CountriesLoadedState`, `CountriesErrorState` |
 | `ConnectivityBloc` | Track online/offline state via `connectivity_plus` for the global banner and per-screen offline behaviour (per ADR-0013). | `ConnectivityChanged` (internal) | `OnlineState`, `OfflineState` |
@@ -278,3 +278,4 @@ The following MUST be verified:
 * Malformed Icy metadata MUST NOT crash the player.
 * The Buffering → Playing transition MUST exist on every successful
   play.
+* A play request while offline MUST transition through Buffering before emitting `PlayerErrorState` (per ADR-0025).

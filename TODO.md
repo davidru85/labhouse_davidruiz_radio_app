@@ -89,6 +89,8 @@ polish phase, see `MEMORY.md` §Pending Questions instead.
 - **Sleep timer.** Stop playback after a user-configured duration.
   Architecturally additive when implemented.
   Source: [ADR-0011](docs/adr/0011-sleep-timer-scope.md).
+- **Next and Previous station controls in the player.** Skip to the next or previous station in the active list (e.g. from Favorites or search results) directly from the player interface. Deferred to avoid queue synchronization complexity and high network load on rapid skipping in v1.
+  Source: [ADR-0022](docs/adr/0022-background-playback-controls.md).
 
 ## Analytics
 

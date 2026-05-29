@@ -18,8 +18,7 @@ The following MUST hold:
   * `limit=30`
 * Search debounce window is 350 ms (per ADR-0014).
 * Minimum search query length is 3 characters (per ADR-0014).
-* In-flight search requests are cancelled on supersession via
-  `CancelToken` (per ADR-0014).
+* In-flight search requests are cancelled on supersession in the network/data layer (per ADR-0014).
 * Tags query defaults use:
   * `hidebroken=true`
   * `order=stationcount`
@@ -55,8 +54,7 @@ The following MUST hold:
 * Country codes resolve to human-readable names through the
   `country_name_resolver` helper in `core/utils/`, backed by `intl`
   against the active locale (per ADR-0005, ADR-0017).
-* `NowPlayingInfo` parsing follows the rules in `API_SPEC.md` §6.4
-  (per ADR-0012).
+* `NowPlayingInfo` parsing follows the first-separator split rules in `API_SPEC.md` §6.4 (per ADR-0012, ADR-0024).
 
 ---
 
@@ -73,7 +71,8 @@ The following MUST hold:
   * tags
   * stream URL
 * Favorites MAY optionally refresh through `/json/stations/byuuid`.
-* History persists in Hive.
+* Favorites synchronization does not silently delete local stations if they are missing from the remote API response.
+* History persists in Hive, is capped at 50 items, and implements a FIFO eviction policy (per ADR-0021).
 * Genres are cached locally in Hive.
 * Country codes are cached locally in Hive.
 * The last-known-working mirror is persisted in the Hive box
@@ -102,6 +101,9 @@ The following MUST hold:
   state (per ADR-0012).
 * Connectivity lost during playback maps to `PlayerErrorState`
   (per ADR-0013).
+* Playback requested while offline transitions through Buffering before emitting `PlayerErrorState` (per ADR-0025).
+* Lockscreen/notification controls are restricted to Play, Pause, and Stop (per ADR-0022).
+* Lockscreen/notification metadata displays the station name as the title, and NowPlayingInfo or static fallback as the subtitle (per ADR-0022).
 
 ---
 

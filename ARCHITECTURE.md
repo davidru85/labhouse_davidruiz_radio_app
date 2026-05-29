@@ -193,3 +193,13 @@ The iOS module MUST configure:
 * Deployment target `13.0` (per ADR-0002).
 * `UISupportedInterfaceOrientations` limited to
   `UIInterfaceOrientationPortrait` (per ADR-0004).
+
+---
+
+## Background Media Controls
+
+The application MUST configure background playback notifications as follows (per ADR-0022):
+
+* The notification widget MUST only enable controls for `Play`, `Pause`, and `Stop`.
+* Skip controls (Next/Previous) and seek controls (Fast Forward/Rewind) MUST be disabled.
+* Notification metadata MUST display the station name as the title, and the dynamically updated `NowPlayingInfo` (formatted as "Artist - Track") as the subtitle. If unavailable, it MUST fall back to a static genre or country subtitle.

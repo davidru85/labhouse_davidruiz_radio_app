@@ -36,7 +36,7 @@ Tasks:
   `core/network/dio_client.dart` with mirror failover, required
   headers (`User-Agent`, `Content-Type`), and timeouts (30 s
   connect, 60 s read).
-* [ ] Define mirror URL constants in `core/constants/`.
+* [ ] Define mirror URL constants in `core/constants/` (the 4 HTTPS mirrors per ADR-0023).
 * [ ] Create `.github/workflows/ci.yml` with `analyze`, `test`,
   `build-android`, `build-ios` jobs (per ADR-0008).
 * [ ] Create `lefthook.yml` with pre-commit (format + analyze),
@@ -85,6 +85,7 @@ Implement independent use case classes under `domain/usecases/`.
 Station use cases:
 
 * [ ] `SearchStationsUseCase`
+* [ ] `CancelSearchUseCase` (per ADR-0014)
 * [ ] `GetStationByUuidUseCase`
 * [ ] `LoadTopClickStationsUseCase`
 * [ ] `LoadTopVoteStationsUseCase`
@@ -188,16 +189,17 @@ Tasks:
 Tasks:
 
 * [ ] Implement `StationRepositoryImpl`.
-* [ ] Implement `FavoritesRepositoryImpl`.
+* [ ] Implement `FavoritesRepositoryImpl` (ensuring missing remote stations during synchronization are marked as `lastCheckOk = false` rather than silently deleted).
 * [ ] Implement `GenresRepositoryImpl`.
 * [ ] Implement `CountriesRepositoryImpl`.
-* [ ] Implement `HistoryRepositoryImpl`.
+* [ ] Implement `HistoryRepositoryImpl` (enforcing the 50-item limit and FIFO eviction policy per ADR-0021).
 * [ ] Implement `PlaybackUrlRepositoryImpl`.
 * [ ] Implement `AudioPlayerRepositoryImpl`:
   * Wraps `just_audio` + `audio_service`.
   * Exposes `nowPlayingStream` from `just_audio`'s
     `icyMetadataStream`, adapted via `icy_metadata_parser`
     (per ADR-0012).
+  * Configures the system background audio notification controls to be restricted to Play, Pause, and Stop, and maps station name and NowPlayingInfo to title/subtitle (per ADR-0022).
   * Listens to `ConnectivityRepository.onlineStatusStream` and
     surfaces transitions to offline during active playback as
     `PlaybackFailure` (per ADR-0013).
@@ -242,8 +244,7 @@ Tasks:
   * tag filter
   * pagination / load more
   * popular stations
-  * `CancelToken`-based cancellation of in-flight requests on
-    supersession (per ADR-0014)
+  * trigger explicit search cancellation via `CancelSearchUseCase` when playing a station or disposing the bloc (per ADR-0014)
   * API failure mapping to UI-representable states
 * [ ] Implement `FavoritesBloc` with:
   * toggle favorite

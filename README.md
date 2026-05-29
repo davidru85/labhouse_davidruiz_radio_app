@@ -119,8 +119,8 @@ foundational decisions**. The full index and links live in
 - **Network:** mirror failover with persisted last-known mirror in
   Hive `app_settings`; offline behaviour handled by
   `ConnectivityBloc` with global banner.
-- **Search:** debounce 350 ms, minimum 3 characters, `CancelToken`
-  for in-flight requests.
+- **Search:** debounce 350 ms, minimum 3 characters, data-layer
+  cancellation of in-flight requests.
 - **Analytics:** provider-agnostic interface with sealed event
   catalogue and no-op default; real provider, adapter, and GDPR
   consent flow tracked in `TODO.md`.

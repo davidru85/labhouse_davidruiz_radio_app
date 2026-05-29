@@ -73,33 +73,26 @@ the operators actually needed here (`debounce`, `switchMap`).
 
 ### Request cancellation
 
-Each in-flight HTTP request carries a `CancelToken` (Dio). When the
-bloc dispatches a new query — either because a newer
-`SearchStations` event has won the debounce window, or because a
-filter change has invalidated the current query — the previous
-`CancelToken` is cancelled and the new request is started. Stale
-responses cannot overwrite the state because the cancellation
-short-circuits the response handler.
+Each in-flight HTTP request carries a `CancelToken` (`Dio`) managed entirely inside the network and data layers (specifically in the `RemoteStationDataSource`). The presentation layer (BLoCs) remains completely unaware of `Dio`'s cancellation tokens. 
 
-Other paths that invalidate an in-flight search and require
-cancellation:
+Cancellation happens under two scenarios:
 
-- A `FilterByCountry` or `FilterByGenre` event.
-- A `StationPlayRequested` event that navigates away from the
-  Stations screen (the bloc remains alive but the user has moved
-  on; cancellation prevents wasted bandwidth).
+1. **Automatic cancellation on supersession:** When a new search or filter request is initiated, the `RemoteStationDataSource` automatically cancels the `CancelToken` of the previously active search request before launching the new request.
+2. **Explicit cancellation:** The `StationRepository` contract exposes a `cancelSearch()` method (wrapped in a `CancelSearchUseCase`). The `StationsBloc` calls this use case when a `StationPlayRequested` event occurs or when the bloc is disposed, indicating that the user is navigating away and search results are no longer needed.
+
+This ensures stale responses from previous HTTP requests do not overwrite the state, and prevents wasted bandwidth without leaking `Dio` types into the domain or presentation layers.
 
 ### Exact timeline
 
-| User action | Time | Bloc behaviour |
-|---|---|---|
-| Types `r` | t=0 | Below 3-char floor: ignored |
-| Types `ra` | t=200 ms | Below 3-char floor: ignored |
-| Types `rad` | t=400 ms | At floor; debounce timer starts |
-| Types `radio` | t=550 ms | Debounce timer restarts |
-| Stops typing | – | Counts 350 ms of inactivity |
-| – | t=900 ms | `SearchStationsUseCase("radio")` invoked with a fresh `CancelToken` |
-| Types `radio rock` | t=1200 ms | Previous `CancelToken` cancelled; new debounce starts |
+| User action | Time | Bloc behaviour | Network / Data Layer behaviour |
+|---|---|---|---|
+| Types `r` | t=0 | Below 3-char floor: ignored | None |
+| Types `ra` | t=200 ms | Below 3-char floor: ignored | None |
+| Types `rad` | t=400 ms | At floor; debounce timer starts | None |
+| Types `radio` | t=550 ms | Debounce timer restarts | None |
+| Stops typing | – | Counts 350 ms of inactivity | None |
+| – | t=900 ms | `SearchStationsUseCase("radio")` invoked | Remote data source starts request with a fresh `CancelToken` |
+| Types `radio rock` | t=1200 ms | Previous request is superseded | Previous `CancelToken` is cancelled by remote data source; new request starts with a fresh token |
 
 ## Consequences
 

@@ -26,7 +26,7 @@ Required coverage:
   * `tag_parser` — trim, deduplicate and split comma-separated tags;
     handle empty and whitespace-only input.
   * `icy_metadata_parser` — apply the rules in `API_SPEC.md` §6.4:
-    valid `Artist - Track`, missing separator, empty input, garbage.
+    valid `Artist - Track`, multiple separators (e.g. `Artist - Song - Show` split by first hyphen per ADR-0024), missing separator, empty/whitespace input, garbage.
 
 ---
 
@@ -102,6 +102,7 @@ Playback use case tests verify the fallback chain defined in
   with updated `nowPlaying` (per ADR-0012).
 * Connectivity lost during playback emits `PlayerErrorState`
   (per ADR-0013).
+* Playback requested while offline emits `[Buffering, Error]` (per ADR-0025).
 
 ### GenresBloc
 
