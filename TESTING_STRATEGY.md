@@ -21,8 +21,7 @@ Required coverage:
 * Repository integration using `mocktail`.
 * Error propagation through repositories.
 * `core/utils/` helpers (per ADR-0017):
-  * `country_name_resolver` — resolve known and unknown ISO codes
-    against multiple locales.
+  * `country_name_resolver` — resolve ISO codes dynamically by loading keys formatted as `country_XX` from localization ARB files, falling back to raw uppercase ISO codes on missing keys (per ADR-0032).
   * `tag_parser` — trim, deduplicate and split comma-separated tags;
     handle empty and whitespace-only input.
   * `icy_metadata_parser` — apply the rules in `API_SPEC.md` §6.4:
@@ -65,6 +64,8 @@ Playback use case tests verify the fallback chain defined in
 * `CancelSearchUseCase` is invoked to cancel in-flight remote requests when a new search/filter event arrives, when a station play is requested, or when the BLoC is disposed (per ADR-0014).
 * A `SearchStations("")` event maps to the popular-stations
   behaviour (per ADR-0014).
+* search results containing duplicates are filtered out in memory (verify client-side deduplication via `stationuuid`, per ADR-0031).
+* pagination loading limits requests when search results are exhausted or reach `STATIONS_MAX_LIMIT` (verify `hasReachedMax` transitions to `true` and new loading events are ignored, per ADR-0031).
 
 ### FavoritesBloc
 

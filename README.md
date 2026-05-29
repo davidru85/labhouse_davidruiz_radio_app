@@ -97,7 +97,7 @@ maintained API.
 
 ## Decision summary
 
-The polish phase produced **29 accepted ADRs** and **6 inherited
+The polish phase produced **32 accepted ADRs** and **6 inherited
 foundational decisions**. The full index and links live in
 `MEMORY.md` §"Decision Log" and `docs/adr/README.md`. Highlights:
 

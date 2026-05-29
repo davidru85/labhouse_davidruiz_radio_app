@@ -75,7 +75,7 @@ Tasks:
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
 * [ ] Configure `flutter_localizations` and create
-  `lib/l10n/intl_en.arb` (per ADR-0005).
+  `lib/l10n/intl_en.arb` with initial country name translation keys (`country_DE`, `country_AT`, `country_NL`, `country_FR`) (per ADR-0005 and ADR-0032).
 
 ---
 

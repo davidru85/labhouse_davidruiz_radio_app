@@ -139,6 +139,8 @@ Important rules:
 * All user-facing queries MUST set `hidebroken=true`.
 * The bloc MUST enforce a client-side minimum query length of
   3 characters before reaching the endpoint (per ADR-0014).
+* The data or repository layer MUST filter out duplicate station entries in memory using their unique `stationuuid` (per ADR-0031).
+* The `StationsBloc` MUST track whether the search results have been exhausted (e.g. via a `hasReachedMax` boolean). If a page request returns fewer items than the limit, or if the cumulative loaded list reaches `STATIONS_MAX_LIMIT`, the bloc MUST ignore any subsequent `LoadMoreStations` events (per ADR-0031).
 * Search by name MUST be supported.
 * Country filtering MUST be supported.
 * Genre/tag filtering MUST be supported.
@@ -328,9 +330,11 @@ class Country {
 The `/json/countrycodes` API returns raw ISO codes and counts.
 
 The `country_name_resolver` helper in `core/utils/` (per ADR-0017)
-MUST be used to resolve human-readable country names from ISO codes,
-using the `intl` package against the application's active locale
-(per ADR-0005).
+MUST be used to resolve human-readable country names from ISO codes. 
+
+Specifically:
+- It MUST look up the localized country name using standard ARB translation keys formatted as `country_XX` (where `XX` is the uppercase ISO country code), resolved via the generated localization classes (`intl`, per ADR-0005).
+- If the translation key is missing, it MUST fall back to returning the raw uppercase ISO country code (per ADR-0032).
 
 ### 6.4 NowPlayingInfo Entity
 

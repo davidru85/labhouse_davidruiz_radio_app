@@ -46,3 +46,6 @@ decisions made for RadioApp.
 | 0027 | [Popular stations strategy](0027-popular-stations-strategy.md) | Accepted | 2026-05-29 |
 | 0028 | [Error observability and crash reporting](0028-error-observability-crash-reporting.md) | Accepted | 2026-05-29 |
 | 0029 | [Recently played history presentation surface](0029-recently-played-history-presentation-surface.md) | Accepted | 2026-05-29 |
+| 0030 | [Android cleartext traffic configuration](0030-android-cleartext-traffic.md) | Accepted | 2026-05-29 |
+| 0031 | [Search pagination deduplication and end-of-list behavior](0031-search-pagination-deduplication-and-end.md) | Accepted | 2026-05-29 |
+| 0032 | [Country name resolution strategy](0032-country-name-resolution-strategy.md) | Accepted | 2026-05-29 |

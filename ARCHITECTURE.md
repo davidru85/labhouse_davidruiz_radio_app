@@ -174,6 +174,7 @@ The Android module MUST configure:
 
 * `INTERNET` permission.
 * Background service registration for `audio_service`.
+* `android:usesCleartextTraffic="true"` on the `<application>` tag in `AndroidManifest.xml` (per ADR-0030).
 * `applicationId` = `com.labhouse.davidruizassessment.radioapp`
   (per ADR-0003).
 * `minSdkVersion = 23`, `targetSdkVersion = 34`,
