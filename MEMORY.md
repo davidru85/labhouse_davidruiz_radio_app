@@ -64,8 +64,8 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
 
-* **Current Task:** Align pre-coding documentation and resolve all gaps in merged_analysis.md.
-* **Last Completed Task:** Registered architectural decisions ADR-0030 to ADR-0032.
+* **Current Task:** Phase 1, Sub-task 1.2 (Strict Linter & Dependencies Setup).
+* **Last Completed Task:** Phase 1, Sub-task 1.1 (Platform Cleanup & Naming).
 
 ---
 
