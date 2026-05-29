@@ -11,11 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'RadioApp',
-      home: Scaffold(
-        body: Center(
-          child: Text('RadioApp Shell'),
-        ),
-      ),
+      home: Scaffold(body: Center(child: Text('RadioApp Shell'))),
     );
   }
 }
