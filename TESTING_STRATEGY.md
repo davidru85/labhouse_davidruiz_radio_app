@@ -171,35 +171,36 @@ Verify:
 
 ## Phase 1 PHASE RED Testing Strategy
 
-Before writing production bootstrapping code, introduce failing
-tests or checks that prove the expected infrastructure does not
-exist yet.
+Before implementing production bootstrapping code, the implementer MUST write tests or validations to establish the failing (RED) state for each sequential sub-task.
 
-Recommended initial Phase 1 Red checks:
+### Sequential RED Checkpoints:
 
-* Verify required dependencies are present in `pubspec.yaml`
-  (the 13 production + 7 dev packages governed by ADR-0018).
-* Verify `analysis_options.yaml` includes `very_good_analysis`.
-* Verify the required folder structure exists (including
-  `core/utils/`).
-* Verify `AndroidManifest.xml` contains the `INTERNET` permission
-  and the portrait orientation lock.
-* Verify Android `build.gradle` configures `minSdkVersion = 23`,
-  `targetSdkVersion = 34`, `compileSdkVersion = 34`, and
-  `applicationId = com.labhouse.davidruizassessment.radioapp`.
-* Verify iOS `Info.plist` contains the audio Background Mode,
-  `NSAppTransportSecurity` with `NSAllowsArbitraryLoads`, the
-  portrait orientation lock, and
-  `CFBundleIdentifier = com.labhouse.davidruizassessment.radioapp`.
-* Verify iOS deployment target is `13.0`.
-* Verify `Dio` client configuration exposes required headers
-  (`User-Agent`, `Content-Type`) and timeouts (30 s connect,
-  60 s read).
-* Verify `config/app.json` is present and committed.
-* Verify `.github/workflows/ci.yml` runs `analyze`, `test`,
-  `build-android`, `build-ios`.
-* Verify `lefthook.yml` defines pre-commit (format + analyze) and
-  pre-push (test) hooks.
+#### Sub-task 1.1: Platform Cleanup & Naming
+* **RED Verification Check:** The developer executes verification script commands or tests proving that:
+  - Default platform folders (`web/`, `macos/`, `linux/`, `windows/`) exist in the workspace.
+  - The package name in `pubspec.yaml` is NOT `radio_app`.
+  - The native app identifiers in `build.gradle` and `Info.plist` do not match `com.labhouse.davidruizassessment.radioapp`.
+  - Native platform orientation settings, SDK versions, and background playback entitlements are unconfigured or default.
 
-After writing these checks, run them and present the failing
-output for review.
+#### Sub-task 1.2: Strict Linter & Dependencies Setup
+* **RED Verification Check:**
+  - Verify that `analysis_options.yaml` does not enforce `very_good_analysis`.
+  - Verify that a file-level search on `pubspec.yaml` reveals that the 13 production and 7 dev dependencies (per ADR-0018) are not added.
+
+#### Sub-task 1.3: Folder Structure & App Configuration
+* **RED Verification Check:**
+  - Verify that directories under `lib/` (such as `core/utils/` and `domain/failures/`) are absent.
+  - Verify that `config/app.json` does not exist in the project root.
+
+#### Sub-task 1.4: Base Dio Client Factory & Mirror Constants
+* **RED Unit Test:**
+  - Create the unit test file `test/core/network/dio_client_test.dart`.
+  - Assert that calling `DioClientFactory.create()` yields a `Dio` instance with a 30s connection timeout, 60s read timeout, and headers for `User-Agent: RadioApp/1.0` and `Content-Type: application/json; charset=utf-8`.
+  - Assert that `core/constants/mirrors.dart` defines the four static default HTTPS mirrors.
+  - Run `flutter test test/core/network/dio_client_test.dart` and verify it fails (as `DioClientFactory` and mirror constants do not exist yet).
+
+#### Sub-task 1.5: CI/CD Workflows & Git Hooks
+* **RED Verification Check:**
+  - Assert that `.github/workflows/ci.yml` and `lefthook.yml` are absent.
+
+Once all red checkpoints for a sub-task are verified as failing, present them for review before proceeding to the green implementation step.

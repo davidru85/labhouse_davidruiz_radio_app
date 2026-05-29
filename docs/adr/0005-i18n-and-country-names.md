@@ -3,7 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-05-28
 - **Deciders:** David Ruiz
-- **Related:** `API_SPEC.md` §6.3, `MEMORY.md` §Pending Questions, `TECHNICAL_SPEC.md` §2
+- **Related:** `API_SPEC.md` §6.3, `MEMORY.md` §Pending Questions, `TECHNICAL_SPEC.md` §2, ADR-0032
 
 ## Context
 
@@ -36,6 +36,9 @@ zero maintenance.
   widgets.
 - **Country names** resolve via the `intl` package against the app's
   active locale.
+
+> [!NOTE]
+> **Extended by ADR-0032:** The country name resolution details are extended to dynamically map ISO codes to ARB keys (`country_XX`) inside the localization workflow. Refer to [ADR-0032](0032-country-name-resolution-strategy.md).
 - **No automatic locale detection** based on the system locale at launch.
   The app uses `en_US` unconditionally. Detection can be added later
   without rearchitecting.

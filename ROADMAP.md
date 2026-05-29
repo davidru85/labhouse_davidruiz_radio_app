@@ -9,43 +9,48 @@ is governed there.
 
 ## Phase 1: Infrastructure And Project Bootstrapping
 
-Tasks:
+> [!NOTE]
+> **Dio Client Scope:** Phase 1 implements ONLY the base `Dio` client factory, required headers, timeout configuration, and a basic retry interceptor cycling through a static mirror list. Persisting the last-known mirror using Hive is strictly deferred to Phase 4 (Local Storage) and Phase 5 (Remote Data Source).
 
-* [ ] Clean up and configure the existing Flutter project scaffold (per ADR-0003):
-  * Delete out-of-scope platform folders (`web/`, `macos/`, `linux/`, `windows/`) to conform to ADR-0001.
+Tasks MUST follow the sequential TDD RED/GREEN/REFACTOR micro-cycle checkpoints:
+
+### Sub-task 1.1: Platform Cleanup & Naming
+* [ ] **PHASE RED:** Write tests or run assertions verifying that non-conforming platform folders (`web/`, `macos/`, `linux/`, `windows/`) exist, that the default package name does not match `radio_app`, and that `main.dart` contains the default flutter template. Present failing checks.
+* [ ] **PHASE GREEN:** 
+  * Delete `web/`, `macos/`, `linux/`, `windows/` platform folders to conform to Android/iOS only (per ADR-0001).
   * Update package name in `pubspec.yaml` to `radio_app`.
-  * Update native package identifier to `com.labhouse.davidruizassessment.radioapp`.
-  * Remove the default counter app code in `lib/main.dart` and maintain a clean minimal Material/Cupertino shell (UI work blocked).
-* [ ] Initialise the git repository and create the private GitHub
-  remote (per ADR-0009).
-* [ ] Configure local SSH commit signing (per ADR-0008).
-* [ ] Author `pubspec.yaml` with the 13 production and 7 dev
-  dependencies governed by ADR-0018.
-* [ ] Configure `analysis_options.yaml` with `very_good_analysis` and
-  the zero-warnings policy.
-* [ ] Create the complete folder structure defined in
-  `ARCHITECTURE.md` §"Mandatory Folder Structure", including
-  `core/utils/` (per ADR-0017).
-* [ ] Apply Android and iOS native configuration as specified in
-  `ARCHITECTURE.md` §"Native Platform Configuration"
-  (minSdk, target/compileSdk, deployment target, identifiers,
-  portrait lock, INTERNET permission, audio service registration,
-  `NSAllowsArbitraryLoads`).
-* [ ] Create `config/app.json` with the initial values defined in
-  ADR-0007.
-* [ ] Configure base `Dio` client factory in
-  `core/network/dio_client.dart` with mirror failover, required
-  headers (`User-Agent`, `Content-Type`), and timeouts (30 s
-  connect, 60 s read).
-* [ ] Define mirror URL constants in `core/constants/` (the 4 HTTPS mirrors per ADR-0023).
-* [ ] Create `.github/workflows/ci.yml` with `analyze`, `test`,
-  `build-android`, `build-ios` jobs (per ADR-0008).
-* [ ] Create `lefthook.yml` with pre-commit (format + analyze),
-  pre-push (test), and commit-msg (Conventional Commits regex)
-  hooks (per ADR-0008 and ADR-0009).
-* [ ] Apply branch protection rules to `main` on GitHub
-  (per ADR-0008).
-* [ ] Run `lefthook install` after first clone on each machine.
+  * Update native package identifier to `com.labhouse.davidruizassessment.radioapp` (per ADR-0003).
+  * Replace default counter code in `lib/main.dart` with a minimal clean shell (gating actual UI).
+  * Initialise git repository, configure local SSH signing, and present passing checks.
+* [ ] **PHASE REFACTOR:** Ensure code formatting passes and files are cleanly organized.
+
+### Sub-task 1.2: Strict Linter & Dependencies Setup
+* [ ] **PHASE RED:** Assert that `analysis_options.yaml` uses default rules and `pubspec.yaml` lacks the 13 production and 7 dev dependencies defined in ADR-0018. Present failing checks.
+* [ ] **PHASE GREEN:**
+  * Configure `analysis_options.yaml` with `very_good_analysis` and the zero-warnings policy.
+  * Add dependencies to `pubspec.yaml` (ADR-0018). Run `flutter pub get`.
+* [ ] **PHASE REFACTOR:** Verify linter returns zero warnings (`flutter analyze`).
+
+### Sub-task 1.3: Folder Structure & App Configuration
+* [ ] **PHASE RED:** Assert that the mandatory Clean Architecture folders (`lib/core/utils`, `lib/domain/failures`, etc.) do not exist and `config/app.json` is missing. Present failing checks.
+* [ ] **PHASE GREEN:**
+  * Create the folder structure specified in `ARCHITECTURE.md` §"Mandatory Folder Structure".
+  * Create `config/app.json` with the initial configuration variables defined in ADR-0007.
+* [ ] **PHASE REFACTOR:** Ensure folder naming is perfectly aligned.
+
+### Sub-task 1.4: Base Dio Client Factory & Mirror Constants
+* [ ] **PHASE RED:** Write unit tests in `test/core/network/dio_client_test.dart` verifying that `Dio` is configured with a 30s connection timeout, 60s read timeout, `Content-Type: application/json; charset=utf-8` header, custom descriptive `User-Agent` header (e.g. `RadioApp/1.0`), and checking that the 4 default HTTPS mirror URLs are defined in `core/constants/mirrors.dart`. Run and show failing test results.
+* [ ] **PHASE GREEN:**
+  * Implement mirror constants in `lib/core/constants/mirrors.dart` (per ADR-0023).
+  * Implement base `Dio` client factory in `lib/core/network/dio_client.dart` with timeout/header configurations. Run and show passing tests.
+* [ ] **PHASE REFACTOR:** Clean up factory and test code.
+
+### Sub-task 1.5: CI/CD Workflows & Git Hooks
+* [ ] **PHASE RED:** Assert that `.github/workflows/ci.yml` and `lefthook.yml` are missing. Present failing checks.
+* [ ] **PHASE GREEN:**
+  * Create `.github/workflows/ci.yml` with `analyze`, `test`, `build-android`, `build-ios` jobs (per ADR-0008).
+  * Create `lefthook.yml` with pre-commit (format + analyze), pre-push (test), and commit-msg (Conventional Commits) hooks (per ADR-0008/0009). Run `lefthook install`.
+* [ ] **PHASE REFACTOR:** Verify hooks run successfully locally.
 
 ---
 
@@ -67,15 +72,17 @@ Tasks:
 * [ ] Define all sealed failure classes in `domain/failures/`:
   * `ApiFailure` with subclasses (`ServerFailure`,
     `ValidationErrorFailure`, `UnauthorizedFailure`).
-  * `NetworkFailure`.
+  - `NetworkFailure` with subclasses (`ConnectionTimeoutFailure`, `SocketFailure`, `MirrorFailure`).
   * `PlaybackFailure` (includes connectivity lost during playback,
     per ADR-0013).
   * `StorageFailure`.
 * [ ] Define repository interfaces in `domain/repositories/` per
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
-* [ ] Configure `flutter_localizations` and create
-  `lib/l10n/intl_en.arb` with initial country name translation keys (`country_DE`, `country_AT`, `country_NL`, `country_FR`) (per ADR-0005 and ADR-0032).
+* [ ] Configure `flutter_localizations` (per ADR-0005 and ADR-0032):
+  * Create `l10n.yaml` in the project root to enable automatic localization generation.
+  * Create `lib/l10n/intl_en.arb` with initial country name translation keys (`country_DE`, `country_AT`, `country_NL`, `country_FR`).
+
 
 ---
 

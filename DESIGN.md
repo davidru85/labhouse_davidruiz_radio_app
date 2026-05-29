@@ -116,7 +116,8 @@ These specifications cover layout structure, components, colors, typography, spa
 
 The app uses a **#131315 glassmorphic dark theme** with extensive use of `backdrop-filter: blur(20px)` on elevated surfaces.
 
-> Source of truth for the raw export: [`stitch_export.txt`](./stitch_export.txt).
+> Design asset files are synced in the [`stitch/`](stitch/) directory.
+
 
 ---
 
@@ -129,13 +130,14 @@ Do not generate code for:
 * definitive styling
 * final visual components
 
-This restriction remains active until detailed visual specifications are provided.
+This restriction remains active until Phase 9 is reached and the user explicitly approves UI implementation.
 
 ---
 
 ## Current Allowed Scope
 
-Until design specifications are provided, work may continue only on:
+Until UI implementation is approved, work may continue only on:
+
 
 1. Core architecture.
 2. Contracts.
@@ -230,18 +232,20 @@ The visual narrative centers on "Atmospheric Depth." By using translucent layers
 
 ## Screen Catalog
 
-Synced from the **Labhouse David Radio** project in Google Stitch. The corresponding visual screen layouts and interactive HTML prototypes are saved inside the [`./stitch/`](file:///Users/davidruizurraca/Documents/David%20Vault/Tech%20Assessments/LABHOUSE/RadioApp/stitch/) directory as references. 
+Synced from the **Labhouse David Radio** project in Google Stitch. The corresponding visual screen layouts and interactive HTML prototypes are saved inside the [`stitch/`](stitch/) directory as references. 
 
 All screens use a Material 3 dark theme (`Inter` font) and consume shared BLoC state, rendering adaptive Material/Cupertino widgets per the architecture above. A glassmorphic treatment (`backdrop-filter: blur(20px)`, translucent surfaces, hairline `glass-stroke` borders) is used on app bars, the nav bar, and the mini-player.
+
 
 ### 1. Stations
 
 Primary list screen.
 
-- **Design Assets:** [Interactive HTML Prototype (code.html)](file:///Users/davidruizurraca/Documents/David%20Vault/Tech%20Assessments/LABHOUSE/RadioApp/stitch/stations/code.html) | [Visual Mockup Image (screen.png)](file:///Users/davidruizurraca/Documents/David%20Vault/Tech%20Assessments/LABHOUSE/RadioApp/stitch/stations/screen.png)
+- **Design Assets:** [Interactive HTML Prototype (code.html)](stitch/stations/code.html) | [Visual Mockup Image (screen.png)](stitch/stations/screen.png)
 - **App bar:** sticky, translucent. `radio` icon + "Labhouse David Radio" wordmark (`headline-md`, bold).
 - **Search field:** rounded-`xl`, `surface-container-high` background, leading `search` icon, placeholder "Search stations, genres, or frequencies…". Search is **hosted on this screen** — there is no dedicated search screen. Querying filters the station list below in place (server-side; debounced per ADR-0014, offset-paginated per ADR-0031).
-- **Station list:** vertical list of cards (`surface-container`, rounded-2xl, `card-padding`). Each row: 64dp rounded artwork, station name (`body-lg` bold), frequency + genre subtitle (`body-md`, e.g. "101.9 MHz • Ambient"), a `favorite` toggle, and a circular `primary` play button. Active-favorite hearts use `favorite-active`. Doubles as both the default browse list and the search-results list.
+- **Station list:** vertical list of cards (`surface-container`, rounded-2xl, `card-padding`). Each row: 64dp rounded artwork, station name (`body-lg` bold), primary tag + country subtitle (`body-md`, e.g. "Ambient • United Kingdom" - since internet radio stations do not have physical frequencies), a `favorite` toggle, and a circular `primary` play button. Active-favorite hearts use `favorite-active`. Doubles as both the default browse list and the search-results list.
+
 - **Mini-player:** docked above the nav bar (see below).
 - **Bottom nav:** Stations (active), Favorites.
 
@@ -249,11 +253,12 @@ Primary list screen.
 
 Saved stations.
 
-- **Design Assets:** [Interactive HTML Prototype (code.html)](file:///Users/davidruizurraca/Documents/David%20Vault/Tech%20Assessments/LABHOUSE/RadioApp/stitch/favorites/code.html) | [Visual Mockup Image (screen.png)](file:///Users/davidruizurraca/Documents/David%20Vault/Tech%20Assessments/LABHOUSE/RadioApp/stitch/favorites/screen.png)
+- **Design Assets:** [Interactive HTML Prototype (code.html)](stitch/favorites/code.html) | [Visual Mockup Image (screen.png)](stitch/favorites/screen.png)
 - **App bar:** sticky, translucent "Labhouse David Radio" wordmark.
 - **Heading:** "Your Favorites" (`headline-lg-mobile`) + a "Search your favorites" field.
-- **Populated state:** responsive 2-column grid (`station-grid`, `minmax(160px, 1fr)`, 16px gap). Each card: square artwork, a filled `favorite-active` heart button overlaid top-right (on a translucent blurred chip), station name (`body-lg` bold), and "genre • city" subtitle (e.g. "Synthwave • Tokyo").
+- **Populated state:** responsive 2-column grid (`station-grid`, `minmax(160px, 1fr)`, 16px gap). Each card: square artwork, a filled `favorite-active` heart button overlaid top-right (on a translucent blurred chip), station name (`body-lg` bold), and "primary tag • country" subtitle (e.g. "Synthwave • Japan").
 - **Empty state:** centered `favorite_border` glyph in a circular surface, "No favorites yet", supporting copy, and an "Explore Stations" `primary` pill button. Toggled via `toggleEmptyState()`.
+
 - **Mini-player:** includes a thin `primary` playback progress bar along its bottom edge.
 - **Bottom nav:** Stations, Favorites (active).
 
@@ -261,14 +266,15 @@ Saved stations.
 
 Full-screen now-playing view, presented via a bottom-to-top slide (`slideUp`, 0.6s). Reached from the mini-player. This screen is a modal/slide-up view and DOES NOT contain navigation tabs.
 
-- **Design Assets:** [Visual Mockup Image (screen.png)](file:///Users/davidruizurraca/Documents/David%20Vault/Tech%20Assessments/LABHOUSE/RadioApp/stitch/full_player/screen.png)
+- **Design Assets:** [Visual Mockup Image (screen.png)](stitch/full_player/screen.png) (Note: `screen.png` is an invalid 28-byte placeholder and `stitch/full_player/code.html` is absent; design details are limited to this text specification).
 - **Background:** atmospheric layered gradient (`primary-container/20` → background) with a large blurred `primary` glow.
 - **Top bar:** `expand_more` collapse button (left), centered "Now Playing" label (`label-lg`, uppercase, tracked). The menu button has been removed to allow the title to be perfectly centered.
 - **Hero artwork:** up to 320dp square, rounded `2rem`, with `artwork-glow` shadow and an inset `glass-stroke` ring.
-- **Identity:** station name (`headline-lg-mobile`/`headline-lg`, bold), frequency + city in `primary` (e.g. "104.2 FM — London"), and a status line. A `favorite` toggle (`favorite_border`) is located to the right of the station name.
-- **Transport:** A central 80dp primary control (`play_arrow`/`pause`). Skip previous and skip next buttons are intentionally omitted as they are not applicable to live radio streams (see ADR-0022). Volume row with `volume_mute`/`volume_up` icons and a custom `primary` slider (`volume-slider`).
-- **Footer actions:** Share, Sleep, Up Next (icon + `label-sm`).
+- **Identity:** station name (`headline-lg-mobile`/`headline-lg`, bold), primary tag + country in `primary` (e.g. "Ambient • United Kingdom"), and a status line. A `favorite` toggle (`favorite_border`) is located to the right of the station name.
+- **Transport:** A central 80dp primary control (`play_arrow`/`pause`). Skip previous and skip next buttons are intentionally omitted as they are not applicable to live radio streams (see ADR-0022). Volume row with `volume_mute`/`volume_up` icons and a custom `primary` slider (`volume-slider`) is present in the Stitch mockup but **MUST NOT be implemented** (refer to ADR-0010, system-only volume is used).
+- **Footer actions:** Share, Sleep, Up Next (icon + `label-sm`) are present in the Stitch mockup but **MUST NOT be implemented** as they are out of scope for v1 (refer to ADR-0011 for Sleep timer, ADR-0022 for background controls only, and Share behavior is out of scope).
 - **Playback states (same screen):**
+
   - **Buffering** — center control shows a spinning ring + `hourglass_empty`; status line reads "Buffering…"; artwork dimmed.
   - **Paused / Live** — center control is a `primary` `play_arrow`/`pause` button (`togglePlay()`); status line reads "Live"; artwork at full opacity.
 

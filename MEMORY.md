@@ -64,8 +64,8 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
 
-* **Current Task:** Clean up and align the non-conforming Flutter scaffold (Phase 1 execution).
-* **Last Completed Task:** Align pre-coding documentation and register architectural decisions ADR-0026 to ADR-0029.
+* **Current Task:** Align pre-coding documentation and resolve all gaps in merged_analysis.md.
+* **Last Completed Task:** Registered architectural decisions ADR-0030 to ADR-0032.
 
 ---
 
@@ -74,12 +74,12 @@ to ADRs if revisited.
 * Radio Browser mirrors may be unavailable or inconsistent.
 * Some station streams may be broken even when `lastcheckok == 1`.
 * HTTP audio streams may require permissive native configuration, especially on iOS.
-* Country code API returns raw ISO codes, so human-readable names require a mapping utility or `intl`.
-* UI work must not begin before visual specifications are provided.
+* Dynamic ISO country code lookup via ARB keys is resolved at strategy level but requires verification during Phase 2.
+* UI implementation is strictly gated on Phase 9 and requires explicit user approval.
 
 ---
 
 ## Pending Questions
 
-* What exact visual design system will be used once UI work is approved?
+* None. The pre-coding documentation gaps have been fully resolved.
 

@@ -98,24 +98,32 @@ dependency.
 
 Data failures MUST be modeled using sealed classes in `domain/failures/`.
 
+To return failures safely without throwing raw exceptions across Clean Architecture layer boundaries, a local custom `Result<S, F>` sealed class MUST be used as the return type for all repository and use case signatures that can fail.
+
+The `Result` structure is:
+* `Result<S, F>` (base sealed class)
+* `Success<S, F>` (wraps the success data of type `S`)
+* `FailureResult<S, F>` (wraps the failure object of type `F`, which MUST subclass `Failure`)
+
 Required failure groups:
 
 * `ApiFailure`
-  * `ServerFailure`
-  * `ValidationErrorFailure`
-  * `UnauthorizedFailure`
+  * `ServerFailure` (HTTP 5xx, backend down)
+  * `ValidationErrorFailure` (HTTP 422, query invalid)
+  * `UnauthorizedFailure` (HTTP 401/403, rejected credentials)
 * `NetworkFailure`
-  * connection timeout
-  * socket error
-  * mirror failure
+  * `ConnectionTimeoutFailure` (connection, send, or receive timeouts)
+  * `SocketFailure` (socket or DNS resolution error)
+  * `MirrorFailure` (all fallback mirror retries exhausted)
 * `PlaybackFailure`
-  * stream unreachable
-  * codec unsupported
-  * playback interrupted
-  * connectivity lost during playback (per ADR-0013)
+  * `StreamUnreachableFailure` (connection failed to playback stream URL)
+  * `CodecUnsupportedFailure` (audio player unable to decode stream format)
+  * `PlaybackInterruptedFailure` (playback stalled or aborted mid-stream)
+  * `ConnectivityLostFailure` (connectivity lost during playback, per ADR-0013)
 * `StorageFailure`
-  * Hive read/write corruption
-  * favorites synchronization error
+  * `StorageReadWriteFailure` (Hive database read/write corruption)
+  * `FavoritesSyncFailure` (favorites synchronization error)
+
 
 ---
 
@@ -175,7 +183,24 @@ Rules:
   * `CupertinoIcons`
 * Third-party icon packages MUST NOT be added.
 
+### 9.1 Localization (l10n) And Country Resolution
+
+Localization is configured using the official Flutter code generator:
+
+* A `l10n.yaml` configuration file MUST exist in the project root containing:
+  ```yaml
+  arb-dir: lib/l10n
+  template-arb-file: intl_en.arb
+  output-localization-file: app_localizations.dart
+  nullable-getter: false
+  ```
+* All user-facing strings MUST be defined in ARB resource files (e.g. `lib/l10n/intl_en.arb`) and looked up via the generated `AppLocalizations`. Hardcoded text in widgets is prohibited.
+* Country name translation keys MUST follow the format `country_XX` (where `XX` is the uppercase ISO country code, e.g. `country_DE`).
+* The helper utility `country_name_resolver` MUST load these dynamic localization keys using `AppLocalizations`. If a key is missing, it MUST fallback gracefully to returning the raw uppercase ISO code (per ADR-0032).
+* The font asset **Inter** (regular, medium, semi-bold, bold weights) MUST be bundled locally in `pubspec.yaml` in Phase 9, with its license tracked, rather than adding any unapproved font package.
+
 ---
+
 
 ## 10. Accessibility Baseline
 

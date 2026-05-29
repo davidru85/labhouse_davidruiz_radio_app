@@ -22,14 +22,14 @@ The project must follow a rigorous development methodology:
 
 ## Current Status
 * **Phase:** Initial Setup / Infrastructure Bootstrapping.
-* **UI Status:** Design pending.
+* **UI Status:** Stitch visual specifications available, but UI implementation is gated on Phase 9 and explicit user approval.
 
 ---
 
 ## Project Start Condition (Critical)
 
 ### Design UI Status
-Final visual and aesthetic details will be defined later using specialized design tools.
+Visual specifications are available (Stitch export), but UI implementation is strictly gated on Phase 9 and requires explicit user approval before starting.
 
 ### Execution Rule
 Generating code for user interfaces, layouts, or definitive styling is strictly prohibited until detailed visual specifications are provided.

@@ -3,7 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-05-28
 - **Deciders:** David Ruiz
-- **Related:** `TECHNICAL_SPEC.md` §4, `ARCHITECTURE.md` §Repository Contracts, `ROADMAP.md` Phases 2 / 6 / 7
+- **Related:** `TECHNICAL_SPEC.md` §4, `ARCHITECTURE.md` §Repository Contracts, `ROADMAP.md` Phases 2 / 6 / 7, ADR-0024
 
 ## Context
 
@@ -58,6 +58,9 @@ class NowPlayingInfo extends Equatable {
 ```
 
 Parsing rules:
+
+> [!IMPORTANT]
+> **Amended by ADR-0024:** The parsing rules are amended to split on the *first* space-hyphen-space separator encountered from left to right, rather than requiring exactly one separator. This ensures correct parsing for rich metadata with multiple separators. Refer to [ADR-0024](0024-now-playing-parsing-rules.md).
 
 - If `raw` is null or empty, both `artist` and `track` are null.
 - If `raw` contains exactly one ` - ` (space-hyphen-space) separator,

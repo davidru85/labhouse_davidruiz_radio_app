@@ -49,10 +49,12 @@ maintained API.
 
 ### For an AI agent resuming a session
 
-1. `MEMORY.md` — current phase and last completed task.
-2. `docs/adr/README.md` — accepted decisions.
-3. Any ADR directly referenced by the user's request.
-4. Propose the next step; wait for explicit user approval.
+1. `MEMORY.md` — current phase, decision log, open risks, pending questions.
+2. `CONTEXT.md` — project intent and key constraints.
+3. `CONVENTIONS.md` — normative keyword convention used in contractual documents.
+4. `docs/adr/README.md` — index of accepted ADRs.
+5. Any ADR directly referenced by the user's request or by the current task in `MEMORY.md`.
+6. The contractual document(s) relevant to the current task (`ARCHITECTURE.md`, `TECHNICAL_SPEC.md`, `API_SPEC.md`, or `VALIDATION_CHECKLIST.md`).
 
 ---
 
@@ -66,7 +68,7 @@ maintained API.
 | [`TECHNICAL_SPEC.md`](TECHNICAL_SPEC.md)                              | Contractual          | Tech stack, dependency list, BLoC table, configuration, CI/CD.          |
 | [`API_SPEC.md`](API_SPEC.md)                                          | Contractual          | Radio Browser integration, mirror failover, domain modelling.           |
 | [`VALIDATION_CHECKLIST.md`](VALIDATION_CHECKLIST.md)                  | Contractual          | Per-domain verification checks gating phase advancement.                |
-| [`DESIGN.md`](DESIGN.md)                                              | Narrative            | UI shell architecture and adaptive design (UI work blocked until specs).|
+| [`DESIGN.md`](DESIGN.md)                                              | Narrative            | UI shell architecture and adaptive design (Stitch specs available, but UI implementation blocked).|
 | [`ROADMAP.md`](ROADMAP.md)                                            | Operational          | Phase-by-phase implementation plan.                                     |
 | [`TESTING_STRATEGY.md`](TESTING_STRATEGY.md)                          | Operational          | What to test at each layer; BLoC test matrix.                           |
 | [`AGENTS.md`](AGENTS.md)                                              | Operational          | Execution protocol; mandatory TDD micro-cycle.                          |

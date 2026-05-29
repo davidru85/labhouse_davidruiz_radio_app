@@ -148,11 +148,10 @@ Important rules:
 
 ### 5.2 Popular Stations
 
-Endpoints:
+Endpoint:
 
 ```http
-GET /json/stations/topclick/{limit}
-GET /json/stations/topvote/{limit}
+GET /json/stations/search
 ```
 
 Purpose:
@@ -161,13 +160,19 @@ Purpose:
 * Featured stations.
 * Onboarding or home recommendations.
 
+Query parameters:
+* `order=clickcount` or `order=votes` (MUST be parameterised per ADR-0027)
+* `reverse=true` (REQUIRED)
+* `hidebroken=true` (REQUIRED for user-facing queries)
+
 Integration mapping:
 
-* `LoadTopClickStationsUseCase`
-* `LoadTopVoteStationsUseCase`
+* `LoadPopularStationsUseCase`
 
-These endpoints are OPTIONAL because the architecture MAY derive
-popularity through station search using `order=clickcount`.
+Rules:
+* The application MUST NOT call `/json/stations/topclick` and `/json/stations/topvote` endpoints (per ADR-0027).
+* Popular station fetching MUST use the unified search-based parameterization through the search endpoint.
+* `LoadPopularStationsUseCase` replaces the old `LoadTopClickStationsUseCase` and `LoadTopVoteStationsUseCase` abstractions (per ADR-0027).
 
 ### 5.3 Playback URL Resolution
 

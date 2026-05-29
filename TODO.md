@@ -123,3 +123,9 @@ polish phase, see `MEMORY.md` §Pending Questions instead.
 - **Remote crash reporting integration.** Integrate a production crash reporting service (such as Sentry or Firebase Crashlytics) to monitor unhandled exceptions and diagnostics. Formally deferred to maintain a zero-dependency telemetry profile at launch.
   Source: [ADR-0028](docs/adr/0028-error-observability-crash-reporting.md).
 
+## Project delivery / Licensing
+
+- **Repository licensing.** Decide on the final license (e.g., MIT, Apache 2.0, or proprietary) and add the LICENSE file to the project root before the repository becomes public.
+  Source: [README.md](README.md) §License.
+
+

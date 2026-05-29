@@ -42,7 +42,7 @@ Use BLoC only.
 Riverpod and manual Provider-based state management are strictly prohibited.
 
 ### UI Constraint
-Generating code for user interfaces, layouts, or definitive styling is prohibited until detailed visual specifications are provided.
+Generating code for user interfaces, layouts, or definitive styling is prohibited until Phase 9 is reached and the user explicitly approves UI implementation. (Note: Stitch visual specifications are available in the repository but UI implementation remains strictly gated).
 
 Until then, work only on:
 
@@ -239,8 +239,7 @@ diverge from those sources.
 
 ### Product and architecture
 
-- UI / styling code MUST NOT be produced until visual specifications are
-  provided (see §"UI Constraint" above).
+- UI / styling code MUST NOT be produced until Phase 9 is reached and the user explicitly approves UI implementation (see §"UI Constraint" above).
 - Riverpod MUST NOT be used (`TECHNICAL_SPEC.md` §1).
 - Manual Provider-based state management MUST NOT be used
   (`TECHNICAL_SPEC.md` §1).
