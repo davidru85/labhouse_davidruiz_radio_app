@@ -89,7 +89,7 @@ Tasks:
   * [x] **PHASE RED:** Add failing tests for the required sealed event
     catalogue, event fields, privacy-preserving search payload, and value
     equality.
-  * [ ] **PHASE GREEN:** Implement the minimum immutable `Equatable`
+  * [x] **PHASE GREEN:** Implement the minimum immutable `Equatable`
     analytics event hierarchy required to make the tests pass.
   * [ ] **PHASE REFACTOR:** Review event/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
