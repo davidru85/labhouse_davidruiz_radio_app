@@ -314,3 +314,5 @@ implementation lands on `main`. The procedure is:
 
 A decision MUST NOT be implemented if its ADR has not been accepted by
 the user.
+
+## Imported Claude Cowork project instructions
