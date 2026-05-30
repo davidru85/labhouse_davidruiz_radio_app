@@ -63,9 +63,9 @@ to ADRs if revisited.
 ---
 
 ## Current Progress Tracker
-
-* **Current Task:** Phase 1, Sub-task 1.2 (Strict Linter & Dependencies Setup).
-* **Last Completed Task:** Phase 1, Sub-task 1.1 (Platform Cleanup & Naming).
+ 
+* **Current Task:** Phase 1, Sub-task 1.3 (Folder Structure & App Configuration).
+* **Last Completed Task:** Phase 1, Sub-task 1.2 (Strict Linter & Dependencies Setup).
 
 ---
 
