@@ -66,9 +66,9 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 2, Sub-task 2.1 REFACTOR complete; awaiting user approval before next sub-task.
+* **Current Task:** Phase 2, Sub-task 2.2 RED complete; awaiting user review before GREEN.
 * **Last Completed Task:** Phase 2, Sub-task 2.1 (Domain entities).
-* **Active Branch:** `feature/phase-2-sub-task-21-domain-entities`.
+* **Active Branch:** `feature/phase-2-sub-task-22-analytics-event-sealed-hierarchy`.
 
 ---
 
