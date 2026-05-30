@@ -1,9 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:radio_app/domain/failures/api_failure.dart';
 import 'package:radio_app/domain/failures/failure.dart';
-import 'package:radio_app/domain/failures/network_failure.dart';
-import 'package:radio_app/domain/failures/playback_failure.dart';
-import 'package:radio_app/domain/failures/storage_failure.dart';
 
 void main() {
   group('Failure hierarchy', () {
@@ -46,19 +42,19 @@ void main() {
     });
 
     test('exposes stable localization keys', () {
-      const expectedKeys = <Failure, String>{
-        ServerFailure(): 'error_server',
-        ValidationErrorFailure(): 'error_validation',
-        UnauthorizedFailure(): 'error_unauthorized',
-        ConnectionTimeoutFailure(): 'error_network_timeout',
-        SocketFailure(): 'error_network_socket',
-        MirrorFailure(): 'error_network_mirror',
-        StreamUnreachableFailure(): 'error_playback_unreachable',
-        CodecUnsupportedFailure(): 'error_playback_codec',
-        PlaybackInterruptedFailure(): 'error_playback_interrupted',
-        ConnectivityLostFailure(): 'error_playback_connectivity',
-        StorageReadWriteFailure(): 'error_storage_io',
-        FavoritesSyncFailure(): 'error_favorites_sync',
+      final expectedKeys = <Failure, String>{
+        const ServerFailure(): 'error_server',
+        const ValidationErrorFailure(): 'error_validation',
+        const UnauthorizedFailure(): 'error_unauthorized',
+        const ConnectionTimeoutFailure(): 'error_network_timeout',
+        const SocketFailure(): 'error_network_socket',
+        const MirrorFailure(): 'error_network_mirror',
+        const StreamUnreachableFailure(): 'error_playback_unreachable',
+        const CodecUnsupportedFailure(): 'error_playback_codec',
+        const PlaybackInterruptedFailure(): 'error_playback_interrupted',
+        const ConnectivityLostFailure(): 'error_playback_connectivity',
+        const StorageReadWriteFailure(): 'error_storage_io',
+        const FavoritesSyncFailure(): 'error_favorites_sync',
       };
 
       for (final entry in expectedKeys.entries) {
