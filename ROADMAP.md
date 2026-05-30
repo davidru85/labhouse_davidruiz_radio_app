@@ -93,13 +93,20 @@ Tasks:
     analytics event hierarchy required to make the tests pass.
   * [x] **PHASE REFACTOR:** Review event/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
-* [ ] Define all sealed failure classes in `domain/failures/`:
+* [x] Define all sealed failure classes in `domain/failures/`:
   * `ApiFailure` with subclasses (`ServerFailure`,
     `ValidationErrorFailure`, `UnauthorizedFailure`).
   - `NetworkFailure` with subclasses (`ConnectionTimeoutFailure`, `SocketFailure`, `MirrorFailure`).
   * `PlaybackFailure` (includes connectivity lost during playback,
     per ADR-0013).
   * `StorageFailure`.
+  * [x] **PHASE RED:** Add failing tests for the sealed failure groups,
+    concrete failure variants, localization keys, nullable messages, and
+    value equality.
+  * [x] **PHASE GREEN:** Implement the minimum immutable `Equatable`
+    failure hierarchy required to make the tests pass.
+  * [x] **PHASE REFACTOR:** Review failure/test structure, run analyzer
+    and tests, and remove any duplication or naming drift.
 * [ ] Define repository interfaces in `domain/repositories/` per
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
