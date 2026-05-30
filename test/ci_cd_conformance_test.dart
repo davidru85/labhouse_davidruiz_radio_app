@@ -46,7 +46,8 @@ void main() {
         expect(
           content,
           contains('--dart-define-from-file=config/app.json'),
-          reason: 'build jobs must inject config via '
+          reason:
+              'build jobs must inject config via '
               '--dart-define-from-file=config/app.json (ADR-0008)',
         );
       });
@@ -109,7 +110,8 @@ void main() {
         expect(
           content,
           contains('feat|fix|refactor|test|docs|chore|style|perf'),
-          reason: 'commit-msg must validate Conventional Commit types '
+          reason:
+              'commit-msg must validate Conventional Commit types '
               '(ADR-0009)',
         );
       });

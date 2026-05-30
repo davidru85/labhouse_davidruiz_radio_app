@@ -6,12 +6,15 @@ void main() {
   group('Mirrors Constants', () {
     test('should define the 4 default HTTPS API mirrors exactly', () {
       expect(defaultApiMirrors, hasLength(4));
-      expect(defaultApiMirrors, containsAll([
-        'https://de1.api.radio-browser.info',
-        'https://at1.api.radio-browser.info',
-        'https://nl1.api.radio-browser.info',
-        'https://fr1.api.radio-browser.info',
-      ]));
+      expect(
+        defaultApiMirrors,
+        containsAll([
+          'https://de1.api.radio-browser.info',
+          'https://at1.api.radio-browser.info',
+          'https://nl1.api.radio-browser.info',
+          'https://fr1.api.radio-browser.info',
+        ]),
+      );
     });
   });
 
@@ -26,7 +29,10 @@ void main() {
     test('should configure required headers correctly', () {
       final dio = DioClient.create();
 
-      expect(dio.options.headers['Content-Type'], equals('application/json; charset=utf-8'));
+      expect(
+        dio.options.headers['Content-Type'],
+        equals('application/json; charset=utf-8'),
+      );
       expect(dio.options.headers['User-Agent'], equals('RadioApp/1.0'));
     });
   });
