@@ -58,8 +58,9 @@ fastest feedback to most authoritative:
 3. **Branch protection on `main`.** See rules table below.
 
 Flutter version is pinned in the workflow via
-`subosito/flutter-action@v2` with `flutter-version: 3.22.x`. Pub and
-Gradle caches are enabled.
+`subosito/flutter-action@v2` with `flutter-version: 3.41.x` (bundles
+Dart 3.11.4, matching the `sdk: ^3.11.4` constraint in `pubspec.yaml`).
+Pub and Gradle caches are enabled.
 
 ### Branch protection rules on `main`
 
@@ -228,7 +229,7 @@ on:
     branches: [main]
 
 env:
-  FLUTTER_VERSION: "3.22.x"
+  FLUTTER_VERSION: "3.41.x"
 
 jobs:
   analyze:
@@ -269,7 +270,8 @@ jobs:
       - run: flutter build apk --debug --dart-define-from-file=config/app.json
 
   build-ios:
-    runs-on: macos-latest
+    # macos-26 ships Xcode 26 (iOS 26 SDK), required by connectivity_plus 7.x.
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2

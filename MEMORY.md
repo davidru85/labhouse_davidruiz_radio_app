@@ -64,8 +64,8 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 1, Sub-task 1.4 (Base Dio Client Factory & Mirror Constants).
-* **Last Completed Task:** Phase 1, Sub-task 1.3 (Folder Structure & App Configuration).
+* **Current Task:** Phase 1, Sub-task 1.5 (CI/CD Workflows & Git Hooks).
+* **Last Completed Task:** Phase 1, Sub-task 1.4 (Base Dio Client Factory & Mirror Constants).
 
 ---
 

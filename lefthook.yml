@@ -1,0 +1,18 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      run: dart format --set-exit-if-changed lib/ test/
+    analyze:
+      run: flutter analyze
+
+pre-push:
+  commands:
+    test:
+      run: flutter test
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: >
+        head -n 1 {1} | grep -Eq '^(feat|fix|refactor|test|docs|chore|style|perf)(\([a-z0-9-]+\))?: .{1,72}$'

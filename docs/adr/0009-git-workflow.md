@@ -55,6 +55,7 @@ delivery, not before.
   state.
 - All other branches are short-lived working branches. They are
   created from `main`, merged back via squash, and deleted.
+- Merging branches into `main` (or `master`) is exclusively performed by the USER via GitHub Pull Requests. The agent MUST NOT merge branches directly.
 - Branch names use a `<type>/<short-description>` format. The type
   prefix mirrors the Conventional Commits type of the work being done.
 

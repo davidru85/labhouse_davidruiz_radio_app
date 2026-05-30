@@ -17,13 +17,17 @@ class DioClient {
       defaultValue: 'RadioApp/1.0',
     );
 
-    final connectTimeoutSec = int.tryParse(
-      const String.fromEnvironment('API_CONNECT_TIMEOUT_SECONDS'),
-    ) ?? 30;
+    final connectTimeoutSec =
+        int.tryParse(
+          const String.fromEnvironment('API_CONNECT_TIMEOUT_SECONDS'),
+        ) ??
+        30;
 
-    final readTimeoutSec = int.tryParse(
-      const String.fromEnvironment('API_READ_TIMEOUT_SECONDS'),
-    ) ?? 60;
+    final readTimeoutSec =
+        int.tryParse(
+          const String.fromEnvironment('API_READ_TIMEOUT_SECONDS'),
+        ) ??
+        60;
 
     final options = BaseOptions(
       connectTimeout: Duration(seconds: connectTimeoutSec),
