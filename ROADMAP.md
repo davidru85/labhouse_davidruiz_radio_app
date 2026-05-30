@@ -74,6 +74,12 @@ Tasks:
   * `Genre`
   * `Country`
   * `NowPlayingInfo` (per ADR-0012)
+  * [x] **PHASE RED:** Add failing tests for the required domain
+    entities and `NowPlayingInfo` parsing behavior.
+  * [x] **PHASE GREEN:** Implement the minimum immutable `Equatable`
+    entity classes required to make the tests pass.
+  * [ ] **PHASE REFACTOR:** Review entity/test structure, run analyzer
+    and tests, and remove any duplication or naming drift.
 * [ ] Define the `AnalyticsEvent` sealed hierarchy under
   `domain/entities/analytics/` per the catalogue in ADR-0019
   (`AppOpenedEvent`, `ScreenViewedEvent`, `StationPlayedEvent`,

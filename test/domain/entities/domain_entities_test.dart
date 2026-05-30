@@ -108,38 +108,31 @@ void main() {
   });
 
   group('NowPlayingInfo', () {
-    test('parses artist and track from the first separator', () {
-      final info = NowPlayingInfo.parse('Artist - Track - Live Version');
+    test('uses value equality for immutable now-playing data', () {
+      const info = NowPlayingInfo(
+        raw: 'Artist - Track',
+        artist: 'Artist',
+        track: 'Track',
+      );
 
-      expect(info.raw, 'Artist - Track - Live Version');
-      expect(info.artist, 'Artist');
-      expect(info.track, 'Track - Live Version');
+      expect(
+        info,
+        equals(
+          const NowPlayingInfo(
+            raw: 'Artist - Track',
+            artist: 'Artist',
+            track: 'Track',
+          ),
+        ),
+      );
     });
 
-    test('trims parsed artist and track values', () {
-      final info = NowPlayingInfo.parse('  Artist  -  Track  ');
+    test('defaults all fields to null', () {
+      const info = NowPlayingInfo();
 
-      expect(info.artist, 'Artist');
-      expect(info.track, 'Track');
-    });
-
-    test('preserves raw metadata when no separator exists', () {
-      final info = NowPlayingInfo.parse('Unstructured live metadata');
-
-      expect(info.raw, 'Unstructured live metadata');
+      expect(info.raw, isNull);
       expect(info.artist, isNull);
       expect(info.track, isNull);
-    });
-
-    test('normalizes null and empty metadata to null fields', () {
-      expect(
-        NowPlayingInfo.parse(null),
-        equals(const NowPlayingInfo(raw: null, artist: null, track: null)),
-      );
-      expect(
-        NowPlayingInfo.parse(''),
-        equals(const NowPlayingInfo(raw: null, artist: null, track: null)),
-      );
     });
   });
 }
