@@ -272,8 +272,7 @@ diverge from those sources.
 
 ### CI/CD and Git
 
-- Code MUST NOT be merged into `main` outside of a pull request
-  (per ADR-0008).
+- Merging branches into `main` (or `master`) is exclusively performed by the USER via GitHub Pull Requests. The agent MUST NOT merge branches directly (per ADR-0008/ADR-0009).
 - Force pushes to `main` MUST NOT be permitted (per ADR-0008).
 - The `main` branch MUST NOT be deleted (per ADR-0008).
 - Branch protection rules on `main` MUST NOT be bypassed by anyone,
