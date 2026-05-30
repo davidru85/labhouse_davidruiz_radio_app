@@ -15,35 +15,35 @@ is governed there.
 Tasks MUST follow the sequential TDD RED/GREEN/REFACTOR micro-cycle checkpoints:
 
 ### Sub-task 1.1: Platform Cleanup & Naming
-* [ ] **PHASE RED:** Write tests or run assertions verifying that non-conforming platform folders (`web/`, `macos/`, `linux/`, `windows/`) exist, that the default package name does not match `radio_app`, and that `main.dart` contains the default flutter template. Present failing checks.
-* [ ] **PHASE GREEN:** 
+* [x] **PHASE RED:** Write tests or run assertions verifying that non-conforming platform folders (`web/`, `macos/`, `linux/`, `windows/`) exist, that the default package name does not match `radio_app`, and that `main.dart` contains the default flutter template. Present failing checks.
+* [x] **PHASE GREEN:** 
   * Delete `web/`, `macos/`, `linux/`, `windows/` platform folders to conform to Android/iOS only (per ADR-0001).
   * Update package name in `pubspec.yaml` to `radio_app`.
   * Update native package identifier to `com.labhouse.davidruizassessment.radioapp` (per ADR-0003).
   * Replace default counter code in `lib/main.dart` with a minimal clean shell (gating actual UI).
   * Initialise git repository, configure local SSH signing, and present passing checks.
-* [ ] **PHASE REFACTOR:** Ensure code formatting passes and files are cleanly organized.
+* [x] **PHASE REFACTOR:** Ensure code formatting passes and files are cleanly organized.
 
 ### Sub-task 1.2: Strict Linter & Dependencies Setup
-* [ ] **PHASE RED:** Assert that `analysis_options.yaml` uses default rules and `pubspec.yaml` lacks the 13 production and 7 dev dependencies defined in ADR-0018. Present failing checks.
-* [ ] **PHASE GREEN:**
+* [x] **PHASE RED:** Assert that `analysis_options.yaml` uses default rules and `pubspec.yaml` lacks the 13 production and 7 dev dependencies defined in ADR-0018. Present failing checks.
+* [x] **PHASE GREEN:**
   * Configure `analysis_options.yaml` with `very_good_analysis` and the zero-warnings policy.
   * Add dependencies to `pubspec.yaml` (ADR-0018). Run `flutter pub get`.
-* [ ] **PHASE REFACTOR:** Verify linter returns zero warnings (`flutter analyze`).
+* [x] **PHASE REFACTOR:** Verify linter returns zero warnings (`flutter analyze`).
 
 ### Sub-task 1.3: Folder Structure & App Configuration
-* [ ] **PHASE RED:** Assert that the mandatory Clean Architecture folders (`lib/core/utils`, `lib/domain/failures`, etc.) do not exist and `config/app.json` is missing. Present failing checks.
-* [ ] **PHASE GREEN:**
+* [x] **PHASE RED:** Assert that the mandatory Clean Architecture folders (`lib/core/utils`, `lib/domain/failures`, etc.) do not exist and `config/app.json` is missing. Present failing checks.
+* [x] **PHASE GREEN:**
   * Create the folder structure specified in `ARCHITECTURE.md` §"Mandatory Folder Structure".
   * Create `config/app.json` with the initial configuration variables defined in ADR-0007.
-* [ ] **PHASE REFACTOR:** Ensure folder naming is perfectly aligned.
+* [x] **PHASE REFACTOR:** Ensure folder naming is perfectly aligned.
 
 ### Sub-task 1.4: Base Dio Client Factory & Mirror Constants
-* [ ] **PHASE RED:** Write unit tests in `test/core/network/dio_client_test.dart` verifying that `Dio` is configured with a 30s connection timeout, 60s read timeout, `Content-Type: application/json; charset=utf-8` header, custom descriptive `User-Agent` header (e.g. `RadioApp/1.0`), and checking that the 4 default HTTPS mirror URLs are defined in `core/constants/mirrors.dart`. Run and show failing test results.
-* [ ] **PHASE GREEN:**
+* [x] **PHASE RED:** Write unit tests in `test/core/network/dio_client_test.dart` verifying that `Dio` is configured with a 30s connection timeout, 60s read timeout, `Content-Type: application/json; charset=utf-8` header, custom descriptive `User-Agent` header (e.g. `RadioApp/1.0`), and checking that the 4 default HTTPS mirror URLs are defined in `core/constants/mirrors.dart`. Run and show failing test results.
+* [x] **PHASE GREEN:**
   * Implement mirror constants in `lib/core/constants/mirrors.dart` (per ADR-0023).
   * Implement base `Dio` client factory in `lib/core/network/dio_client.dart` with timeout/header configurations. Run and show passing tests.
-* [ ] **PHASE REFACTOR:** Clean up factory and test code.
+* [x] **PHASE REFACTOR:** Clean up factory and test code.
 
 ### Sub-task 1.5: CI/CD Workflows & Git Hooks
 * [ ] **PHASE RED:** Assert that `.github/workflows/ci.yml` and `lefthook.yml` are missing. Present failing checks.
