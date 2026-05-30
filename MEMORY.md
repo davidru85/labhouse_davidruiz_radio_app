@@ -59,13 +59,16 @@ to ADRs if revisited.
 | [0030](docs/adr/0030-android-cleartext-traffic.md) | Android cleartext traffic configuration: allow usesCleartextTraffic="true" | 2026-05-29 |
 | [0031](docs/adr/0031-search-pagination-deduplication-and-end.md) | Search pagination: client-side deduplication by UUID and hasReachedMax tracking | 2026-05-29 |
 | [0032](docs/adr/0032-country-name-resolution-strategy.md) | Country name resolution strategy: integrate via standard ARB localization resources | 2026-05-29 |
+| [0033](docs/adr/0033-branch-before-task.md) | Create or confirm a correctly named non-main branch before every new roadmap task or sub-task | 2026-05-30 |
+| [0034](docs/adr/0034-domain-free-core-utils.md) | Keep `core/utils` domain-free; map Icy parser output to domain entities at consuming boundaries | 2026-05-30 |
 
 ---
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 1, Sub-task 1.5 (CI/CD Workflows & Git Hooks).
-* **Last Completed Task:** Phase 1, Sub-task 1.4 (Base Dio Client Factory & Mirror Constants).
+* **Current Task:** Phase 2, Sub-task 2.1 REFACTOR complete; awaiting user approval before next sub-task.
+* **Last Completed Task:** Phase 2, Sub-task 2.1 (Domain entities).
+* **Active Branch:** `feature/phase-2-sub-task-21-domain-entities`.
 
 ---
 
@@ -82,4 +85,3 @@ to ADRs if revisited.
 ## Pending Questions
 
 * None. The pre-coding documentation gaps have been fully resolved.
-

@@ -5,6 +5,17 @@ review checkpoints, as defined in `AGENTS.md` §"Mandatory TDD
 Micro-Cycle". This roadmap describes the sequence of work; the workflow
 is governed there.
 
+Before starting any new roadmap task or sub-task, the active git branch
+MUST be verified. If the repository is on `main`, create a non-`main`
+working branch using the ADR-0009 roadmap naming convention before
+writing the RED test, production code, or task-specific documentation
+changes (per ADR-0033).
+
+Roadmap branch names MUST follow
+`<type>/phase-<phase>-sub-task-<subtask>-<short-description>`, where
+`<subtask>` removes punctuation from the roadmap sub-task number. Example:
+`feature/phase-2-sub-task-21-domain-entities`.
+
 ---
 
 ## Phase 1: Infrastructure And Project Bootstrapping
@@ -58,11 +69,17 @@ Tasks MUST follow the sequential TDD RED/GREEN/REFACTOR micro-cycle checkpoints:
 
 Tasks:
 
-* [ ] Define immutable domain entities in `domain/entities/`:
+* [x] Define immutable domain entities in `domain/entities/`:
   * `RadioStation`
   * `Genre`
   * `Country`
   * `NowPlayingInfo` (per ADR-0012)
+  * [x] **PHASE RED:** Add failing tests for the required domain
+    entities and `NowPlayingInfo` parsing behavior.
+  * [x] **PHASE GREEN:** Implement the minimum immutable `Equatable`
+    entity classes required to make the tests pass.
+  * [x] **PHASE REFACTOR:** Review entity/test structure, run analyzer
+    and tests, and remove any duplication or naming drift.
 * [ ] Define the `AnalyticsEvent` sealed hierarchy under
   `domain/entities/analytics/` per the catalogue in ADR-0019
   (`AppOpenedEvent`, `ScreenViewedEvent`, `StationPlayedEvent`,

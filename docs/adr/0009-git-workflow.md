@@ -56,8 +56,12 @@ delivery, not before.
 - All other branches are short-lived working branches. They are
   created from `main`, merged back via squash, and deleted.
 - Merging branches into `main` (or `master`) is exclusively performed by the USER via GitHub Pull Requests. The agent MUST NOT merge branches directly.
-- Branch names use a `<type>/<short-description>` format. The type
-  prefix mirrors the Conventional Commits type of the work being done.
+- Branch names use a `<type>/phase-<phase>-sub-task-<subtask>-<short-description>`
+  format for roadmap sub-task work. The type prefix mirrors the
+  Conventional Commits type of the work being done.
+- The `<subtask>` segment removes punctuation from the roadmap sub-task
+  number. For example, Sub-task 2.1 becomes `21`, and Sub-task 1.5
+  becomes `15`.
 
 | Branch prefix | When                                                |
 |---------------|-----------------------------------------------------|
@@ -68,8 +72,15 @@ delivery, not before.
 | `docs/`       | Documentation only, including ADRs.                 |
 | `chore/`      | Maintenance, build, CI, dependency bumps.           |
 
-Example branch names: `feature/dio-client-factory`,
-`docs/adr-0010-volume-scope`, `chore/upgrade-flutter-3.22.5`.
+Example roadmap branch names:
+`feature/phase-1-sub-task-14-base-dio-client-factory-mirror-constants`,
+`chore/phase-1-sub-task-15-ci-cd-workflows-git-hooks`, and
+`feature/phase-2-sub-task-21-domain-entities`.
+
+Non-roadmap support branches may still use the shorter
+`<type>/<short-description>` format when they do not correspond to a
+roadmap sub-task, for example `docs/adr-0010-volume-scope` or
+`chore/upgrade-flutter-3-22-5`.
 
 Branches are automatically deleted by GitHub after merge
 (repository setting "Automatically delete head branches").
@@ -156,7 +167,8 @@ Reasoning:
 - Every commit on `main` is machine-readable and human-skimmable.
 - `git log --oneline main` becomes a chronological record of feature
   additions and fixes, suitable for a CHANGELOG.
-- Branch names declare intent before the first commit lands.
+- Branch names declare intent and roadmap scope before the first commit
+  lands.
 - The polish phase remains an offline, non-git activity, keeping the
   eventual repository history focused on the project itself rather
   than its prelude.
