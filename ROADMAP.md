@@ -46,11 +46,11 @@ Tasks MUST follow the sequential TDD RED/GREEN/REFACTOR micro-cycle checkpoints:
 * [x] **PHASE REFACTOR:** Clean up factory and test code.
 
 ### Sub-task 1.5: CI/CD Workflows & Git Hooks
-* [ ] **PHASE RED:** Assert that `.github/workflows/ci.yml` and `lefthook.yml` are missing. Present failing checks.
-* [ ] **PHASE GREEN:**
+* [x] **PHASE RED:** Assert that `.github/workflows/ci.yml` and `lefthook.yml` are missing. Present failing checks.
+* [x] **PHASE GREEN:**
   * Create `.github/workflows/ci.yml` with `analyze`, `test`, `build-android`, `build-ios` jobs (per ADR-0008).
   * Create `lefthook.yml` with pre-commit (format + analyze), pre-push (test), and commit-msg (Conventional Commits) hooks (per ADR-0008/0009). Run `lefthook install`.
-* [ ] **PHASE REFACTOR:** Verify hooks run successfully locally.
+* [x] **PHASE REFACTOR:** Verify hooks run successfully locally.
 
 ---
 
