@@ -294,6 +294,7 @@ diverge from those sources.
   and has been reviewed (§"TDD Methodology" above).
 - The agent MUST NOT automate past any review checkpoint
   (§"Interaction Protocol" above).
+- The `ROADMAP.md` file MUST be updated to reflect completion of any phase or sub-phase immediately upon its execution and prior to advancing.
 
 ---
 
