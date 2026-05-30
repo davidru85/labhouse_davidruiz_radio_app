@@ -100,6 +100,13 @@ Tasks:
   * `PlaybackFailure` (includes connectivity lost during playback,
     per ADR-0013).
   * `StorageFailure`.
+  * [x] **PHASE RED:** Add failing tests for the sealed failure groups,
+    concrete failure variants, localization keys, nullable messages, and
+    value equality.
+  * [ ] **PHASE GREEN:** Implement the minimum immutable `Equatable`
+    failure hierarchy required to make the tests pass.
+  * [ ] **PHASE REFACTOR:** Review failure/test structure, run analyzer
+    and tests, and remove any duplication or naming drift.
 * [ ] Define repository interfaces in `domain/repositories/` per
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
