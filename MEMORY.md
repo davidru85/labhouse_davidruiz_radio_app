@@ -66,8 +66,8 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 2, Sub-task 2.3 GREEN complete; awaiting user review before REFACTOR.
-* **Last Completed Task:** Phase 2, Sub-task 2.2 (AnalyticsEvent sealed hierarchy).
+* **Current Task:** Phase 2, Sub-task 2.3 REFACTOR complete; awaiting user review before next sub-task.
+* **Last Completed Task:** Phase 2, Sub-task 2.3 (Sealed failure classes).
 * **Active Branch:** `feature/phase-2-sub-task-23-sealed-failure-classes`.
 
 ---

@@ -4,20 +4,7 @@ import 'package:radio_app/domain/failures/failure.dart';
 void main() {
   group('Failure hierarchy', () {
     test('defines every concrete failure from the architecture contract', () {
-      const failures = <Failure>[
-        ServerFailure('server down'),
-        ValidationErrorFailure('invalid query'),
-        UnauthorizedFailure('unauthorized'),
-        ConnectionTimeoutFailure('timed out'),
-        SocketFailure('dns failed'),
-        MirrorFailure('mirrors exhausted'),
-        StreamUnreachableFailure('stream unreachable'),
-        CodecUnsupportedFailure('codec unsupported'),
-        PlaybackInterruptedFailure('playback interrupted'),
-        ConnectivityLostFailure('connectivity lost'),
-        StorageReadWriteFailure('storage failed'),
-        FavoritesSyncFailure('favorites sync failed'),
-      ];
+      final failures = _failureCatalogue();
 
       expect(failures, hasLength(12));
       expect(failures, everyElement(isA<Failure>()));
@@ -86,4 +73,21 @@ void main() {
       );
     });
   });
+}
+
+List<Failure> _failureCatalogue() {
+  return const [
+    ServerFailure('server down'),
+    ValidationErrorFailure('invalid query'),
+    UnauthorizedFailure('unauthorized'),
+    ConnectionTimeoutFailure('timed out'),
+    SocketFailure('dns failed'),
+    MirrorFailure('mirrors exhausted'),
+    StreamUnreachableFailure('stream unreachable'),
+    CodecUnsupportedFailure('codec unsupported'),
+    PlaybackInterruptedFailure('playback interrupted'),
+    ConnectivityLostFailure('connectivity lost'),
+    StorageReadWriteFailure('storage failed'),
+    FavoritesSyncFailure('favorites sync failed'),
+  ];
 }
