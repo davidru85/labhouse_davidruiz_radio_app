@@ -1,9 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:radio_app/core/utils/icy_metadata_parser.dart';
-import 'package:radio_app/domain/entities/now_playing_info.dart';
 
 void main() {
   group('parseIcyMetadata', () {
+    test('does not depend on domain entities', () {
+      final source = File(
+        'lib/core/utils/icy_metadata_parser.dart',
+      ).readAsStringSync();
+
+      expect(source, isNot(contains('domain/')));
+    });
+
     test('parses artist and track from the first separator', () {
       final info = parseIcyMetadata('Artist - Track - Live Version');
 
@@ -27,9 +36,16 @@ void main() {
       expect(info.track, isNull);
     });
 
-    test('normalizes null and empty metadata to an empty entity', () {
-      expect(parseIcyMetadata(null), equals(const NowPlayingInfo()));
-      expect(parseIcyMetadata(''), equals(const NowPlayingInfo()));
+    test('normalizes null and empty metadata to null fields', () {
+      final nullInfo = parseIcyMetadata(null);
+      final emptyInfo = parseIcyMetadata('');
+
+      expect(nullInfo.raw, isNull);
+      expect(nullInfo.artist, isNull);
+      expect(nullInfo.track, isNull);
+      expect(emptyInfo.raw, isNull);
+      expect(emptyInfo.artist, isNull);
+      expect(emptyInfo.track, isNull);
     });
   });
 }
