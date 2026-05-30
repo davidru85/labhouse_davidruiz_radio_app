@@ -144,12 +144,15 @@ void main() {
     });
 
     group('Minimum OS versions (ADR-0002)', () {
-      test('Android SDK levels are minSdk=23, targetSdk=34, compileSdk=34', () {
+      test(
+          'Android SDK levels are minSdk=flutter.minSdkVersion, '
+          'targetSdk=34, compileSdk=36', () {
         final gradle = File('android/app/build.gradle.kts').readAsStringSync();
         expect(
-          gradle.contains('minSdk = 23'),
+          gradle.contains('minSdk = flutter.minSdkVersion'),
           isTrue,
-          reason: 'Android minSdkVersion must be 23 (ADR-0002)',
+          reason: 'Android minSdkVersion must be '
+              'flutter.minSdkVersion (ADR-0002)',
         );
         expect(
           gradle.contains('targetSdk = 34'),
@@ -157,9 +160,9 @@ void main() {
           reason: 'Android targetSdkVersion must be 34 (ADR-0002)',
         );
         expect(
-          gradle.contains('compileSdk = 34'),
+          gradle.contains('compileSdk = 36'),
           isTrue,
-          reason: 'Android compileSdkVersion must be 34 (ADR-0002)',
+          reason: 'Android compileSdkVersion must be 36 (ADR-0002)',
         );
       });
 

@@ -140,8 +140,8 @@ The following MUST hold:
 * Presentation never calls Radio Browser endpoints directly.
 * API specifics live in the data layer and `core/network/`.
 * DTOs do not leak into presentation.
-* Android `minSdkVersion = 23`, `targetSdkVersion = 34`,
-  `compileSdkVersion = 34` (per ADR-0002).
+* Android `minSdk = flutter.minSdkVersion` (resolving dynamically), `targetSdk = 34`,
+  `compileSdk = 36` (per ADR-0002).
 * iOS deployment target = 13.0 (per ADR-0002).
 * Android activity locks portrait. iOS supports portrait only
   (per ADR-0004).

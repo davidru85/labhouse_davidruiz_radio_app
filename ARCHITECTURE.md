@@ -177,8 +177,8 @@ The Android module MUST configure:
 * `android:usesCleartextTraffic="true"` on the `<application>` tag in `AndroidManifest.xml` (per ADR-0030).
 * `applicationId` = `com.labhouse.davidruizassessment.radioapp`
   (per ADR-0003).
-* `minSdkVersion = 23`, `targetSdkVersion = 34`,
-  `compileSdkVersion = 34` (per ADR-0002).
+* `minSdk = flutter.minSdkVersion` (resolving dynamically), `targetSdk = 34`,
+  `compileSdk = 36` (per ADR-0002).
 * `android:screenOrientation="portrait"` on the main activity
   (per ADR-0004).
 

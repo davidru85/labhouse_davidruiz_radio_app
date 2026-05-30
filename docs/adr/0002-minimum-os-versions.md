@@ -26,12 +26,12 @@ or higher.
 
 ## Decision
 
-- **Android:** `minSdkVersion = 23`, `targetSdkVersion = 34`,
-  `compileSdkVersion = 34`.
+- **Android:** `minSdk = flutter.minSdkVersion` (resolving dynamically from the Flutter SDK environment configuration, referencing the toolchain floor of at least API 23), `targetSdk = 34`, `compileSdk = 36`.
 - **iOS:** deployment target `13.0`.
 
-These values are recorded in `android/app/build.gradle` and
+These values are recorded in `android/app/build.gradle.kts` and
 `ios/Podfile` / `ios/Runner/Info.plist`, and asserted by Phase 1 RED tests.
+
 
 ## Consequences
 
