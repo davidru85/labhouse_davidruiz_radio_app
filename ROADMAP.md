@@ -5,6 +5,17 @@ review checkpoints, as defined in `AGENTS.md` §"Mandatory TDD
 Micro-Cycle". This roadmap describes the sequence of work; the workflow
 is governed there.
 
+Before starting any new roadmap task or sub-task, the active git branch
+MUST be verified. If the repository is on `main`, create a non-`main`
+working branch using the ADR-0009 roadmap naming convention before
+writing the RED test, production code, or task-specific documentation
+changes (per ADR-0033).
+
+Roadmap branch names MUST follow
+`<type>/phase-<phase>-sub-task-<subtask>-<short-description>`, where
+`<subtask>` removes punctuation from the roadmap sub-task number. Example:
+`feature/phase-2-sub-task-21-domain-entities`.
+
 ---
 
 ## Phase 1: Infrastructure And Project Bootstrapping

@@ -49,3 +49,4 @@ decisions made for RadioApp.
 | 0030 | [Android cleartext traffic configuration](0030-android-cleartext-traffic.md) | Accepted | 2026-05-29 |
 | 0031 | [Search pagination deduplication and end-of-list behavior](0031-search-pagination-deduplication-and-end.md) | Accepted | 2026-05-29 |
 | 0032 | [Country name resolution strategy](0032-country-name-resolution-strategy.md) | Accepted | 2026-05-29 |
+| 0033 | [Branch before task execution](0033-branch-before-task.md) | Accepted | 2026-05-30 |

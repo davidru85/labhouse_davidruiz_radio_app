@@ -28,6 +28,24 @@ Development must halt and explicitly ask for permission before:
 
 The user must perform a Definition of Done review before progression.
 
+### Branch-Before-Task Rule
+Before starting any new roadmap task or sub-task, verify the current git
+branch and create or switch to an appropriate non-`main` working branch
+using the ADR-0009 roadmap naming convention:
+`<type>/phase-<phase>-sub-task-<subtask>-<short-description>`.
+
+The `<subtask>` segment removes punctuation from the roadmap sub-task
+number. For example, Sub-task 2.1 becomes `21`.
+
+If the repository is on `main`, task work MUST NOT begin until the branch
+has been created. If the repository is already on a non-`main` branch, the
+branch name MUST be checked against the exact current task scope before
+writing tests, production code, or task-specific documentation changes. If
+the branch name does not match, rename or switch branches before
+continuing.
+
+Record the active branch in `MEMORY.md` while work is in progress.
+
 ### TDD Methodology
 For every single sub-task within each phase, use the classic Red-Green-Refactor micro-cycle.
 
@@ -272,6 +290,8 @@ diverge from those sources.
 
 ### CI/CD and Git
 
+- New roadmap task or sub-task work MUST NOT start on `main`; create or
+  switch to a correctly named non-`main` working branch first (per ADR-0033).
 - Merging branches into `main` (or `master`) is exclusively performed by the USER via GitHub Pull Requests. The agent MUST NOT merge branches directly (per ADR-0008/ADR-0009).
 - Force pushes to `main` MUST NOT be permitted (per ADR-0008).
 - The `main` branch MUST NOT be deleted (per ADR-0008).
