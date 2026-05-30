@@ -270,7 +270,8 @@ jobs:
       - run: flutter build apk --debug --dart-define-from-file=config/app.json
 
   build-ios:
-    runs-on: macos-latest
+    # macos-26 ships Xcode 26 (iOS 26 SDK), required by connectivity_plus 7.x.
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
