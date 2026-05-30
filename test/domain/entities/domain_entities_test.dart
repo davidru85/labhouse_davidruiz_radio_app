@@ -7,15 +7,12 @@ import 'package:radio_app/domain/entities/radio_station.dart';
 void main() {
   group('RadioStation', () {
     test('exposes the stationuuid as the only stable identifier', () {
-      const station = RadioStation(
+      final station = _station(
         stationUuid: '960e57f1-0601-11e8-ae97-52543be04c81',
-        name: 'Radio Example',
-        streamUrl: 'http://stream.example.test/live',
-        resolvedStreamUrl: 'https://cdn.example.test/live.mp3',
         favicon: 'https://example.test/favicon.png',
         homepage: 'https://example.test',
-        tags: 'jazz, blues,News',
         tagList: ['jazz', 'blues', 'news'],
+        tags: 'jazz, blues,News',
         country: 'Germany',
         countryCode: 'DE',
         language: 'german',
@@ -23,8 +20,6 @@ void main() {
         bitrate: 128,
         votes: 42,
         clickCount: 1000,
-        lastCheckOk: true,
-        isHLS: false,
       );
 
       expect(station.stationUuid, '960e57f1-0601-11e8-ae97-52543be04c81');
@@ -34,44 +29,8 @@ void main() {
     });
 
     test('uses value equality for immutable station data', () {
-      const first = RadioStation(
-        stationUuid: 'station-uuid',
-        name: 'Radio Example',
-        streamUrl: 'http://stream.example.test/live',
-        resolvedStreamUrl: 'https://cdn.example.test/live.mp3',
-        favicon: null,
-        homepage: null,
-        tags: 'rock',
-        tagList: ['rock'],
-        country: 'Austria',
-        countryCode: 'AT',
-        language: null,
-        codec: null,
-        bitrate: null,
-        votes: 7,
-        clickCount: 11,
-        lastCheckOk: true,
-        isHLS: false,
-      );
-      const second = RadioStation(
-        stationUuid: 'station-uuid',
-        name: 'Radio Example',
-        streamUrl: 'http://stream.example.test/live',
-        resolvedStreamUrl: 'https://cdn.example.test/live.mp3',
-        favicon: null,
-        homepage: null,
-        tags: 'rock',
-        tagList: ['rock'],
-        country: 'Austria',
-        countryCode: 'AT',
-        language: null,
-        codec: null,
-        bitrate: null,
-        votes: 7,
-        clickCount: 11,
-        lastCheckOk: true,
-        isHLS: false,
-      );
+      final first = _station();
+      final second = _station();
 
       expect(first, equals(second));
     });
@@ -135,4 +94,44 @@ void main() {
       expect(info.track, isNull);
     });
   });
+}
+
+RadioStation _station({
+  String stationUuid = 'station-uuid',
+  String name = 'Radio Example',
+  String streamUrl = 'http://stream.example.test/live',
+  String resolvedStreamUrl = 'https://cdn.example.test/live.mp3',
+  String? favicon,
+  String? homepage,
+  String tags = 'rock',
+  List<String> tagList = const ['rock'],
+  String country = 'Austria',
+  String countryCode = 'AT',
+  String? language,
+  String? codec,
+  int? bitrate,
+  int votes = 7,
+  int clickCount = 11,
+  bool lastCheckOk = true,
+  bool isHLS = false,
+}) {
+  return RadioStation(
+    stationUuid: stationUuid,
+    name: name,
+    streamUrl: streamUrl,
+    resolvedStreamUrl: resolvedStreamUrl,
+    favicon: favicon,
+    homepage: homepage,
+    tags: tags,
+    tagList: tagList,
+    country: country,
+    countryCode: countryCode,
+    language: language,
+    codec: codec,
+    bitrate: bitrate,
+    votes: votes,
+    clickCount: clickCount,
+    lastCheckOk: lastCheckOk,
+    isHLS: isHLS,
+  );
 }

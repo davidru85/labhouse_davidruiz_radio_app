@@ -69,7 +69,7 @@ Tasks MUST follow the sequential TDD RED/GREEN/REFACTOR micro-cycle checkpoints:
 
 Tasks:
 
-* [ ] Define immutable domain entities in `domain/entities/`:
+* [x] Define immutable domain entities in `domain/entities/`:
   * `RadioStation`
   * `Genre`
   * `Country`
@@ -78,7 +78,7 @@ Tasks:
     entities and `NowPlayingInfo` parsing behavior.
   * [x] **PHASE GREEN:** Implement the minimum immutable `Equatable`
     entity classes required to make the tests pass.
-  * [ ] **PHASE REFACTOR:** Review entity/test structure, run analyzer
+  * [x] **PHASE REFACTOR:** Review entity/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
 * [ ] Define the `AnalyticsEvent` sealed hierarchy under
   `domain/entities/analytics/` per the catalogue in ADR-0019
