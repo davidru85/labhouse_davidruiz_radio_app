@@ -80,7 +80,7 @@ Tasks:
     entity classes required to make the tests pass.
   * [x] **PHASE REFACTOR:** Review entity/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
-* [ ] Define the `AnalyticsEvent` sealed hierarchy under
+* [x] Define the `AnalyticsEvent` sealed hierarchy under
   `domain/entities/analytics/` per the catalogue in ADR-0019
   (`AppOpenedEvent`, `ScreenViewedEvent`, `StationPlayedEvent`,
   `StationStoppedEvent`, `StationFavoritedEvent`,
@@ -91,7 +91,7 @@ Tasks:
     equality.
   * [x] **PHASE GREEN:** Implement the minimum immutable `Equatable`
     analytics event hierarchy required to make the tests pass.
-  * [ ] **PHASE REFACTOR:** Review event/test structure, run analyzer
+  * [x] **PHASE REFACTOR:** Review event/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
 * [ ] Define all sealed failure classes in `domain/failures/`:
   * `ApiFailure` with subclasses (`ServerFailure`,

@@ -4,24 +4,7 @@ import 'package:radio_app/domain/entities/analytics/analytics_event.dart';
 void main() {
   group('AnalyticsEvent', () {
     test('defines the initial sealed event catalogue from ADR-0019', () {
-      const events = <AnalyticsEvent>[
-        AppOpenedEvent(),
-        ScreenViewedEvent('stations'),
-        StationPlayedEvent(
-          stationUuid: 'station-uuid',
-          stationName: 'Radio Example',
-          countryCode: 'DE',
-        ),
-        StationStoppedEvent(stationUuid: 'station-uuid', durationSeconds: 42),
-        StationFavoritedEvent('station-uuid'),
-        StationUnfavoritedEvent('station-uuid'),
-        SearchPerformedEvent(queryLength: 5, resultCount: 12),
-        FilterAppliedEvent(filterType: 'country', value: 'DE'),
-        PlaybackErrorEvent(
-          stationUuid: 'station-uuid',
-          failureType: 'StreamUnreachableFailure',
-        ),
-      ];
+      final events = _analyticsEventCatalogue();
 
       expect(events, hasLength(9));
       expect(events, everyElement(isA<AnalyticsEvent>()));
@@ -141,4 +124,25 @@ void main() {
       expect(event.props, equals(<Object?>[11, 2]));
     });
   });
+}
+
+List<AnalyticsEvent> _analyticsEventCatalogue() {
+  return const [
+    AppOpenedEvent(),
+    ScreenViewedEvent('stations'),
+    StationPlayedEvent(
+      stationUuid: 'station-uuid',
+      stationName: 'Radio Example',
+      countryCode: 'DE',
+    ),
+    StationStoppedEvent(stationUuid: 'station-uuid', durationSeconds: 42),
+    StationFavoritedEvent('station-uuid'),
+    StationUnfavoritedEvent('station-uuid'),
+    SearchPerformedEvent(queryLength: 5, resultCount: 12),
+    FilterAppliedEvent(filterType: 'country', value: 'DE'),
+    PlaybackErrorEvent(
+      stationUuid: 'station-uuid',
+      failureType: 'StreamUnreachableFailure',
+    ),
+  ];
 }
