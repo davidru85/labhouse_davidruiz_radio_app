@@ -2,6 +2,9 @@
 
 - **Status:** Accepted
 - **Date:** 2026-05-28
+- **Amended:** 2026-05-30 — document the `analyzer` dependency
+  override required for version solving (see "Toolchain version
+  constraint: `analyzer` override" below).
 - **Deciders:** David Ruiz
 - **Related:** `TECHNICAL_SPEC.md` §2, ADR-0005, ADR-0007, ADR-0013, ADR-0014
 
@@ -72,6 +75,35 @@ annotations on the cache entities (favorites, history, genres,
 countries). Generated files (`*.g.dart`) are committed to the
 repository so CI does not need to run code generation to build.
 
+### Toolchain version constraint: `analyzer` override
+
+`pubspec.yaml` declares a single `dependency_overrides` entry:
+
+```yaml
+dependency_overrides:
+  analyzer: ^6.4.1
+```
+
+This is **not** a new product dependency. `analyzer` is a transitive
+dev-toolchain package; the override is required for version solving,
+not a stylistic preference:
+
+- `hive_generator 2.0.1` (the codegen tool chosen above) depends on
+  `analyzer >=4.6.0 <7.0.0`.
+- The `bloc_test 10.0.0` → `test` → `flutter_test` chain pulls newer
+  `test` releases that depend on `analyzer >=8.0.0`.
+
+Without pinning, these two constraints are mutually exclusive and
+`flutter pub get` fails with "version solving failed". Pinning
+`analyzer` to `^6.4.1` keeps it under `hive_generator`'s `<7.0.0`
+ceiling and forces `test` / `bloc_test` to resolve to versions
+compatible with that range, so the graph resolves.
+
+The override is scoped to the dev/codegen toolchain and has no effect
+on shipped application behaviour. It should be removed once
+`hive_generator` publishes a release that accepts `analyzer >=8.0.0`,
+after which the newer analyzer can be used without pinning.
+
 ### Explicitly rejected dependencies
 
 These packages have been considered and are **not** added:
@@ -141,6 +173,10 @@ record of the official dependency surface.
   `build_runner` + `hive_generator`.
 - No `.gitignore` change required: generated `*.g.dart` files are
   committed.
+- `pubspec.yaml` — keep the `dependency_overrides: analyzer ^6.4.1`
+  entry (with a comment pointing here) for as long as resolution
+  requires it; remove it once `hive_generator` supports
+  `analyzer >=8.0.0`. See "Toolchain version constraint" above.
 
 ## Follow-ups
 

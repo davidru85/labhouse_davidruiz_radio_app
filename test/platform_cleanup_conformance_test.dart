@@ -53,30 +53,28 @@ void main() {
     );
 
     group('App identifiers (ADR-0003)', () {
-      test(
-        'Android applicationId and namespace are com.labhouse.davidruizassessment.radioapp',
-        () {
-          final gradle = File(
-            'android/app/build.gradle.kts',
-          ).readAsStringSync();
-          expect(
-            gradle.contains(
-              'applicationId = "com.labhouse.davidruizassessment.radioapp"',
-            ),
-            isTrue,
-            reason:
-                'Android applicationId must be com.labhouse.davidruizassessment.radioapp (ADR-0003)',
-          );
-          expect(
-            gradle.contains(
-              'namespace = "com.labhouse.davidruizassessment.radioapp"',
-            ),
-            isTrue,
-            reason:
-                'Android namespace must be com.labhouse.davidruizassessment.radioapp (ADR-0003)',
-          );
-        },
-      );
+      test('Android applicationId and namespace are '
+          'com.labhouse.davidruizassessment.radioapp', () {
+        final gradle = File('android/app/build.gradle.kts').readAsStringSync();
+        expect(
+          gradle.contains(
+            'applicationId = "com.labhouse.davidruizassessment.radioapp"',
+          ),
+          isTrue,
+          reason:
+              'Android applicationId must be '
+              'com.labhouse.davidruizassessment.radioapp (ADR-0003)',
+        );
+        expect(
+          gradle.contains(
+            'namespace = "com.labhouse.davidruizassessment.radioapp"',
+          ),
+          isTrue,
+          reason:
+              'Android namespace must be '
+              'com.labhouse.davidruizassessment.radioapp (ADR-0003)',
+        );
+      });
 
       test(
         'iOS bundle identifier is com.labhouse.davidruizassessment.radioapp',
@@ -86,11 +84,13 @@ void main() {
           ).readAsStringSync();
           expect(
             pbxproj.contains(
-              'PRODUCT_BUNDLE_IDENTIFIER = com.labhouse.davidruizassessment.radioapp;',
+              'PRODUCT_BUNDLE_IDENTIFIER = '
+              'com.labhouse.davidruizassessment.radioapp;',
             ),
             isTrue,
             reason:
-                'iOS PRODUCT_BUNDLE_IDENTIFIER must be com.labhouse.davidruizassessment.radioapp (ADR-0003)',
+                'iOS PRODUCT_BUNDLE_IDENTIFIER must be '
+                'com.labhouse.davidruizassessment.radioapp (ADR-0003)',
           );
           expect(
             pbxproj.contains('com.example'),
@@ -133,8 +133,7 @@ void main() {
             'package com.labhouse.davidruizassessment.radioapp',
           ),
           isTrue,
-          reason:
-              'MainActivity package declaration must match the new applicationId',
+          reason: 'MainActivity package must match the new applicationId',
         );
         expect(
           Directory('android/app/src/main/kotlin/com/example').existsSync(),
