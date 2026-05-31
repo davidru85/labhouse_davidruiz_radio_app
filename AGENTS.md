@@ -111,6 +111,9 @@ Required checkpoint:
 * Present the passing test output.
 * Wait for user review.
 * Once approved, write a high-quality Git commit message detailing the implementation.
+* As the final step of this phase, push the approved commit to the remote
+  feature branch with `git push` (per ADR-0036). This publishes the green
+  implementation for CI and review; it never targets `main`.
 * Do not continue to Refactor until the user explicitly approves.
 
 ### 3. PHASE REFACTOR
