@@ -68,9 +68,9 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 3, Sub-task 3.2 (Favorites use cases) — RED/GREEN/REFACTOR complete; awaiting user PR merge and `main` sync.
-* **Last Completed Task:** Phase 3, Sub-task 3.1 (Station use cases), merged via PR #13.
-* **Active Branch:** `feature/phase-3-sub-task-32-favorites-use-cases`.
+* **Current Task:** Phase 3, Sub-task 3.3 (Filter metadata use cases) — RED/GREEN/REFACTOR complete; awaiting user PR merge and `main` sync.
+* **Last Completed Task:** Phase 3, Sub-task 3.2 (Favorites use cases), merged via PR #14.
+* **Active Branch:** `feature/phase-3-sub-task-33-filter-metadata-use-cases`.
 
 ---
 
