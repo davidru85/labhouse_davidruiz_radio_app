@@ -302,6 +302,8 @@ abstract class StationRepository {
     int offset = 0,
   });
 
+  Future<Result<RadioStation?, Failure>> getStationByUuid(String stationUuid);
+
   Future<Result<void, Failure>> cancelPendingRequests();
 }
 

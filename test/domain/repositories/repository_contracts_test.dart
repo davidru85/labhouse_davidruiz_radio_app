@@ -68,6 +68,9 @@ void main() {
         tag: 'jazz',
       );
       final popularResult = await stationRepository.loadPopularStations();
+      final stationByUuidResult = await stationRepository.getStationByUuid(
+        station.stationUuid,
+      );
       final cancelResult = await stationRepository.cancelPendingRequests();
       final favoriteResult = await favoritesRepository.getFavorites();
       final genreResult = await genresRepository.getGenres();
@@ -79,6 +82,7 @@ void main() {
 
       expect(searchResult, isA<Result<List<RadioStation>, Failure>>());
       expect(popularResult, isA<Result<List<RadioStation>, Failure>>());
+      expect(stationByUuidResult, isA<Result<RadioStation?, Failure>>());
       expect(cancelResult, isA<Result<void, Failure>>());
       expect(favoriteResult, isA<Result<List<RadioStation>, Failure>>());
       expect(genreResult, isA<Result<List<Genre>, Failure>>());
@@ -156,6 +160,17 @@ final class _FakeStationRepository implements StationRepository {
     int offset = 0,
   }) async {
     return Success<List<RadioStation>, Failure>(stations);
+  }
+
+  @override
+  Future<Result<RadioStation?, Failure>> getStationByUuid(
+    String stationUuid,
+  ) async {
+    final matches =
+        stations.where((station) => station.stationUuid == stationUuid);
+    return Success<RadioStation?, Failure>(
+      matches.isEmpty ? null : matches.first,
+    );
   }
 
   @override

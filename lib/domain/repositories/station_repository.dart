@@ -19,6 +19,9 @@ abstract interface class StationRepository {
     int offset = 0,
   });
 
+  /// Gets a single station by its stable Radio Browser station UUID.
+  Future<Result<RadioStation?, Failure>> getStationByUuid(String stationUuid);
+
   /// Cancels any pending station requests.
   Future<Result<void, Failure>> cancelPendingRequests();
 }

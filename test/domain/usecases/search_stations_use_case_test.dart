@@ -47,9 +47,7 @@ void main() {
       final repository = _FakeStationRepository();
       final useCase = SearchStationsUseCase(repository);
 
-      await useCase(
-        const SearchStationsParams(query: null, countryCode: 'DE', tag: 'jazz'),
-      );
+      await useCase(const SearchStationsParams(countryCode: 'DE', tag: 'jazz'));
 
       expect(repository.lastSearchQuery, isNull);
       expect(repository.lastSearchCountryCode, 'DE');
