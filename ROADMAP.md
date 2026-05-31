@@ -107,7 +107,7 @@ Tasks:
     failure hierarchy required to make the tests pass.
   * [x] **PHASE REFACTOR:** Review failure/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
-* [ ] Define repository interfaces in `domain/repositories/` per
+* [x] Define repository interfaces in `domain/repositories/` per
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
 * [ ] Configure `flutter_localizations` (per ADR-0005 and ADR-0032):
