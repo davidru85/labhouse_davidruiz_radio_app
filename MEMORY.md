@@ -66,7 +66,7 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 2, Sub-task 2.4 PHASE GREEN pending review (Repository interfaces).
+* **Current Task:** Phase 2, Sub-task 2.4 PHASE REFACTOR pending review (Repository interfaces).
 * **Last Completed Task:** Phase 2, Sub-task 2.3 (Sealed failure classes).
 * **Active Branch:** `feature/phase-2-sub-task-24-repository-interfaces`.
 
