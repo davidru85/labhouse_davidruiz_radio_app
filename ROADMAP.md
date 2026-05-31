@@ -115,7 +115,7 @@ Tasks:
 * [x] Define repository interfaces in `domain/repositories/` per
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
-* [ ] Configure `flutter_localizations` (per ADR-0005 and ADR-0032):
+* [x] Configure `flutter_localizations` (per ADR-0005 and ADR-0032):
   * Create `l10n.yaml` in the project root to enable automatic localization generation.
   * Create `lib/l10n/intl_en.arb` with initial country name translation keys (`country_DE`, `country_AT`, `country_NL`, `country_FR`).
 
