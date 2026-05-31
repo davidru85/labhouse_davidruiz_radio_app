@@ -67,7 +67,7 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 2, Sub-task 2.5 PHASE GREEN pending review (Flutter localizations configuration).
+* **Current Task:** Phase 2, Sub-task 2.5 PHASE REFACTOR pending review (Flutter localizations configuration).
 * **Last Completed Task:** Phase 2, Sub-task 2.4 (Repository interfaces).
 * **Active Branch:** `feature/phase-2-sub-task-25-flutter-localizations`.
 
