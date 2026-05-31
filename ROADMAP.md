@@ -140,8 +140,8 @@ Favorites use cases:
 
 Filter metadata use cases:
 
-* [ ] `LoadGenresUseCase`
-* [ ] `LoadCountriesUseCase`
+* [x] `LoadGenresUseCase`
+* [x] `LoadCountriesUseCase`
 
 History use cases:
 
