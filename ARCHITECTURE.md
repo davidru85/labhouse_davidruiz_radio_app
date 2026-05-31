@@ -346,7 +346,7 @@ abstract class ConnectivityRepository {
 }
 
 abstract class AnalyticsRepository {
-  Future<Result<void, Failure>> trackEvent(AnalyticsEvent event);
+  Future<void> track(AnalyticsEvent event);
 }
 ```
 
