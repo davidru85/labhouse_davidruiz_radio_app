@@ -52,3 +52,4 @@ decisions made for RadioApp.
 | 0033 | [Branch before task execution](0033-branch-before-task.md) | Accepted | 2026-05-30 |
 | 0034 | [Domain-free core utility return types](0034-domain-free-core-utils.md) | Accepted | 2026-05-30 |
 | 0035 | [Pull request before next task branch](0035-pr-before-next-task-branch.md) | Accepted | 2026-05-31 |
+| 0036 | [Push the GREEN commit to the remote](0036-push-after-green-commit.md) | Accepted | 2026-05-31 |

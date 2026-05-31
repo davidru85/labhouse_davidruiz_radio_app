@@ -62,6 +62,7 @@ to ADRs if revisited.
 | [0033](docs/adr/0033-branch-before-task.md) | Create or confirm a correctly named non-main branch before every new roadmap task or sub-task | 2026-05-30 |
 | [0034](docs/adr/0034-domain-free-core-utils.md) | Keep `core/utils` domain-free; map Icy parser output to domain entities at consuming boundaries | 2026-05-30 |
 | [0035](docs/adr/0035-pr-before-next-task-branch.md) | Wait for PR merge and synced `main` before creating the next sub-task branch | 2026-05-31 |
+| [0036](docs/adr/0036-push-after-green-commit.md) | Push the approved GREEN commit to the remote feature branch as the final step of PHASE GREEN | 2026-05-31 |
 
 ---
 
