@@ -3,15 +3,18 @@ import 'package:radio_app/core/errors/result.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
 import 'package:radio_app/domain/repositories/station_repository.dart';
+import 'package:radio_app/domain/usecases/use_case.dart';
 
 /// Searches stations by name and optional filter metadata.
-final class SearchStationsUseCase {
+final class SearchStationsUseCase
+    implements UseCase<List<RadioStation>, SearchStationsParams> {
   /// Creates a station search use case.
   const SearchStationsUseCase(this._repository);
 
   final StationRepository _repository;
 
   /// Executes a station search with [params].
+  @override
   Future<Result<List<RadioStation>, Failure>> call(
     SearchStationsParams params,
   ) {

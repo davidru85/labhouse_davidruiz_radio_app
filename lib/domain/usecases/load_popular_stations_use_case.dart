@@ -3,15 +3,18 @@ import 'package:radio_app/core/errors/result.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
 import 'package:radio_app/domain/repositories/station_repository.dart';
+import 'package:radio_app/domain/usecases/use_case.dart';
 
 /// Loads popular stations through the station repository.
-final class LoadPopularStationsUseCase {
+final class LoadPopularStationsUseCase
+    implements UseCase<List<RadioStation>, LoadPopularStationsParams> {
   /// Creates a popular stations use case.
   const LoadPopularStationsUseCase(this._repository);
 
   final StationRepository _repository;
 
   /// Loads popular stations with [params].
+  @override
   Future<Result<List<RadioStation>, Failure>> call(
     LoadPopularStationsParams params,
   ) {

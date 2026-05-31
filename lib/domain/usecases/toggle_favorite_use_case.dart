@@ -3,9 +3,11 @@ import 'package:radio_app/core/errors/result.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
 import 'package:radio_app/domain/repositories/favorites_repository.dart';
+import 'package:radio_app/domain/usecases/use_case.dart';
 
 /// Toggles the favorite status of a station.
-final class ToggleFavoriteUseCase {
+final class ToggleFavoriteUseCase
+    implements UseCase<bool, ToggleFavoriteParams> {
   /// Creates a favorite toggle use case.
   const ToggleFavoriteUseCase(this._repository);
 
@@ -16,6 +18,7 @@ final class ToggleFavoriteUseCase {
   /// Reads the current favorites to decide the action and returns the
   /// resulting favorite state: `true` when the station is now favorited,
   /// `false` when it was removed.
+  @override
   Future<Result<bool, Failure>> call(ToggleFavoriteParams params) async {
     final favorites = await _repository.getFavorites();
 
