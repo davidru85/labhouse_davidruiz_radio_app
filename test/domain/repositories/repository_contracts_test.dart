@@ -4,7 +4,6 @@ import 'package:radio_app/domain/entities/analytics/analytics_event.dart';
 import 'package:radio_app/domain/entities/country.dart';
 import 'package:radio_app/domain/entities/genre.dart';
 import 'package:radio_app/domain/entities/now_playing_info.dart';
-import 'package:radio_app/domain/entities/player_state.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
 import 'package:radio_app/domain/repositories/analytics_repository.dart';
@@ -15,6 +14,7 @@ import 'package:radio_app/domain/repositories/favorites_repository.dart';
 import 'package:radio_app/domain/repositories/genres_repository.dart';
 import 'package:radio_app/domain/repositories/history_repository.dart';
 import 'package:radio_app/domain/repositories/playback_url_repository.dart';
+import 'package:radio_app/domain/repositories/player_state.dart';
 import 'package:radio_app/domain/repositories/station_repository.dart';
 
 void main() {
