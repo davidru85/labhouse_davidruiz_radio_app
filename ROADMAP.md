@@ -128,15 +128,15 @@ Implement independent use case classes under `domain/usecases/`.
 
 Station use cases:
 
-* [ ] `SearchStationsUseCase`
-* [ ] `CancelSearchUseCase` (per ADR-0014)
-* [ ] `GetStationByUuidUseCase`
-* [ ] `LoadPopularStationsUseCase` (parameterizes unified search sorting, per ADR-0027)
+* [x] `SearchStationsUseCase`
+* [x] `CancelSearchUseCase` (per ADR-0014)
+* [x] `GetStationByUuidUseCase`
+* [x] `LoadPopularStationsUseCase` (parameterizes unified search sorting, per ADR-0027)
 
 Favorites use cases:
 
-* [ ] `ToggleFavoriteUseCase`
-* [ ] `RefreshFavoritesUseCase`
+* [x] `ToggleFavoriteUseCase`
+* [x] `RefreshFavoritesUseCase`
 
 Filter metadata use cases:
 

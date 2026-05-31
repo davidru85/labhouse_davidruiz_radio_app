@@ -67,9 +67,9 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 3, Sub-task 3.1 PHASE RED pending approval (Station use cases).
-* **Last Completed Task:** Phase 2, Sub-task 2.5 (Flutter localizations configuration).
-* **Active Branch:** `feature/phase-3-sub-task-31-station-use-cases`.
+* **Current Task:** Phase 3, Sub-task 3.2 (Favorites use cases) — RED/GREEN/REFACTOR complete; awaiting user PR merge and `main` sync.
+* **Last Completed Task:** Phase 3, Sub-task 3.1 (Station use cases), merged via PR #13.
+* **Active Branch:** `feature/phase-3-sub-task-32-favorites-use-cases`.
 
 ---
 
