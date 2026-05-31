@@ -67,9 +67,9 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 2, Sub-task 2.4 complete; awaiting PR merge and synced `main` before next sub-task branch.
+* **Current Task:** Phase 2, Sub-task 2.5 PHASE RED pending (Flutter localizations configuration).
 * **Last Completed Task:** Phase 2, Sub-task 2.4 (Repository interfaces).
-* **Active Branch:** `feature/phase-2-sub-task-24-repository-interfaces`.
+* **Active Branch:** `feature/phase-2-sub-task-25-flutter-localizations`.
 
 ---
 
