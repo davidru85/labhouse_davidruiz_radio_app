@@ -135,8 +135,8 @@ Station use cases:
 
 Favorites use cases:
 
-* [ ] `ToggleFavoriteUseCase`
-* [ ] `RefreshFavoritesUseCase`
+* [x] `ToggleFavoriteUseCase`
+* [x] `RefreshFavoritesUseCase`
 
 Filter metadata use cases:
 
