@@ -5,11 +5,16 @@ review checkpoints, as defined in `AGENTS.md` §"Mandatory TDD
 Micro-Cycle". This roadmap describes the sequence of work; the workflow
 is governed there.
 
-Before starting any new roadmap task or sub-task, the active git branch
-MUST be verified. If the repository is on `main`, create a non-`main`
-working branch using the ADR-0009 roadmap naming convention before
-writing the RED test, production code, or task-specific documentation
-changes (per ADR-0033).
+Before starting any new roadmap task or sub-task, the previous task's
+pull request MUST have been created and merged by the user on GitHub, and
+local `main` MUST have been synchronized with that merge. The agent MUST
+wait for explicit user confirmation of both facts before creating or
+switching to the next roadmap branch (per ADR-0035).
+
+After that confirmation, the active git branch MUST be verified. If the
+repository is on `main`, create a non-`main` working branch using the
+ADR-0009 roadmap naming convention before writing the RED test,
+production code, or task-specific documentation changes (per ADR-0033).
 
 Roadmap branch names MUST follow
 `<type>/phase-<phase>-sub-task-<subtask>-<short-description>`, where
@@ -107,7 +112,7 @@ Tasks:
     failure hierarchy required to make the tests pass.
   * [x] **PHASE REFACTOR:** Review failure/test structure, run analyzer
     and tests, and remove any duplication or naming drift.
-* [ ] Define repository interfaces in `domain/repositories/` per
+* [x] Define repository interfaces in `domain/repositories/` per
   the contracts listed in `ARCHITECTURE.md` §"Repository
   Contracts" (including `ConnectivityRepository` per ADR-0013).
 * [ ] Configure `flutter_localizations` (per ADR-0005 and ADR-0032):

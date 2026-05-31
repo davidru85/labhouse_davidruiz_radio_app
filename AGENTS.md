@@ -29,9 +29,16 @@ Development must halt and explicitly ask for permission before:
 The user must perform a Definition of Done review before progression.
 
 ### Branch-Before-Task Rule
-Before starting any new roadmap task or sub-task, verify the current git
-branch and create or switch to an appropriate non-`main` working branch
-using the ADR-0009 roadmap naming convention:
+Before starting any new roadmap task or sub-task, verify that the
+previous roadmap task or sub-task has been merged via GitHub pull request
+and that local `main` has been synchronized with the merge (per
+ADR-0035). The agent MUST NOT create or switch to the next task branch
+until the user explicitly confirms that the PR has been merged, local
+`main` is synced, and work may proceed.
+
+After that confirmation, verify the current git branch and create or
+switch to an appropriate non-`main` working branch using the ADR-0009
+roadmap naming convention:
 `<type>/phase-<phase>-sub-task-<subtask>-<short-description>`.
 
 The `<subtask>` segment removes punctuation from the roadmap sub-task
@@ -43,6 +50,12 @@ branch name MUST be checked against the exact current task scope before
 writing tests, production code, or task-specific documentation changes. If
 the branch name does not match, rename or switch branches before
 continuing.
+
+After a sub-task is completed, the agent MUST remain on the completed
+task branch and wait for the user's PR merge and local-`main`
+synchronization confirmation before creating the next sub-task branch.
+Premature next-task branches MUST be rolled back unless the user
+explicitly chooses to keep them.
 
 Record the active branch in `MEMORY.md` while work is in progress.
 
