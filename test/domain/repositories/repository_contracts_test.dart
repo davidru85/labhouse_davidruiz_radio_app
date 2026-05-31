@@ -166,8 +166,9 @@ final class _FakeStationRepository implements StationRepository {
   Future<Result<RadioStation?, Failure>> getStationByUuid(
     String stationUuid,
   ) async {
-    final matches =
-        stations.where((station) => station.stationUuid == stationUuid);
+    final matches = stations.where(
+      (station) => station.stationUuid == stationUuid,
+    );
     return Success<RadioStation?, Failure>(
       matches.isEmpty ? null : matches.first,
     );
