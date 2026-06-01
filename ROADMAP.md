@@ -168,9 +168,9 @@ chain defined in `API_SPEC.md` §5.3.
 
 Testing requirements:
 
-* [ ] Null handling.
-* [ ] Empty results.
-* [ ] Boundary conditions.
+* [x] Null handling.
+* [x] Empty results.
+* [x] Boundary conditions.
 
 ---
 

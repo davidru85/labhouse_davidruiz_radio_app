@@ -46,6 +46,15 @@ void main() {
       expect((result as Success<List<RadioStation>, Failure>).value, isEmpty);
     });
 
+    test('forwards a boundary limit verbatim without clamping', () async {
+      final repository = _FakeStationRepository();
+      final useCase = LoadPopularStationsUseCase(repository);
+
+      await useCase(const LoadPopularStationsParams(limit: 0));
+
+      expect(repository.lastPopularLimit, 0);
+    });
+
     test('forwards repository failures', () async {
       const failure = ServerFailure('unavailable');
       final repository = _FakeStationRepository(

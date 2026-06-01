@@ -23,6 +23,20 @@ void main() {
       expect((result as Success<List<RadioStation>, Failure>).value, [station]);
     });
 
+    test('preserves empty successful results', () async {
+      final repository = _FakeHistoryRepository(
+        historyResult: const Success<List<RadioStation>, Failure>(
+          <RadioStation>[],
+        ),
+      );
+      final useCase = GetHistoryUseCase(repository);
+
+      final result = await useCase(const NoParams());
+
+      expect(result, isA<Success<List<RadioStation>, Failure>>());
+      expect((result as Success<List<RadioStation>, Failure>).value, isEmpty);
+    });
+
     test('forwards repository failures', () async {
       const failure = StorageReadWriteFailure('read error');
       final repository = _FakeHistoryRepository(
