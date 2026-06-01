@@ -161,7 +161,7 @@ Connectivity use cases:
 
 Analytics use cases:
 
-* [ ] `TrackAnalyticsEventUseCase` (per ADR-0019).
+* [x] `TrackAnalyticsEventUseCase` (per ADR-0019).
 
 `PlayStationUseCase` resolves the playback URL using the fallback
 chain defined in `API_SPEC.md` §5.3.
