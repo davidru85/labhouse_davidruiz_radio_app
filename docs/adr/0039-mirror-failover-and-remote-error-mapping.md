@@ -55,6 +55,14 @@ data sources (sub-task 5.2) are written.
 5. `NetworkException implements Exception { final Failure failure; }` — a
    thin carrier so the mapped failure can cross the data-source→repository
    boundary without leaking `DioException` or `throw`ing a non-`Exception`.
+6. `MirrorFailoverExhausted` — a small, `const`-constructible **sentinel**
+   (a plain marker, not a `Failure` and not an `Exception`) that lives in
+   `core/network/` (alongside `mapDioException`). It carries no data; its
+   only purpose is to tag a propagated `DioException` as "all mirrors
+   exhausted" so the mapper can distinguish that case from an ordinary
+   connection error. It MUST NOT be added to `domain/failures/`: failover
+   exhaustion is a networking detail, and the domain layer never sees
+   mirrors. The corresponding domain value remains `MirrorFailure`.
 
 ### Initial mirror selection (per ADR-0016)
 
@@ -73,7 +81,11 @@ active mirror followed by the remaining whitelist mirrors, in list order.
   mirror** in rotation, rewrites the request `baseUrl`, and re-dispatches.
 - Caps: **≤ 2 attempts per mirror** and **≤ 6 total attempts** per logical
   request. When the caps are reached, the interceptor stops rotating and
-  lets the error propagate.
+  lets the error propagate. Before propagating, it **re-tags** the
+  `DioException` so its `error` field is a `MirrorFailoverExhausted`
+  sentinel (`DioException.copyWith(error: const MirrorFailoverExhausted())`,
+  preserving `type`/`requestOptions`/`response`). This marks the otherwise
+  ordinary connection-level error as "failover exhausted" for the mapper.
 - **Non-retriable** errors (4xx, malformed 2xx) propagate immediately with
   no rotation.
 
@@ -95,7 +107,12 @@ request (it is swallowed).
 | `badResponse` 5xx | `ServerFailure` |
 | `badResponse` 422 | `ValidationErrorFailure` |
 | `badResponse` 401 / 403 | `UnauthorizedFailure` |
-| failover exhausted (caps hit on retriable errors) | `MirrorFailure` |
+| failover exhausted — any `DioException` whose `error` is a `MirrorFailoverExhausted` sentinel (caps hit on retriable errors) | `MirrorFailure` |
+
+The exhausted-failover row is checked **first**: when `error` is a
+`MirrorFailoverExhausted`, `mapDioException` returns `MirrorFailure`
+regardless of `DioExceptionType` (e.g. a tagged `connectionError` maps to
+`MirrorFailure`, not `SocketFailure`).
 
 Remote data sources wrap each Dio call in `try/catch`, call
 `mapDioException`, and `throw NetworkException(failure)`. They do **not**
