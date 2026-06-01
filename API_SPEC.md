@@ -338,7 +338,13 @@ The `country_name_resolver` helper in `core/utils/` (per ADR-0017)
 MUST be used to resolve human-readable country names from ISO codes. 
 
 Specifically:
-- It MUST look up the localized country name using standard ARB translation keys formatted as `country_XX` (where `XX` is the uppercase ISO country code), resolved via the generated localization classes (`intl`, per ADR-0005).
+- It MUST look up the localized country name using standard ARB translation keys formatted as `country_XX` (where `XX` is the uppercase ISO country code).
+- The helper is a **pure** function taking the ISO code and a lookup
+  callback (`String? Function(String key)`); the presentation layer adapts
+  the generated `AppLocalizations` (`intl`, per ADR-0005) into that callback,
+  because `gen-l10n` exposes no dynamic key lookup (per ADR-0032, amended
+  2026-06-01). Resolution happens at the presentation boundary; the
+  data-layer mapper leaves `Country.name` as the raw ISO code.
 - If the translation key is missing, it MUST fall back to returning the raw uppercase ISO country code (per ADR-0032).
 
 ### 6.4 NowPlayingInfo Entity
