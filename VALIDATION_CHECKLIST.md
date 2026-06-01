@@ -79,8 +79,8 @@ The following MUST hold:
   `app_settings` under the key `last_known_mirror`
   (per ADR-0016).
 * Hive `TypeAdapter`s are generated via `build_runner` +
-  `hive_generator` (per ADR-0018) and the generated `*.g.dart` files
-  are committed to the repository.
+  `hive_ce_generator` (per ADR-0018, ADR-0038) and the generated
+  `*.g.dart` files are committed to the repository.
 
 ---
 

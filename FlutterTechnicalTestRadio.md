@@ -1,6 +1,7 @@
 # Assignment
 ## Flutter Technical Test
 
+
 ### Summary
 
 Feel free to approach this project with creativity and consider it as if you're working with a regular client seeking your expertise. Use third-party packages if necessary and make sure the project adheres to the outlined requirements.

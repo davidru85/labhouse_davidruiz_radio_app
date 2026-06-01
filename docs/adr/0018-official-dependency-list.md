@@ -1,12 +1,21 @@
 # ADR-0018 — Official dependency list (consolidated)
 
-- **Status:** Accepted
+- **Status:** Accepted (superseded in part by ADR-0038)
 - **Date:** 2026-05-28
 - **Amended:** 2026-05-30 — document the `analyzer` dependency
   override required for version solving (see "Toolchain version
   constraint: `analyzer` override" below).
+- **Superseded in part:** 2026-06-01 by **ADR-0038**. The persistence and
+  code-generation choices below — `hive_flutter`, `hive_generator`, and
+  the `dependency_overrides: analyzer ^6.4.1` entry — are replaced by Hive
+  Community Edition (`hive_ce` / `hive_ce_flutter` / `hive_ce_generator`,
+  no analyzer override). `hive_generator 2.0.1` proved to be the latest
+  (unmaintained) release and incompatible with the current Dart SDK, so
+  this ADR's "remove the override once `hive_generator` supports
+  analyzer >=8.0.0" exit condition could never be met. The rest of this
+  ADR stands.
 - **Deciders:** David Ruiz
-- **Related:** `TECHNICAL_SPEC.md` §2, ADR-0005, ADR-0007, ADR-0013, ADR-0014
+- **Related:** `TECHNICAL_SPEC.md` §2, ADR-0005, ADR-0007, ADR-0013, ADR-0014, ADR-0038
 
 ## Context
 

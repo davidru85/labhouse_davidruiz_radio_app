@@ -22,7 +22,7 @@ The cached datum is small and infrequently written:
   request against a different mirror than the one previously
   cached.
 
-The project already pulls in Hive (`hive_flutter`) for favorites,
+The project already pulls in Hive (`hive_ce_flutter`, per ADR-0038) for favorites,
 history, and the genre / country caches. Introducing a second
 persistence mechanism for a 30-byte string would create two parallel
 storage stacks, two initialisation sequences and two debugging
