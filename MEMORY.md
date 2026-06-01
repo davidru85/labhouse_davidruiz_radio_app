@@ -70,9 +70,10 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 4, Sub-task 4.1 (Hive persistence models + local entity-cache data sources). Design fixed in ADR-0037; PHASE RED next.
+* **Current Task:** Phase 4, Sub-task 4.1 (Hive persistence models + local entity-cache data sources) — RED/GREEN/REFACTOR complete on branch `feature/phase-4-sub-task-41-hive-local-data-sources`; PR open. Design fixed in ADR-0037; the codegen toolchain migrated to Hive CE in ADR-0038 (the unmaintained `hive_generator` was incompatible with Dart 3.11.4).
 * **Last Completed Task:** Phase 3, Sub-task 3.8 (use-case edge-case test coverage), merged via PR #22. Completes Phase 3.
 * **Active Branch:** `feature/phase-4-sub-task-41-hive-local-data-sources`.
+* **Next Up (after 4.1 merges):** Sub-task 4.2 `MirrorCacheDataSource` (`app_settings` box, ADR-0016), then 4.3 box-opening in `main.dart`.
 
 ---
 

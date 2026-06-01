@@ -178,16 +178,16 @@ Testing requirements:
 
 Tasks:
 
-* [ ] Implement Hive `TypeAdapter`s via `build_runner` +
+* [x] Implement Hive `TypeAdapter`s via `build_runner` +
   `hive_ce_generator` (Hive CE, per ADR-0038) for favorite entries, cached genres, cached
   countries, and history entries (per ADR-0018). The persistence
   models use the `*HiveModel` naming and the `typeId` registry fixed
   in ADR-0037 (a single `StationHiveModel` backs both the `favorites`
   and `history` boxes). Commit the generated `*.g.dart` files.
-* [ ] Implement `LocalFavoritesDataSource`.
-* [ ] Implement `LocalHistoryDataSource`.
-* [ ] Implement `LocalGenresDataSource`.
-* [ ] Implement `LocalCountriesDataSource`.
+* [x] Implement `LocalFavoritesDataSource`.
+* [x] Implement `LocalHistoryDataSource`.
+* [x] Implement `LocalGenresDataSource`.
+* [x] Implement `LocalCountriesDataSource`.
 * [ ] Implement `MirrorCacheDataSource` backed by the
   `app_settings` Hive box (per ADR-0016).
 * [ ] Open all boxes (`favorites`, `history`, `genres`,
