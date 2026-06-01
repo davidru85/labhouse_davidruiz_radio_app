@@ -145,9 +145,9 @@ Filter metadata use cases:
 
 History use cases:
 
-* [ ] `AddToHistoryUseCase`
-* [ ] `GetHistoryUseCase`
-* [ ] `ClearHistoryUseCase`
+* [x] `AddToHistoryUseCase`
+* [x] `GetHistoryUseCase`
+* [x] `ClearHistoryUseCase`
 
 Playback use cases:
 
