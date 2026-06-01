@@ -157,7 +157,7 @@ Playback use cases:
 
 Connectivity use cases:
 
-* [ ] `WatchConnectivityUseCase` (per ADR-0013).
+* [x] `WatchConnectivityUseCase` (per ADR-0013).
 
 Analytics use cases:
 
