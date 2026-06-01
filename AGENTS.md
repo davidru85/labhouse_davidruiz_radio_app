@@ -134,6 +134,9 @@ Required checkpoint:
 * Present the passing test output.
 * Wait for user review.
 * Once approved, write a high-quality Git commit message detailing the refactor.
+* As the final step of this phase, push the approved commit to the remote
+  feature branch with `git push` (per ADR-0036). This leaves the branch
+  fully PR-ready with no local-only commits; it never targets `main`.
 * Do not advance to the next sub-task or phase until explicitly approved.
 
 ---
