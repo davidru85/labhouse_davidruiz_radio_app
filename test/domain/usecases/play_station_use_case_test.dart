@@ -10,41 +10,48 @@ import 'package:radio_app/domain/usecases/play_station_use_case.dart';
 
 void main() {
   group('PlayStationUseCase', () {
-    test('resolves the URL and starts playback with station metadata',
-        () async {
-      final station = _station(stationUuid: 'station-uuid');
-      final urlRepository = _FakePlaybackUrlRepository(
-        resolveResult: const Success<String, Failure>(
-          'https://resolved.example.com/stream',
-        ),
-      );
-      final player = _FakeAudioPlayerRepository();
-      final useCase = PlayStationUseCase(urlRepository, player);
+    test(
+      'resolves the URL and starts playback with station metadata',
+      () async {
+        final station = _station(stationUuid: 'station-uuid');
+        final urlRepository = _FakePlaybackUrlRepository(
+          resolveResult: const Success<String, Failure>(
+            'https://resolved.example.com/stream',
+          ),
+        );
+        final player = _FakeAudioPlayerRepository();
+        final useCase = PlayStationUseCase(urlRepository, player);
 
-      final result = await useCase(PlayStationParams(station: station));
+        final result = await useCase(PlayStationParams(station: station));
 
-      expect(result, isA<Success<void, Failure>>());
-      expect(urlRepository.resolvedStation, station);
-      expect(player.playedUrl, 'https://resolved.example.com/stream');
-      expect(player.playedTitle, 'Jazz FM');
-      expect(player.playedSubtitle, 'jazz • Germany');
-    });
+        expect(result, isA<Success<void, Failure>>());
+        expect(urlRepository.resolvedStation, station);
+        expect(player.playedUrl, 'https://resolved.example.com/stream');
+        expect(player.playedTitle, 'Jazz FM');
+        expect(player.playedSubtitle, 'jazz • Germany');
+      },
+    );
 
-    test('falls back to the country subtitle when the station has no tags',
-        () async {
-      final station = _station(stationUuid: 'station-uuid', tagList: const []);
-      final urlRepository = _FakePlaybackUrlRepository(
-        resolveResult: const Success<String, Failure>(
-          'https://resolved.example.com/stream',
-        ),
-      );
-      final player = _FakeAudioPlayerRepository();
-      final useCase = PlayStationUseCase(urlRepository, player);
+    test(
+      'falls back to the country subtitle when the station has no tags',
+      () async {
+        final station = _station(
+          stationUuid: 'station-uuid',
+          tagList: const [],
+        );
+        final urlRepository = _FakePlaybackUrlRepository(
+          resolveResult: const Success<String, Failure>(
+            'https://resolved.example.com/stream',
+          ),
+        );
+        final player = _FakeAudioPlayerRepository();
+        final useCase = PlayStationUseCase(urlRepository, player);
 
-      await useCase(PlayStationParams(station: station));
+        await useCase(PlayStationParams(station: station));
 
-      expect(player.playedSubtitle, 'Germany');
-    });
+        expect(player.playedSubtitle, 'Germany');
+      },
+    );
 
     test('forwards the failure raised while resolving the URL', () async {
       const failure = StreamUnreachableFailure('unreachable');
