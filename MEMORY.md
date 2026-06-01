@@ -68,9 +68,9 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 3, Sub-task 3.6 (Connectivity use cases) — RED/GREEN/REFACTOR complete; awaiting user PR merge and `main` sync.
-* **Last Completed Task:** Phase 3, Sub-task 3.5 (Playback use cases), merged via PR #18.
-* **Active Branch:** `feature/phase-3-sub-task-36-connectivity-use-cases`.
+* **Current Task:** Phase 3, Sub-task 3.7 (Analytics use cases) — RED/GREEN/REFACTOR complete; awaiting user PR merge and `main` sync.
+* **Last Completed Task:** Phase 3, Sub-task 3.6 (Connectivity use cases), merged via PR #19.
+* **Active Branch:** `feature/phase-3-sub-task-37-analytics-use-cases`.
 
 ---
 

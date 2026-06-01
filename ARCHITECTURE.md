@@ -354,7 +354,8 @@ abstract class AnalyticsRepository {
 
 ### 4. Use Case Call Contracts
 
-All use cases MUST implement a consistent call signature pattern:
+Use cases whose operation can fail MUST implement a consistent
+call signature pattern that surfaces failures as a `Result`:
 
 ```dart
 abstract class UseCase<Type, Params> {
@@ -378,6 +379,16 @@ abstract class StreamUseCase<Type, Params> {
   Stream<Type> call(Params params);
 }
 ```
+
+Fire-and-forget use cases — those wrapping a repository operation that
+cannot surface a failure to the caller (e.g. `TrackAnalyticsEventUseCase`,
+per ADR-0019, over `AnalyticsRepository.track`) — return `Future<void>`
+directly and do NOT implement `UseCase`. Forcing a `Result<void, Failure>`
+that can only ever be `Success` would be a misleading signature; the
+failure-swallowing guarantee belongs to the repository implementation.
+Such use cases MAY accept the relevant domain entity (e.g. `AnalyticsEvent`)
+as their parameter directly when it already is a self-describing value
+object, rather than introducing a `Params` wrapper.
 
 ### 5. Search Cancellation & Pagination Contracts
 
