@@ -70,10 +70,10 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 4, Sub-task 4.3 (open all Hive boxes in `main.dart` before `runApp`) — RED/GREEN/REFACTOR complete on branch `feature/phase-4-sub-task-43-main-box-opening` (RED `b6ee9ae`, GREEN `feat(app)` pushed), PR pending. `bootstrapLocalStorage` (in `lib/main.dart`) + `lib/core/constants/hive_boxes.dart`: registers generated adapters idempotently and opens `favorites`/`history` (`Box<StationHiveModel>`), `genres`/`countries` (typed), `app_settings` (`Box<dynamic>`). Box typing per ADR-0037, registrar per ADR-0038, `app_settings` mirror cache per ADR-0016. REFACTOR had no production changes. **This closes Phase 4** (all 7 ROADMAP tasks done).
-* **Last Completed Task:** Phase 4, Sub-task 4.2 (`MirrorCacheDataSource`), merged via PR #24 (`5226f2e`).
-* **Active Branch:** `feature/phase-4-sub-task-43-main-box-opening` (branched from synced `main` after PR #24 merged, per ADR-0035).
-* **Next Up (after 4.3 merges):** **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, mirror failover via `MirrorCacheDataSource`, DTOs (`StationDto`/`GenreDto`/`CountryCodeDto`) + mappers, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
+* **Current Task:** Phase 5, Sub-task 5.1 (DTOs, mappers, and `core/utils` helpers) — RED/GREEN/REFACTOR complete on branch `feature/phase-5-sub-task-51-dtos-mappers-utils` (ADR-0032 amendment `bff37c2`, RED `95775a3`, GREEN `109868f` pushed), PR pending. `StationDto`/`GenreDto`/`CountryCodeDto` (fromJson + toEntity) + `tag_parser`/`country_name_resolver` (pure, domain-free per ADR-0017/0034). DTOs keep country name as raw ISO code (resolution deferred to presentation per ADR-0032 amended). REFACTOR had no production changes. Closes ROADMAP Phase 5 DTO + mapper tasks.
+* **Last Completed Task:** Phase 4, Sub-task 4.3 (open all Hive boxes in `main.dart`), merged via PR #25 (`00d480a`). **This closed Phase 4** (all 7 ROADMAP tasks done).
+* **Active Branch:** `feature/phase-5-sub-task-51-dtos-mappers-utils` (branched from synced `main` after PR #25 merged, per ADR-0035).
+* **Next Up (after 5.1 merges):** remainder of **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, mirror failover via `MirrorCacheDataSource`, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
 
 ---
 

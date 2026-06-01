@@ -217,11 +217,11 @@ Tasks:
   (per ADR-0016) and writing the active mirror back on success.
 * [ ] Handle malformed responses, empty payloads, non-2xx HTTP
   status codes, and timeouts.
-* [ ] Map all API responses to DTOs in `data/models/`:
+* [x] Map all API responses to DTOs in `data/models/`:
   * `StationDto`
   * `GenreDto`
   * `CountryCodeDto`
-* [ ] Implement mappers from DTOs to domain entities, using the
+* [x] Implement mappers from DTOs to domain entities, using the
   helpers in `core/utils/` (`tag_parser` for `tagList`;
   `country_name_resolver` for display names).
 * [ ] Handle playback URL resolution through
