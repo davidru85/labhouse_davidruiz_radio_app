@@ -47,6 +47,17 @@ void main() {
       expect((result as Success<List<Genre>, Failure>).value, isEmpty);
     });
 
+    test('forwards a boundary limit verbatim without clamping', () async {
+      final repository = _FakeGenresRepository(
+        genresResult: const Success<List<Genre>, Failure>(<Genre>[]),
+      );
+      final useCase = LoadGenresUseCase(repository);
+
+      await useCase(const LoadGenresParams(limit: 0));
+
+      expect(repository.lastLimit, 0);
+    });
+
     test('forwards repository failures', () async {
       const failure = ServerFailure('unavailable');
       final repository = _FakeGenresRepository(

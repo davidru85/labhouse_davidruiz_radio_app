@@ -66,6 +66,15 @@ void main() {
       expect((result as Success<List<RadioStation>, Failure>).value, isEmpty);
     });
 
+    test('forwards a boundary limit verbatim without clamping', () async {
+      final repository = _FakeStationRepository();
+      final useCase = SearchStationsUseCase(repository);
+
+      await useCase(const SearchStationsParams(query: 'jazz', limit: 0));
+
+      expect(repository.lastSearchLimit, 0);
+    });
+
     test('forwards repository failures', () async {
       const failure = SocketFailure('offline');
       final repository = _FakeStationRepository(
