@@ -63,14 +63,15 @@ to ADRs if revisited.
 | [0034](docs/adr/0034-domain-free-core-utils.md) | Keep `core/utils` domain-free; map Icy parser output to domain entities at consuming boundaries | 2026-05-30 |
 | [0035](docs/adr/0035-pr-before-next-task-branch.md) | Wait for PR merge and synced `main` before creating the next sub-task branch | 2026-05-31 |
 | [0036](docs/adr/0036-push-after-green-commit.md) | Push the approved commit to the remote feature branch as the final step of PHASE GREEN and PHASE REFACTOR (amended 2026-06-01 to add REFACTOR) | 2026-05-31 |
+| [0037](docs/adr/0037-hive-persistence-model-design.md) | Hive persistence model design: `*HiveModel` naming, append-only `typeId` registry (0 Station, 1 Genre, 2 Country), one `StationHiveModel` for favorites+history, data sources expose domain entities | 2026-06-01 |
 
 ---
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 3, Sub-task 3.8 (use-case edge-case test coverage) — closes the Phase 3 "Testing requirements" gate (null / empty / boundary); tests added and green, awaiting user PR merge and `main` sync. Completes Phase 3.
-* **Last Completed Task:** Phase 3, Sub-task 3.7 (Analytics use cases), merged via PR #20; ADR-0036 push-policy amendment merged via PR #21.
-* **Active Branch:** `test/phase-3-sub-task-38-use-case-edge-case-coverage`.
+* **Current Task:** Phase 4, Sub-task 4.1 (Hive persistence models + local entity-cache data sources). Design fixed in ADR-0037; PHASE RED next.
+* **Last Completed Task:** Phase 3, Sub-task 3.8 (use-case edge-case test coverage), merged via PR #22. Completes Phase 3.
+* **Active Branch:** `feature/phase-4-sub-task-41-hive-local-data-sources`.
 
 ---
 

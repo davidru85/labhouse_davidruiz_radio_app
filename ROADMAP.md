@@ -180,8 +180,10 @@ Tasks:
 
 * [ ] Implement Hive `TypeAdapter`s via `build_runner` +
   `hive_generator` for favorite entries, cached genres, cached
-  countries, and history entries (per ADR-0018). Commit the
-  generated `*.g.dart` files.
+  countries, and history entries (per ADR-0018). The persistence
+  models use the `*HiveModel` naming and the `typeId` registry fixed
+  in ADR-0037 (a single `StationHiveModel` backs both the `favorites`
+  and `history` boxes). Commit the generated `*.g.dart` files.
 * [ ] Implement `LocalFavoritesDataSource`.
 * [ ] Implement `LocalHistoryDataSource`.
 * [ ] Implement `LocalGenresDataSource`.

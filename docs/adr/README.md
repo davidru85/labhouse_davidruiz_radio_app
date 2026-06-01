@@ -53,3 +53,4 @@ decisions made for RadioApp.
 | 0034 | [Domain-free core utility return types](0034-domain-free-core-utils.md) | Accepted | 2026-05-30 |
 | 0035 | [Pull request before next task branch](0035-pr-before-next-task-branch.md) | Accepted | 2026-05-31 |
 | 0036 | [Push approved phase commits to the remote](0036-push-after-green-commit.md) | Accepted | 2026-05-31 (amended 2026-06-01) |
+| 0037 | [Hive persistence model design](0037-hive-persistence-model-design.md) | Accepted | 2026-06-01 |

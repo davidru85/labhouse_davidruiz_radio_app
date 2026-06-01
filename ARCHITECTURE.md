@@ -75,6 +75,13 @@ Local data sources MUST:
 * Persist the last-known-working mirror in the `app_settings` box
   (per ADR-0016).
 
+Local entity-cache data sources (favorites, history, genres, countries)
+expose **domain entities** at their public boundary. The Hive persistence
+models (`*HiveModel`, in `data/models/`) are an internal detail and MUST
+NOT cross the data-source boundary; model↔entity mapping lives on the
+model. The `typeId` registry and the model design are governed by
+ADR-0037.
+
 Repositories MUST:
 
 * Coordinate remote and local data sources.
