@@ -21,8 +21,8 @@ Restrictions:
 
 ## 2. Official Dependency List
 
-The dependency list is governed by ADR-0018. New dependencies require
-an ADR amendment.
+The dependency list is governed by ADR-0018 (amended for persistence and
+code generation by ADR-0038). New dependencies require an ADR amendment.
 
 ### Production
 
@@ -37,13 +37,15 @@ an ADR amendment.
 | Stream operators | `stream_transform` |
 | Audio | `just_audio` |
 | Audio | `audio_service` |
-| Persistence | `hive_flutter` |
+| Persistence | `hive_ce` |
+| Persistence | `hive_ce_flutter` |
 | Image caching | `cached_network_image` |
 | i18n (SDK) | `flutter_localizations` |
 | i18n | `intl` |
 
 Hive was chosen over Isar for the project's data scale to prevent
-over-engineering.
+over-engineering. The maintained Hive Community Edition fork
+(`hive_ce` / `hive_ce_flutter`) is used per ADR-0038.
 
 ### Dev
 
@@ -55,7 +57,7 @@ over-engineering.
 | Test | `mocktail` |
 | Test (SDK) | `integration_test` |
 | Code generation | `build_runner` |
-| Code generation | `hive_generator` |
+| Code generation | `hive_ce_generator` |
 
 ---
 

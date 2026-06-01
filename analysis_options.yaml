@@ -1,6 +1,10 @@
 include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
+  exclude:
+    # Generated code (Hive CE adapters/registrar per ADR-0038) is committed
+    # but not hand-maintained, so it is exempt from lint rules.
+    - "**/*.g.dart"
   language:
     strict-casts: true
     strict-inference: true

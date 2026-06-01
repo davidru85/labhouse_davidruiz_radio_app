@@ -26,7 +26,8 @@ void main() {
         'stream_transform:',
         'just_audio:',
         'audio_service:',
-        'hive_flutter:',
+        'hive_ce:',
+        'hive_ce_flutter:',
         'cached_network_image:',
         'flutter_localizations:',
         'intl:',
@@ -47,7 +48,7 @@ void main() {
         'bloc_test:',
         'mocktail:',
         'build_runner:',
-        'hive_generator:',
+        'hive_ce_generator:',
       ];
       for (final dep in requiredDevDeps) {
         expect(

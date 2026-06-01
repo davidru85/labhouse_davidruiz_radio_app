@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:radio_app/data/datasources/local/local_history_data_source.dart';
 import 'package:radio_app/data/models/station_hive_model.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
@@ -48,10 +48,11 @@ void main() {
       await dataSource.addToHistory(_station(stationUuid: 'c'));
 
       final history = await dataSource.getHistory();
-      expect(
-        history.map((RadioStation s) => s.stationUuid),
-        <String>['a', 'b', 'c'],
-      );
+      expect(history.map((RadioStation s) => s.stationUuid), <String>[
+        'a',
+        'b',
+        'c',
+      ]);
     });
 
     test('removes a single entry by stationUuid', () async {

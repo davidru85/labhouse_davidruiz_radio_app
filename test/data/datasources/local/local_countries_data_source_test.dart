@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:radio_app/data/datasources/local/local_countries_data_source.dart';
 import 'package:radio_app/data/models/country_hive_model.dart';
 import 'package:radio_app/domain/entities/country.dart';

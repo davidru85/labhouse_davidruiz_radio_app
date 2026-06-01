@@ -12,7 +12,7 @@
 ## Context
 
 Phase 4 introduces the local storage layer. ADR-0018 fixed the codegen
-toolchain (`build_runner` + `hive_generator`) and ADR-0016 fixed the
+toolchain (`build_runner` + `hive_ce_generator`, per ADR-0038) and ADR-0016 fixed the
 mirror-cache backend (`app_settings` box). What no ADR has fixed yet is
 the **shape of the persisted Hive models** that back the four entity
 caches — favorites, history, genres, and countries. Several decisions
