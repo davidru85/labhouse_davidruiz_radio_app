@@ -215,6 +215,9 @@ Tasks:
 * [ ] Implement mirror failover with automatic retry, reading the
   cached mirror from `MirrorCacheDataSource` at startup
   (per ADR-0016) and writing the active mirror back on success.
+  The failover lives in `MirrorFailoverInterceptor` + an async
+  `DioClientFactory`; remote data sources map Dio errors via
+  `mapDioException` and throw `NetworkException` (per ADR-0039).
 * [ ] Handle malformed responses, empty payloads, non-2xx HTTP
   status codes, and timeouts.
 * [x] Map all API responses to DTOs in `data/models/`:

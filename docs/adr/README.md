@@ -55,3 +55,4 @@ decisions made for RadioApp.
 | 0036 | [Push approved phase commits to the remote](0036-push-after-green-commit.md) | Accepted | 2026-05-31 (amended 2026-06-01) |
 | 0037 | [Hive persistence model design](0037-hive-persistence-model-design.md) | Accepted | 2026-06-01 |
 | 0038 | [Adopt Hive Community Edition (Hive CE)](0038-adopt-hive-community-edition.md) | Accepted | 2026-06-01 |
+| 0039 | [Mirror failover networking architecture and remote error mapping](0039-mirror-failover-and-remote-error-mapping.md) | Accepted | 2026-06-01 |
