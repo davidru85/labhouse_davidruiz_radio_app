@@ -70,10 +70,10 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 4, Sub-task 4.2 (`MirrorCacheDataSource` — `app_settings` box, key `last_known_mirror`, bare hostname `String?` per ADR-0016) — RED/GREEN/REFACTOR complete on branch `feature/phase-4-sub-task-42-mirror-cache-data-source` (RED `496980d`, GREEN `0046896` pushed), PR pending. No Hive model — stores a plain `String` in a `Box<dynamic>`; public `mirrorKey` const consumed by main.dart in 4.3. REFACTOR had no production changes.
-* **Last Completed Task:** Phase 4, Sub-task 4.1 (Hive persistence models + local entity-cache data sources), merged via PR #23. Design fixed in ADR-0037; codegen toolchain migrated to Hive CE in ADR-0038 (unmaintained `hive_generator` incompatible with Dart 3.11.4).
-* **Active Branch:** `feature/phase-4-sub-task-42-mirror-cache-data-source` (branched from synced `main` after PR #23 merged, per ADR-0035; PR #23 is an ancestor of HEAD).
-* **Next Up (after 4.2 merges):** Sub-task 4.3 box-opening in `main.dart` via `Hive.initFlutter()` + the generated registrar before `runApp`.
+* **Current Task:** Phase 4, Sub-task 4.3 (open all Hive boxes in `main.dart` before `runApp`) — RED/GREEN/REFACTOR complete on branch `feature/phase-4-sub-task-43-main-box-opening` (RED `b6ee9ae`, GREEN `feat(app)` pushed), PR pending. `bootstrapLocalStorage` (in `lib/main.dart`) + `lib/core/constants/hive_boxes.dart`: registers generated adapters idempotently and opens `favorites`/`history` (`Box<StationHiveModel>`), `genres`/`countries` (typed), `app_settings` (`Box<dynamic>`). Box typing per ADR-0037, registrar per ADR-0038, `app_settings` mirror cache per ADR-0016. REFACTOR had no production changes. **This closes Phase 4** (all 7 ROADMAP tasks done).
+* **Last Completed Task:** Phase 4, Sub-task 4.2 (`MirrorCacheDataSource`), merged via PR #24 (`5226f2e`).
+* **Active Branch:** `feature/phase-4-sub-task-43-main-box-opening` (branched from synced `main` after PR #24 merged, per ADR-0035).
+* **Next Up (after 4.3 merges):** **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, mirror failover via `MirrorCacheDataSource`, DTOs (`StationDto`/`GenreDto`/`CountryCodeDto`) + mappers, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
 
 ---
 
