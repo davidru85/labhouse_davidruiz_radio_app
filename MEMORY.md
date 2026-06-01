@@ -58,7 +58,7 @@ to ADRs if revisited.
 | [0029](docs/adr/0029-recently-played-history-presentation-surface.md) | Recently played history presentation surface: StationsScreen empty query section | 2026-05-29 |
 | [0030](docs/adr/0030-android-cleartext-traffic.md) | Android cleartext traffic configuration: allow usesCleartextTraffic="true" | 2026-05-29 |
 | [0031](docs/adr/0031-search-pagination-deduplication-and-end.md) | Search pagination: client-side deduplication by UUID and hasReachedMax tracking | 2026-05-29 |
-| [0032](docs/adr/0032-country-name-resolution-strategy.md) | Country name resolution strategy: integrate via standard ARB localization resources | 2026-05-29 |
+| [0032](docs/adr/0032-country-name-resolution-strategy.md) | Country name resolution strategy: integrate via standard ARB localization resources (amended 2026-06-01: `country_name_resolver` is a pure helper taking a lookup callback since gen-l10n has no dynamic key lookup; resolution at the presentation boundary, data mapper leaves name as raw ISO code) | 2026-05-29 |
 | [0033](docs/adr/0033-branch-before-task.md) | Create or confirm a correctly named non-main branch before every new roadmap task or sub-task | 2026-05-30 |
 | [0034](docs/adr/0034-domain-free-core-utils.md) | Keep `core/utils` domain-free; map Icy parser output to domain entities at consuming boundaries | 2026-05-30 |
 | [0035](docs/adr/0035-pr-before-next-task-branch.md) | Wait for PR merge and synced `main` before creating the next sub-task branch | 2026-05-31 |
@@ -70,10 +70,10 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 4, Sub-task 4.3 (open all Hive boxes in `main.dart` before `runApp`) — RED/GREEN/REFACTOR complete on branch `feature/phase-4-sub-task-43-main-box-opening` (RED `b6ee9ae`, GREEN `feat(app)` pushed), PR pending. `bootstrapLocalStorage` (in `lib/main.dart`) + `lib/core/constants/hive_boxes.dart`: registers generated adapters idempotently and opens `favorites`/`history` (`Box<StationHiveModel>`), `genres`/`countries` (typed), `app_settings` (`Box<dynamic>`). Box typing per ADR-0037, registrar per ADR-0038, `app_settings` mirror cache per ADR-0016. REFACTOR had no production changes. **This closes Phase 4** (all 7 ROADMAP tasks done).
-* **Last Completed Task:** Phase 4, Sub-task 4.2 (`MirrorCacheDataSource`), merged via PR #24 (`5226f2e`).
-* **Active Branch:** `feature/phase-4-sub-task-43-main-box-opening` (branched from synced `main` after PR #24 merged, per ADR-0035).
-* **Next Up (after 4.3 merges):** **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, mirror failover via `MirrorCacheDataSource`, DTOs (`StationDto`/`GenreDto`/`CountryCodeDto`) + mappers, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
+* **Current Task:** Phase 5, Sub-task 5.1 (DTOs, mappers, and `core/utils` helpers) — RED/GREEN/REFACTOR complete on branch `feature/phase-5-sub-task-51-dtos-mappers-utils` (ADR-0032 amendment `bff37c2`, RED `95775a3`, GREEN `109868f` pushed), PR pending. `StationDto`/`GenreDto`/`CountryCodeDto` (fromJson + toEntity) + `tag_parser`/`country_name_resolver` (pure, domain-free per ADR-0017/0034). DTOs keep country name as raw ISO code (resolution deferred to presentation per ADR-0032 amended). REFACTOR had no production changes. Closes ROADMAP Phase 5 DTO + mapper tasks.
+* **Last Completed Task:** Phase 4, Sub-task 4.3 (open all Hive boxes in `main.dart`), merged via PR #25 (`00d480a`). **This closed Phase 4** (all 7 ROADMAP tasks done).
+* **Active Branch:** `feature/phase-5-sub-task-51-dtos-mappers-utils` (branched from synced `main` after PR #25 merged, per ADR-0035).
+* **Next Up (after 5.1 merges):** remainder of **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, mirror failover via `MirrorCacheDataSource`, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
 
 ---
 
