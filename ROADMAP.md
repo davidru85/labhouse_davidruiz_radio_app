@@ -151,9 +151,9 @@ History use cases:
 
 Playback use cases:
 
-* [ ] `PlayStationUseCase`
-* [ ] `PausePlaybackUseCase`
-* [ ] `StopPlaybackUseCase`
+* [x] `PlayStationUseCase`
+* [x] `PausePlaybackUseCase`
+* [x] `StopPlaybackUseCase`
 
 Connectivity use cases:
 
