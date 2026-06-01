@@ -188,7 +188,7 @@ Tasks:
 * [x] Implement `LocalHistoryDataSource`.
 * [x] Implement `LocalGenresDataSource`.
 * [x] Implement `LocalCountriesDataSource`.
-* [ ] Implement `MirrorCacheDataSource` backed by the
+* [x] Implement `MirrorCacheDataSource` backed by the
   `app_settings` Hive box (per ADR-0016).
 * [ ] Open all boxes (`favorites`, `history`, `genres`,
   `countries`, `app_settings`) during `Hive.initFlutter()` in
