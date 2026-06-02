@@ -94,7 +94,25 @@ final class RadioStation extends Equatable {
     bool? lastCheckOk,
     bool? isHLS,
   }) {
-    throw UnimplementedError();
+    return RadioStation(
+      stationUuid: stationUuid ?? this.stationUuid,
+      name: name ?? this.name,
+      streamUrl: streamUrl ?? this.streamUrl,
+      resolvedStreamUrl: resolvedStreamUrl ?? this.resolvedStreamUrl,
+      favicon: favicon ?? this.favicon,
+      homepage: homepage ?? this.homepage,
+      tags: tags ?? this.tags,
+      tagList: tagList ?? this.tagList,
+      country: country ?? this.country,
+      countryCode: countryCode ?? this.countryCode,
+      language: language ?? this.language,
+      codec: codec ?? this.codec,
+      bitrate: bitrate ?? this.bitrate,
+      votes: votes ?? this.votes,
+      clickCount: clickCount ?? this.clickCount,
+      lastCheckOk: lastCheckOk ?? this.lastCheckOk,
+      isHLS: isHLS ?? this.isHLS,
+    );
   }
 
   @override

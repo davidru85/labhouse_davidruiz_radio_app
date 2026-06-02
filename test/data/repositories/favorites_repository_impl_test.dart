@@ -74,7 +74,10 @@ void main() {
     group('removeFavorite', () {
       test('deletes the station and emits the updated list', () async {
         final local = _FakeLocalFavoritesDataSource(
-          initial: [_station(uuid: 'a'), _station(uuid: 'b')],
+          initial: [
+            _station(uuid: 'a'),
+            _station(uuid: 'b'),
+          ],
         );
         final repository = _repository(local: local);
         final emissions = <List<RadioStation>>[];
