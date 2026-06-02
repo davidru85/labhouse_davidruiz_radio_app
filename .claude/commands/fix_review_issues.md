@@ -1,14 +1,16 @@
 ---
-description: Review the issues the user collected in code_review_result.md, verify each against the repo, fix only the real ones, delete the file, and hand back for re-review (no commit).
+description: Review the issues the user collected in code_review_result.md, verify each against the repo, fix only the real ones, delete the file only if nothing needed fixing, and hand back for re-review (no commit).
 argument-hint: "[optional: a different review file path, or extra focus notes]"
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git diff --staged:*), Bash(git log:*), Bash(git show:*), Bash(flutter analyze:*), Bash(flutter test:*), Bash(rm:*), Read, Glob, Grep, Edit, Write
 ---
 
 # /fix_review_issues
 
-The user has just reviewed the pending changes with AI agents and collected the issues into **`code_review_result.md`** (at the repo root) before committing. Your job: read that file, fix the issues it raises, delete the file, and then let the user know so they can review again.
+The user has just reviewed the pending changes with AI agents and collected the issues into **`code_review_result.md`** (at the repo root) before committing. Your job: read that file, fix the issues it raises, and then let the user know so they can review again.
 
-The end state is: real issues fixed, `code_review_result.md` deleted, the user notified. **Do not commit, push, or merge** — the user re-reviews and owns the commit.
+The end state is: real issues fixed and the user notified. **Do not commit, push, or merge** — the user re-reviews and owns the commit.
+
+**File deletion is conditional.** Delete `code_review_result.md` **only if you modified no files** — i.e. the code was already OK and every finding turned out to be a false positive or needed no change. If you edited any file to fix a real issue, **keep `code_review_result.md`** (the user wants it to persist alongside the modifications for the re-review).
 
 ## Critical: verify before you fix
 
@@ -28,6 +30,6 @@ Review output from AI agents is frequently **wrong**. Past runs produced false p
 
 5. **Re-validate.** Run `flutter analyze` and `flutter test` on the affected paths and confirm they are clean.
 
-6. **Delete the file.** `rm code_review_result.md` so it is never swept into a commit. If a real blocker remains unresolved because it needs the user's approval, do NOT delete the file — leave it and say so.
+6. **Delete the file — only if you changed nothing.** If you did **not** modify any file (the code was OK and every finding was a false positive or needed no change), `rm code_review_result.md` so the clean run leaves no stray file. Otherwise — if you edited any file to fix a real issue, or a real blocker remains unresolved pending the user's approval — **keep `code_review_result.md`** (do not delete it) and say so.
 
-7. **Hand back.** Tell the user it's ready for re-review. Reply in the user's language (the user often writes in Spanish — match it). Summarize per finding: REAL → what you fixed, or FALSE POSITIVE → the evidence refuting it. Then state the re-validation result and that `code_review_result.md` was deleted. Do not commit, push, or merge.
+7. **Hand back.** Tell the user it's ready for re-review. Reply in the user's language (the user often writes in Spanish — match it). Summarize per finding: REAL → what you fixed, or FALSE POSITIVE → the evidence refuting it. Then state the re-validation result and whether `code_review_result.md` was deleted (only when nothing was modified) or kept (because files were modified). Do not commit, push, or merge.
