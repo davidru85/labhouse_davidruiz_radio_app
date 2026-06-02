@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// AppShell que actúa como contenedor persistente (placeholder).
+/// Persistent shell that wraps tab-based screens.
+///
+/// In Phase 9 this will evolve into the full AppShell with bottom navigation,
+/// mini-player, and an IndexedStack. For now it is a minimal passthrough.
 class AppShell extends StatelessWidget {
-  /// Crea una instancia de [AppShell] con un [child] de navegación.
+  /// Creates an instance of [AppShell] with the navigated [child].
   const AppShell({required this.child, super.key});
 
-  /// El widget hijo correspondiente a la ruta actual.
+  /// The widget corresponding to the current route.
   final Widget child;
 
   @override

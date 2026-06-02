@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// Pantalla de favoritos (placeholder mínimo para compilación de rutas).
+/// Favorites screen placeholder (minimal for route compilation).
 class FavoritesScreen extends StatelessWidget {
-  /// Crea una instancia de [FavoritesScreen].
+  /// Creates an instance of [FavoritesScreen].
   const FavoritesScreen({super.key});
 
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// Pantalla del reproductor (placeholder mínimo para compilación de rutas).
+/// Full player screen placeholder (minimal for route compilation).
 class FullPlayerScreen extends StatelessWidget {
-  /// Crea una instancia de [FullPlayerScreen].
+  /// Creates an instance of [FullPlayerScreen].
   const FullPlayerScreen({super.key});
 
   @override

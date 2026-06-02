@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// Pantalla de estaciones (placeholder mínimo para compilación de rutas).
+/// Stations screen placeholder (minimal for route compilation).
 class StationsScreen extends StatelessWidget {
-  /// Crea una instancia de [StationsScreen].
+  /// Creates an instance of [StationsScreen].
   const StationsScreen({super.key});
 
   @override

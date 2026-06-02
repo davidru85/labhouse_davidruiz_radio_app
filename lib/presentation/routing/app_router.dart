@@ -5,7 +5,10 @@ import 'package:radio_app/presentation/screens/full_player_screen.dart';
 import 'package:radio_app/presentation/screens/stations_screen.dart';
 import 'package:radio_app/presentation/widgets/app_shell.dart';
 
-/// Crea el enrutador principal de la aplicación.
+/// Creates a new [GoRouter] for the application.
+///
+/// Using a factory avoids sharing a single stateful router across tests and
+/// allows callers to inject a [navigatorKey] when needed (e.g. for testing).
 GoRouter createAppRouter({GlobalKey<NavigatorState>? navigatorKey}) {
   return GoRouter(
     navigatorKey: navigatorKey,
