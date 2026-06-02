@@ -74,6 +74,29 @@ final class RadioStation extends Equatable {
   /// Whether the station stream is HLS.
   final bool isHLS;
 
+  /// Returns a copy of this station with the given fields replaced.
+  RadioStation copyWith({
+    String? stationUuid,
+    String? name,
+    String? streamUrl,
+    String? resolvedStreamUrl,
+    String? favicon,
+    String? homepage,
+    String? tags,
+    List<String>? tagList,
+    String? country,
+    String? countryCode,
+    String? language,
+    String? codec,
+    int? bitrate,
+    int? votes,
+    int? clickCount,
+    bool? lastCheckOk,
+    bool? isHLS,
+  }) {
+    throw UnimplementedError();
+  }
+
   @override
   List<Object?> get props => [
     stationUuid,
