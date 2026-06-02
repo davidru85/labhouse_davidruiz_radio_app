@@ -328,18 +328,24 @@ matrix):
 
 Tasks:
 
-* [ ] Initialise `get_it` service locator (rules in
-  `ARCHITECTURE.md` §"Dependency Injection").
-* [ ] Keep dependency setup in a separate composition-root file.
-* [ ] Register all data sources, repositories, use cases, and
-  BLoCs.
-* [ ] Set up `go_router` with `AppShell` architecture.
-* [ ] Define routes for:
-  * `StationsScreen`
-  * `FavoritesScreen`
-  * `FullPlayerScreen`
+* [x] Initialise `get_it` service locator (rules in
+  `ARCHITECTURE.md` §"Dependency Injection"). *(Sub-task 8.1, PR #38.)*
+* [x] Keep dependency setup in a separate composition-root file. *(Sub-task 8.1, PR #38.)*
+* [x] Register all data sources, repositories, use cases, and
+  BLoCs. *(Sub-task 8.1, PR #38.)*
+* [x] Set up `go_router` with `AppShell` architecture. *(Sub-task 8.2:
+  `createAppRouter` factory + `ShellRoute`; `AppShell` is a minimal
+  passthrough — the real `IndexedStack` shell lands in Phase 9.)*
+* [x] Define routes for: *(Sub-task 8.2.)*
+  * `StationsScreen` *(in shell)*
+  * `FavoritesScreen` *(in shell)*
+  * `FullPlayerScreen` *(top-level, outside the shell)*
 * [ ] Ensure BLoC lifecycle management within the routing shell.
-* [ ] Ensure proper disposal.
+  *(Deferred to Phase 9 with the `IndexedStack` `AppShell`; the Phase 8
+  passthrough holds no BLoC providers.)*
+* [ ] Ensure proper disposal. *(Deferred to Phase 9; no controllers/streams
+  in the passthrough shell yet — a disposal test MUST accompany the Phase 9
+  shell.)*
 
 ---
 
