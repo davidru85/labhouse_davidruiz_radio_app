@@ -29,7 +29,7 @@ class AudioPlayerRepositoryImpl implements AudioPlayerRepository {
       StreamController<PlayerState>.broadcast();
   late final StreamSubscription<PlaybackStatus> _statusSubscription;
   late final StreamSubscription<bool> _connectivitySubscription;
-  bool _isPlaying = false;
+  bool _isSessionActive = false;
 
   @override
   Stream<PlayerState> get playerStateStream => _stateController.stream;
@@ -69,14 +69,18 @@ class AudioPlayerRepositoryImpl implements AudioPlayerRepository {
   }
 
   void _onStatus(PlaybackStatus status) {
-    _isPlaying = status == PlaybackStatus.playing;
+    // Buffering is part of an active playback session (a stream may rebuffer
+    // mid-session), so it counts as active alongside playing (per ADR-0025).
+    _isSessionActive =
+        status == PlaybackStatus.playing || status == PlaybackStatus.buffering;
     _stateController.add(_mapStatus(status));
   }
 
   void _onConnectivityChanged(bool isOnline) {
-    // A drop to offline during active playback is surfaced as a playback
-    // failure so the player layer needs no connectivity awareness (ADR-0013).
-    if (!isOnline && _isPlaying) {
+    // A drop to offline during an active playback session is surfaced as a
+    // playback failure so the player layer needs no connectivity awareness
+    // (per ADR-0013).
+    if (!isOnline && _isSessionActive) {
       _stateController.add(const PlayerErrorState(ConnectivityLostFailure()));
     }
   }
