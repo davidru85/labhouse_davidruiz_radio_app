@@ -76,6 +76,15 @@ void main() {
       expect(await _dataSource(adapter).resolvePlaybackUrl('uuid-123'), isNull);
     });
 
+    test('returns null when the endpoint reports a boolean ok:false', () async {
+      // Review N1 — tolerate API drift where `ok` is a JSON boolean.
+      final adapter = _StubAdapter(
+        body: '{"ok":false,"url":"https://stream.example/live"}',
+      );
+
+      expect(await _dataSource(adapter).resolvePlaybackUrl('uuid-123'), isNull);
+    });
+
     test('returns null when the resolved url is empty', () async {
       final adapter = _StubAdapter(body: '{"ok":"true","url":""}');
 
