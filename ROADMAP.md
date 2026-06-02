@@ -206,16 +206,19 @@ Favorites cache the metadata required for offline rendering
 
 Tasks:
 
-* [ ] Implement `Dio`-based `RemoteStationDataSource`.
-* [ ] Implement `Dio`-based `RemoteGenresDataSource`.
-* [ ] Implement `Dio`-based `RemoteCountriesDataSource`.
-* [ ] Implement `ConnectivityDataSource` (thin wrapper around
+* [x] Implement `Dio`-based `RemoteStationDataSource`.
+* [x] Implement `Dio`-based `RemoteGenresDataSource`.
+* [x] Implement `Dio`-based `RemoteCountriesDataSource`.
+* [x] Implement `ConnectivityDataSource` (thin wrapper around
   `connectivity_plus`, per ADR-0013).
-* [ ] Enforce required headers (`User-Agent`, `Content-Type`).
-* [ ] Implement mirror failover with automatic retry, reading the
+* [x] Enforce required headers (`User-Agent`, `Content-Type`).
+* [x] Implement mirror failover with automatic retry, reading the
   cached mirror from `MirrorCacheDataSource` at startup
   (per ADR-0016) and writing the active mirror back on success.
-* [ ] Handle malformed responses, empty payloads, non-2xx HTTP
+  The failover lives in `MirrorFailoverInterceptor` + an async
+  `DioClientFactory`; remote data sources map Dio errors via
+  `mapDioException` and throw `NetworkException` (per ADR-0039).
+* [x] Handle malformed responses, empty payloads, non-2xx HTTP
   status codes, and timeouts.
 * [x] Map all API responses to DTOs in `data/models/`:
   * `StationDto`
@@ -224,7 +227,7 @@ Tasks:
 * [x] Implement mappers from DTOs to domain entities, using the
   helpers in `core/utils/` (`tag_parser` for `tagList`;
   `country_name_resolver` for display names).
-* [ ] Handle playback URL resolution through
+* [x] Handle playback URL resolution through
   `/json/url/{stationuuid}` (see `API_SPEC.md` §5.3).
 
 ---
