@@ -4,15 +4,18 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:radio_app/core/errors/result.dart';
+import 'package:radio_app/domain/entities/analytics/analytics_event.dart';
 import 'package:radio_app/domain/entities/now_playing_info.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
+import 'package:radio_app/domain/repositories/analytics_repository.dart';
 import 'package:radio_app/domain/repositories/audio_player_repository.dart';
 import 'package:radio_app/domain/repositories/playback_url_repository.dart';
 import 'package:radio_app/domain/repositories/player_state.dart';
 import 'package:radio_app/domain/usecases/pause_playback_use_case.dart';
 import 'package:radio_app/domain/usecases/play_station_use_case.dart';
 import 'package:radio_app/domain/usecases/stop_playback_use_case.dart';
+import 'package:radio_app/domain/usecases/track_analytics_event_use_case.dart';
 import 'package:radio_app/domain/usecases/watch_now_playing_use_case.dart';
 import 'package:radio_app/domain/usecases/watch_player_state_use_case.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
@@ -26,21 +29,31 @@ class _MockPlaybackUrlRepository extends Mock
 class _MockAudioPlayerRepository extends Mock
     implements AudioPlayerRepository {}
 
+class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
+
 void main() {
   late _MockPlaybackUrlRepository urlRepository;
   late _MockAudioPlayerRepository audioPlayer;
+  late _MockAnalyticsRepository analytics;
   late StreamController<PlayerState> stateController;
   late StreamController<NowPlayingInfo?> nowPlayingController;
+  late DateTime nowValue;
 
   final station = _station('a');
 
-  setUpAll(() => registerFallbackValue(_station('fallback')));
+  setUpAll(() {
+    registerFallbackValue(_station('fallback'));
+    registerFallbackValue(const AppOpenedEvent());
+  });
 
   setUp(() {
     urlRepository = _MockPlaybackUrlRepository();
     audioPlayer = _MockAudioPlayerRepository();
+    analytics = _MockAnalyticsRepository();
+    nowValue = DateTime(2026, 1, 1, 12);
     stateController = StreamController<PlayerState>.broadcast();
     nowPlayingController = StreamController<NowPlayingInfo?>.broadcast();
+    when(() => analytics.track(any())).thenAnswer((_) async {});
     when(
       () => audioPlayer.playerStateStream,
     ).thenAnswer((_) => stateController.stream);
@@ -76,6 +89,8 @@ void main() {
     StopPlaybackUseCase(audioPlayer),
     WatchPlayerStateUseCase(audioPlayer),
     WatchNowPlayingUseCase(audioPlayer),
+    TrackAnalyticsEventUseCase(analytics),
+    now: () => nowValue,
   );
 
   Future<void> tick() => Future<void>.delayed(Duration.zero);
@@ -351,6 +366,84 @@ void main() {
           const NowPlayingInfo(raw: 'A - 2', artist: 'A', track: '2'),
         ),
       ],
+    );
+
+    blocTest<RadioPlayerBloc, RadioPlayerState>(
+      'fires StationPlayedEvent on entering Playing (per ADR-0019)',
+      build: build,
+      act: (bloc) async {
+        bloc.add(RadioPlayerPlayRequested(station));
+        await tick();
+        stateController.add(const PlayerPlayingState());
+        await tick();
+      },
+      verify: (_) => verify(
+        () => analytics.track(
+          const StationPlayedEvent(
+            stationUuid: 'a',
+            stationName: 'Station a',
+            countryCode: 'DE',
+          ),
+        ),
+      ).called(1),
+    );
+
+    blocTest<RadioPlayerBloc, RadioPlayerState>(
+      'fires StationStoppedEvent with the played duration on stop '
+      '(per ADR-0019)',
+      build: build,
+      act: (bloc) async {
+        bloc.add(RadioPlayerPlayRequested(station));
+        await tick();
+        stateController.add(const PlayerPlayingState());
+        await tick();
+        nowValue = nowValue.add(const Duration(seconds: 42));
+        stateController.add(const PlayerStoppedState());
+        await tick();
+      },
+      verify: (_) => verify(
+        () => analytics.track(
+          const StationStoppedEvent(stationUuid: 'a', durationSeconds: 42),
+        ),
+      ).called(1),
+    );
+
+    blocTest<RadioPlayerBloc, RadioPlayerState>(
+      'fires PlaybackErrorEvent on entering Error (per ADR-0019)',
+      setUp: () =>
+          when(() => urlRepository.resolvePlaybackUrl(any())).thenAnswer(
+            (_) async => const FailureResult<String, Failure>(
+              StreamUnreachableFailure(),
+            ),
+          ),
+      build: build,
+      act: (bloc) => bloc.add(RadioPlayerPlayRequested(station)),
+      verify: (_) => verify(
+        () => analytics.track(
+          const PlaybackErrorEvent(
+            stationUuid: 'a',
+            failureType: 'StreamUnreachableFailure',
+          ),
+        ),
+      ).called(1),
+    );
+
+    blocTest<RadioPlayerBloc, RadioPlayerState>(
+      'does not re-fire StationPlayedEvent across a mid-playback stall '
+      '(per ADR-0019)',
+      build: build,
+      act: (bloc) async {
+        bloc.add(RadioPlayerPlayRequested(station));
+        await tick();
+        stateController.add(const PlayerPlayingState());
+        await tick();
+        stateController.add(const PlayerBufferingState());
+        await tick();
+        stateController.add(const PlayerPlayingState());
+        await tick();
+      },
+      verify: (_) =>
+          verify(() => analytics.track(any<StationPlayedEvent>())).called(1),
     );
   });
 }

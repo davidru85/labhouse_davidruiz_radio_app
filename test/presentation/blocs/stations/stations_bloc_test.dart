@@ -2,12 +2,15 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:radio_app/core/errors/result.dart';
+import 'package:radio_app/domain/entities/analytics/analytics_event.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
+import 'package:radio_app/domain/repositories/analytics_repository.dart';
 import 'package:radio_app/domain/repositories/station_repository.dart';
 import 'package:radio_app/domain/usecases/cancel_search_use_case.dart';
 import 'package:radio_app/domain/usecases/load_popular_stations_use_case.dart';
 import 'package:radio_app/domain/usecases/search_stations_use_case.dart';
+import 'package:radio_app/domain/usecases/track_analytics_event_use_case.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 
 // Use cases are `final` (unmockable): mock the StationRepository contract and
@@ -15,11 +18,18 @@ import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 // (ARCHITECTURE.md §"Dependency Rule").
 class _MockStationRepository extends Mock implements StationRepository {}
 
+class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
+
 void main() {
   late _MockStationRepository repository;
+  late _MockAnalyticsRepository analytics;
+
+  setUpAll(() => registerFallbackValue(const AppOpenedEvent()));
 
   setUp(() {
     repository = _MockStationRepository();
+    analytics = _MockAnalyticsRepository();
+    when(() => analytics.track(any())).thenAnswer((_) async {});
     when(
       () => repository.cancelPendingRequests(),
     ).thenAnswer((_) async => const Success<void, Failure>(null));
@@ -35,6 +45,7 @@ void main() {
     SearchStationsUseCase(repository),
     LoadPopularStationsUseCase(repository),
     CancelSearchUseCase(repository),
+    TrackAnalyticsEventUseCase(analytics),
   );
 
   void stubSearch(List<RadioStation> Function() responder) {
@@ -323,6 +334,57 @@ void main() {
     );
   });
 
+  group('StationsBloc analytics', () {
+    blocTest<StationsBloc, StationsState>(
+      'fires SearchPerformedEvent after a successful search (per ADR-0019)',
+      setUp: () => stubSearch(() => page(['a', 'b'])),
+      build: build,
+      act: (bloc) => bloc.add(const StationsSearchChanged('rock')),
+      wait: const Duration(milliseconds: 400),
+      verify: (_) => verify(
+        () => analytics.track(
+          const SearchPerformedEvent(queryLength: 4, resultCount: 2),
+        ),
+      ).called(1),
+    );
+
+    blocTest<StationsBloc, StationsState>(
+      'does not fire SearchPerformedEvent for the popular-stations fallback '
+      '(per ADR-0019)',
+      build: build,
+      act: (bloc) => bloc.add(const StationsSearchChanged('')),
+      wait: const Duration(milliseconds: 400),
+      verify: (_) =>
+          verifyNever(() => analytics.track(any<SearchPerformedEvent>())),
+    );
+
+    blocTest<StationsBloc, StationsState>(
+      'fires FilterAppliedEvent(country) on a country filter (per ADR-0019)',
+      setUp: () => stubSearch(() => page(['de'])),
+      build: build,
+      act: (bloc) => bloc.add(const StationsCountryFilterChanged('DE')),
+      wait: const Duration(milliseconds: 400),
+      verify: (_) => verify(
+        () => analytics.track(
+          const FilterAppliedEvent(filterType: 'country', value: 'DE'),
+        ),
+      ).called(1),
+    );
+
+    blocTest<StationsBloc, StationsState>(
+      'fires FilterAppliedEvent(genre) on a tag filter (per ADR-0019)',
+      setUp: () => stubSearch(() => page(['rock'])),
+      build: build,
+      act: (bloc) => bloc.add(const StationsTagFilterChanged('rock')),
+      wait: const Duration(milliseconds: 400),
+      verify: (_) => verify(
+        () => analytics.track(
+          const FilterAppliedEvent(filterType: 'genre', value: 'rock'),
+        ),
+      ).called(1),
+    );
+  });
+
   group('StationsBloc pagination', () {
     // A full first page (== pageSize) keeps hasReachedMax false so load-more
     // can fetch; the second page is shorter and re-includes one uuid, proving
@@ -376,6 +438,7 @@ void main() {
         SearchStationsUseCase(repository),
         LoadPopularStationsUseCase(repository),
         CancelSearchUseCase(repository),
+        TrackAnalyticsEventUseCase(analytics),
         maxStations: 2,
       ),
       act: (bloc) => bloc.add(const StationsSearchChanged('rock')),
