@@ -71,10 +71,10 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 8 **Sub-task 8.1 — Dependency Injection / composition root** (`get_it` registrations only in the composition root; register data sources, repositories, use cases, and BLoCs; keep widgets free of `GetIt`). Preparing PHASE RED on branch `feature/phase-8-sub-task-81-dependency-injection-composition-root`.
+* **Current Task:** Phase 8 **Sub-task 8.1 — Dependency Injection / composition root** (`get_it` registrations only in the composition root; register data sources, repositories, use cases, and BLoCs; keep widgets free of `GetIt`). Completed, verified, and awaiting PR merge.
 * **Last Completed Task:** Phase 7 **Step 2 = sub-tasks 7.5–7.8** (`GenresBloc`, `CountriesBloc`, `ConnectivityBloc` + analytics instrumentation) — merged via **PR #36 (`e93c2d6`)**. Phase 7 memory sync merged via **PR #37 (`68eb58f`)**. Step 1 (7.1–7.4) merged earlier via **PR #35 (`6cd1abc`)**. (Phase 6 closed via PRs #31–#34.)
 * **Active Branch:** `feature/phase-8-sub-task-81-dependency-injection-composition-root` (branched from synced `main` @ `68eb58f`, per ADR-0033/0035).
-* **Next Up:** PHASE RED for Phase 8 Sub-task 8.1 — add failing DI composition-root tests, present test code and failing output, then wait for user review before GREEN.
+* **Next Up:** Wait for user to merge the PR for Sub-task 8.1 and confirm sync of local `main` before creating the branch for the next task.
 
 ### Phase 7 governing decisions (BLoC layer — reuse from Phase 8 on)
 
