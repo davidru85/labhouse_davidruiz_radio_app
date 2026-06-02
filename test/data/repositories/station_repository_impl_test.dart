@@ -42,10 +42,7 @@ void main() {
         final result = await repository.searchStations(query: 'none');
 
         expect(result, isA<Success<List<RadioStation>, Failure>>());
-        expect(
-          (result as Success<List<RadioStation>, Failure>).value,
-          isEmpty,
-        );
+        expect((result as Success<List<RadioStation>, Failure>).value, isEmpty);
       });
 
       test('maps a NetworkException to a FailureResult', () async {
@@ -115,10 +112,7 @@ void main() {
         final result = await repository.getStationByUuid('uuid-1');
 
         expect(result, isA<Success<RadioStation?, Failure>>());
-        expect(
-          (result as Success<RadioStation?, Failure>).value,
-          station,
-        );
+        expect((result as Success<RadioStation?, Failure>).value, station);
         expect(remote.lastByUuids, ['uuid-1']);
       });
 
