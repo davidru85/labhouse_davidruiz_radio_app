@@ -241,7 +241,7 @@ Tasks:
 * [x] Implement `GenresRepositoryImpl`.
 * [ ] Implement `CountriesRepositoryImpl`.
 * [ ] Implement `HistoryRepositoryImpl` (enforcing the 50-item limit and FIFO eviction policy per ADR-0021).
-* [ ] Implement `PlaybackUrlRepositoryImpl`.
+* [x] Implement `PlaybackUrlRepositoryImpl`.
 * [ ] Implement `AudioPlayerRepositoryImpl`:
   * Wraps `just_audio` + `audio_service`.
   * Exposes `nowPlayingStream` from `just_audio`'s
