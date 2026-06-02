@@ -164,6 +164,32 @@ void main() {
       );
       await sub.cancel();
     });
+
+    test('playerStateStream still surfaces a connectivity loss after the '
+        'stream rebuffers mid-session', () async {
+      final playback = _FakeAudioPlaybackDataSource();
+      addTearDown(playback.close);
+      final connectivity = _FakeConnectivityRepository()
+        ..registerTearDown(addTearDown);
+      final repository = AudioPlayerRepositoryImpl(playback, connectivity);
+
+      final states = <PlayerState>[];
+      final sub = repository.playerStateStream.listen(states.add);
+
+      playback
+        ..emitStatus(PlaybackStatus.playing)
+        ..emitStatus(PlaybackStatus.buffering);
+      await pumpEventQueue();
+      connectivity.emitOnline(isOnline: false);
+      await pumpEventQueue();
+
+      expect(states.last, isA<PlayerErrorState>());
+      expect(
+        (states.last as PlayerErrorState).failure,
+        isA<ConnectivityLostFailure>(),
+      );
+      await sub.cancel();
+    });
   });
 }
 
