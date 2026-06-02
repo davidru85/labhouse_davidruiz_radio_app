@@ -17,18 +17,18 @@ class _MockHistoryRepository extends Mock implements HistoryRepository {}
 
 void main() {
   late _MockHistoryRepository repository;
-  late HistoryBloc Function() build;
 
   setUpAll(() => registerFallbackValue(_station('fallback')));
 
   setUp(() {
     repository = _MockHistoryRepository();
-    build = () => HistoryBloc(
-      GetHistoryUseCase(repository),
-      AddToHistoryUseCase(repository),
-      ClearHistoryUseCase(repository),
-    );
   });
+
+  HistoryBloc build() => HistoryBloc(
+    GetHistoryUseCase(repository),
+    AddToHistoryUseCase(repository),
+    ClearHistoryUseCase(repository),
+  );
 
   group('HistoryBloc', () {
     final stations = [_station('a'), _station('b')];

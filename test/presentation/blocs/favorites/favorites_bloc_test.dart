@@ -16,18 +16,18 @@ class _MockFavoritesRepository extends Mock implements FavoritesRepository {}
 
 void main() {
   late _MockFavoritesRepository repository;
-  late FavoritesBloc Function() build;
 
   setUpAll(() => registerFallbackValue(_station('fallback')));
 
   setUp(() {
     repository = _MockFavoritesRepository();
-    build = () => FavoritesBloc(
-      GetFavoritesUseCase(repository),
-      ToggleFavoriteUseCase(repository),
-      RefreshFavoritesUseCase(repository),
-    );
   });
+
+  FavoritesBloc build() => FavoritesBloc(
+    GetFavoritesUseCase(repository),
+    ToggleFavoriteUseCase(repository),
+    RefreshFavoritesUseCase(repository),
+  );
 
   group('FavoritesBloc', () {
     final favorites = [_station('a'), _station('b')];

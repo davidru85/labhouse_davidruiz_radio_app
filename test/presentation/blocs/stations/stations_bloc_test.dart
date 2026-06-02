@@ -17,7 +17,6 @@ class _MockStationRepository extends Mock implements StationRepository {}
 
 void main() {
   late _MockStationRepository repository;
-  late StationsBloc Function() build;
 
   setUp(() {
     repository = _MockStationRepository();
@@ -30,12 +29,13 @@ void main() {
         offset: any(named: 'offset'),
       ),
     ).thenAnswer((_) async => const Success<List<RadioStation>, Failure>([]));
-    build = () => StationsBloc(
-      SearchStationsUseCase(repository),
-      LoadPopularStationsUseCase(repository),
-      CancelSearchUseCase(repository),
-    );
   });
+
+  StationsBloc build() => StationsBloc(
+    SearchStationsUseCase(repository),
+    LoadPopularStationsUseCase(repository),
+    CancelSearchUseCase(repository),
+  );
 
   void stubSearch(List<RadioStation> Function() responder) {
     when(
@@ -193,6 +193,74 @@ void main() {
         () => repository.cancelPendingRequests(),
       ).called(greaterThan(0)),
     );
+
+    blocTest<StationsBloc, StationsState>(
+      'a whitespace-only query loads popular stations (per ADR-0014)',
+      setUp: () =>
+          when(
+            () => repository.loadPopularStations(
+              limit: any(named: 'limit'),
+              offset: any(named: 'offset'),
+            ),
+          ).thenAnswer(
+            (_) async => Success<List<RadioStation>, Failure>(page(['p'])),
+          ),
+      build: build,
+      act: (bloc) => bloc.add(const StationsSearchChanged('   ')),
+      wait: const Duration(milliseconds: 400),
+      expect: () => [
+        isA<StationsState>().having(
+          (s) => s.status,
+          'status',
+          StationsStatus.loading,
+        ),
+        isA<StationsState>().having(
+          (s) => s.status,
+          'status',
+          StationsStatus.success,
+        ),
+      ],
+      verify: (_) {
+        verify(
+          () => repository.loadPopularStations(
+            limit: any(named: 'limit'),
+            offset: any(named: 'offset'),
+          ),
+        ).called(1);
+        verifyNever(
+          () => repository.searchStations(
+            query: any(named: 'query'),
+            countryCode: any(named: 'countryCode'),
+            tag: any(named: 'tag'),
+            limit: any(named: 'limit'),
+            offset: any(named: 'offset'),
+          ),
+        );
+      },
+    );
+
+    blocTest<StationsBloc, StationsState>(
+      'trims trailing whitespace before searching (per ADR-0014)',
+      setUp: () => stubSearch(() => page(['a'])),
+      build: build,
+      act: (bloc) => bloc.add(const StationsSearchChanged('rock  ')),
+      wait: const Duration(milliseconds: 400),
+      verify: (_) => verify(
+        () => repository.searchStations(
+          query: 'rock',
+          countryCode: any(named: 'countryCode'),
+          tag: any(named: 'tag'),
+          limit: any(named: 'limit'),
+          offset: any(named: 'offset'),
+        ),
+      ).called(1),
+    );
+
+    test('cancels the in-flight search when disposed (per ADR-0014)', () async {
+      final bloc = build();
+      await bloc.close();
+      verify(() => repository.cancelPendingRequests()).called(1);
+    });
   });
 
   group('StationsBloc filters', () {
@@ -256,13 +324,20 @@ void main() {
   });
 
   group('StationsBloc pagination', () {
+    // A full first page (== pageSize) keeps hasReachedMax false so load-more
+    // can fetch; the second page is shorter and re-includes one uuid, proving
+    // dedup and the hasReachedMax boundary (per ADR-0031).
+    final firstPage = [
+      for (var i = 0; i < StationsBloc.pageSize; i++) _station('s$i'),
+    ];
+
     blocTest<StationsBloc, StationsState>(
       'load more appends and deduplicates the next page by uuid '
       '(per ADR-0031)',
       setUp: () {
         final responses = <List<RadioStation>>[
-          page(['a', 'b']),
-          page(['b', 'c']),
+          firstPage,
+          [_station('s0'), _station('new')],
         ];
         stubSearch(() => responses.removeAt(0));
       },
@@ -281,13 +356,38 @@ void main() {
         ),
         isA<StationsState>()
             .having((s) => s.status, 'status', StationsStatus.success)
-            .having((s) => s.stations.length, 'count', 2),
+            .having((s) => s.stations.length, 'count', StationsBloc.pageSize)
+            .having((s) => s.hasReachedMax, 'hasReachedMax', false),
         isA<StationsState>()
             .having(
-              (s) => s.stations.map((e) => e.stationUuid).toList(),
-              'uuids',
-              ['a', 'b', 'c'],
+              (s) => s.stations.length,
+              'count',
+              StationsBloc.pageSize + 1,
             )
+            .having((s) => s.stations.last.stationUuid, 'last', 'new')
+            .having((s) => s.hasReachedMax, 'hasReachedMax', true),
+      ],
+    );
+
+    blocTest<StationsBloc, StationsState>(
+      'caps results and reaches max at STATIONS_MAX_LIMIT (per ADR-0031)',
+      setUp: () => stubSearch(() => firstPage),
+      build: () => StationsBloc(
+        SearchStationsUseCase(repository),
+        LoadPopularStationsUseCase(repository),
+        CancelSearchUseCase(repository),
+        maxStations: 2,
+      ),
+      act: (bloc) => bloc.add(const StationsSearchChanged('rock')),
+      wait: const Duration(milliseconds: 400),
+      expect: () => [
+        isA<StationsState>().having(
+          (s) => s.status,
+          'status',
+          StationsStatus.loading,
+        ),
+        isA<StationsState>()
+            .having((s) => s.stations.length, 'count', 2)
             .having((s) => s.hasReachedMax, 'hasReachedMax', true),
       ],
     );
