@@ -44,6 +44,16 @@ void main() {
   setUpAll(() {
     registerFallbackValue(_station('fallback'));
     registerFallbackValue(const AppOpenedEvent());
+    // Required for the typed `any<StationPlayedEvent>()` matcher: mocktail
+    // resolves fallbacks by `value is T`, so the base AppOpenedEvent does not
+    // satisfy a StationPlayedEvent matcher.
+    registerFallbackValue(
+      const StationPlayedEvent(
+        stationUuid: '',
+        stationName: '',
+        countryCode: '',
+      ),
+    );
   });
 
   setUp(() {
@@ -444,6 +454,58 @@ void main() {
       },
       verify: (_) =>
           verify(() => analytics.track(any<StationPlayedEvent>())).called(1),
+    );
+
+    blocTest<RadioPlayerBloc, RadioPlayerState>(
+      'fires StationStoppedEvent for the previous station on a direct switch '
+      '(per ADR-0019)',
+      build: build,
+      act: (bloc) async {
+        bloc.add(RadioPlayerPlayRequested(station));
+        await tick();
+        stateController.add(const PlayerPlayingState());
+        await tick();
+        nowValue = nowValue.add(const Duration(seconds: 30));
+        // Switch straight to another station without an explicit stop: the
+        // session for 'a' is leaving Playing and MUST report its duration.
+        bloc.add(RadioPlayerPlayRequested(_station('b')));
+        await tick();
+      },
+      verify: (_) => verify(
+        () => analytics.track(
+          const StationStoppedEvent(stationUuid: 'a', durationSeconds: 30),
+        ),
+      ).called(1),
+    );
+
+    blocTest<RadioPlayerBloc, RadioPlayerState>(
+      'fires StationStoppedEvent and PlaybackErrorEvent when playback fails '
+      'mid-play (per ADR-0019)',
+      build: build,
+      act: (bloc) async {
+        bloc.add(RadioPlayerPlayRequested(station));
+        await tick();
+        stateController.add(const PlayerPlayingState());
+        await tick();
+        nowValue = nowValue.add(const Duration(seconds: 15));
+        stateController.add(const PlayerErrorState(ConnectivityLostFailure()));
+        await tick();
+      },
+      verify: (_) {
+        verify(
+          () => analytics.track(
+            const StationStoppedEvent(stationUuid: 'a', durationSeconds: 15),
+          ),
+        ).called(1);
+        verify(
+          () => analytics.track(
+            const PlaybackErrorEvent(
+              stationUuid: 'a',
+              failureType: 'ConnectivityLostFailure',
+            ),
+          ),
+        ).called(1);
+      },
     );
   });
 }

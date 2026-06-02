@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radio_app/core/errors/result.dart';
+import 'package:radio_app/domain/entities/analytics/analytics_event.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
 import 'package:radio_app/domain/usecases/get_favorites_use_case.dart';
 import 'package:radio_app/domain/usecases/refresh_favorites_use_case.dart';
 import 'package:radio_app/domain/usecases/toggle_favorite_use_case.dart';
+import 'package:radio_app/domain/usecases/track_analytics_event_use_case.dart';
 import 'package:radio_app/domain/usecases/use_case.dart';
 
 /// Events for [FavoritesBloc].
@@ -89,8 +93,12 @@ final class FavoritesLoadFailure extends FavoritesState {
 /// Manages favorite stations via use cases (per ADR-0020 / API_SPEC.md §8).
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   /// Creates the favorites bloc over its use cases.
-  FavoritesBloc(this._getFavorites, this._toggleFavorite, this._refresh)
-    : super(const FavoritesInitial()) {
+  FavoritesBloc(
+    this._getFavorites,
+    this._toggleFavorite,
+    this._refresh,
+    this._trackAnalytics,
+  ) : super(const FavoritesInitial()) {
     on<FavoritesStarted>(_onStarted);
     on<FavoriteToggled>(_onToggled);
     on<FavoritesRefreshed>(_onRefreshed);
@@ -99,6 +107,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final GetFavoritesUseCase _getFavorites;
   final ToggleFavoriteUseCase _toggleFavorite;
   final RefreshFavoritesUseCase _refresh;
+  final TrackAnalyticsEventUseCase _trackAnalytics;
 
   Future<void> _onStarted(
     FavoritesStarted event,
@@ -119,7 +128,17 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     switch (result) {
       case FailureResult<bool, Failure>(:final failure):
         emit(FavoritesLoadFailure(failure));
-      case Success<bool, Failure>():
+      case Success<bool, Failure>(:final value):
+        // Fire analytics only after persistence succeeds (per ADR-0019);
+        // `value` is true when the station is now favorited, false when
+        // it was removed.
+        unawaited(
+          _trackAnalytics(
+            value
+                ? StationFavoritedEvent(event.station.stationUuid)
+                : StationUnfavoritedEvent(event.station.stationUuid),
+          ),
+        );
         await _emitFavorites(emit);
     }
   }

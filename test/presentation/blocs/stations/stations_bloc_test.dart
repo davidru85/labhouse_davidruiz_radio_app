@@ -24,7 +24,15 @@ void main() {
   late _MockStationRepository repository;
   late _MockAnalyticsRepository analytics;
 
-  setUpAll(() => registerFallbackValue(const AppOpenedEvent()));
+  setUpAll(() {
+    registerFallbackValue(const AppOpenedEvent());
+    // Required for the typed `any<SearchPerformedEvent>()` matcher: mocktail
+    // resolves fallbacks by `value is T`, so the base AppOpenedEvent does not
+    // satisfy a SearchPerformedEvent matcher.
+    registerFallbackValue(
+      const SearchPerformedEvent(queryLength: 0, resultCount: 0),
+    );
+  });
 
   setUp(() {
     repository = _MockStationRepository();

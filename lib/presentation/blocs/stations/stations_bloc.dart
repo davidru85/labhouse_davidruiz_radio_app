@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radio_app/core/errors/result.dart';
+import 'package:radio_app/domain/entities/analytics/analytics_event.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/domain/failures/failure.dart';
 import 'package:radio_app/domain/usecases/cancel_search_use_case.dart';
 import 'package:radio_app/domain/usecases/load_popular_stations_use_case.dart';
 import 'package:radio_app/domain/usecases/search_stations_use_case.dart';
+import 'package:radio_app/domain/usecases/track_analytics_event_use_case.dart';
 import 'package:radio_app/domain/usecases/use_case.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -130,7 +134,8 @@ class StationsBloc extends Bloc<StationsEvent, StationsState> {
   StationsBloc(
     this._search,
     this._loadPopular,
-    this._cancelSearch, {
+    this._cancelSearch,
+    this._trackAnalytics, {
     this.maxStations = defaultMaxStations,
   }) : super(const StationsState()) {
     on<StationsSearchChanged>(
@@ -160,6 +165,7 @@ class StationsBloc extends Bloc<StationsEvent, StationsState> {
   final SearchStationsUseCase _search;
   final LoadPopularStationsUseCase _loadPopular;
   final CancelSearchUseCase _cancelSearch;
+  final TrackAnalyticsEventUseCase _trackAnalytics;
 
   Future<void> _onSearchChanged(
     StationsSearchChanged event,
@@ -173,6 +179,18 @@ class StationsBloc extends Bloc<StationsEvent, StationsState> {
     }
     await _cancelSearch(const NoParams());
     await _runQuery(emit, query: query, countryCode: null, tag: null);
+    // A non-empty query is a real search; the empty-query popular fallback
+    // is not reported (per ADR-0019).
+    if (query.isNotEmpty && state.status == StationsStatus.success) {
+      unawaited(
+        _trackAnalytics(
+          SearchPerformedEvent(
+            queryLength: query.length,
+            resultCount: state.stations.length,
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _onCountryFilterChanged(
@@ -186,6 +204,14 @@ class StationsBloc extends Bloc<StationsEvent, StationsState> {
       countryCode: event.countryCode,
       tag: state.tag,
     );
+    final countryCode = event.countryCode;
+    if (countryCode != null) {
+      unawaited(
+        _trackAnalytics(
+          FilterAppliedEvent(filterType: 'country', value: countryCode),
+        ),
+      );
+    }
   }
 
   Future<void> _onTagFilterChanged(
@@ -199,6 +225,12 @@ class StationsBloc extends Bloc<StationsEvent, StationsState> {
       countryCode: state.countryCode,
       tag: event.tag,
     );
+    final tag = event.tag;
+    if (tag != null) {
+      unawaited(
+        _trackAnalytics(FilterAppliedEvent(filterType: 'genre', value: tag)),
+      );
+    }
   }
 
   Future<void> _onLoadMoreRequested(
