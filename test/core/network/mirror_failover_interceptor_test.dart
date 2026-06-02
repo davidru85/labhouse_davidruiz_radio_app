@@ -161,6 +161,52 @@ void main() {
       expect(adapter.hostsTried.last, 'at1.api.radio-browser.info');
     });
 
+    test(
+      'switches to the next mirror on each retriable failure (no repeat)',
+      () async {
+        // ADR-0039 §"Failover rotation": a retriable failure switches the
+        // request to the NEXT mirror immediately. An implementation that
+        // retried the failed mirror first would surface here as a duplicated
+        // leading host in the attempted sequence.
+        final adapter = _FakeAdapter(<String, int>{
+          'de1.api.radio-browser.info': 500,
+          'at1.api.radio-browser.info': 500,
+          'nl1.api.radio-browser.info': 200,
+        });
+        final dio = _dioWith(
+          adapter,
+          cache,
+          cachedHost: 'de1.api.radio-browser.info',
+        );
+
+        final response = await dio.get<dynamic>('/json/tags');
+
+        expect(response.statusCode, 200);
+        expect(adapter.hostsTried, <String>[
+          'de1.api.radio-browser.info',
+          'at1.api.radio-browser.info',
+          'nl1.api.radio-browser.info',
+        ]);
+      },
+    );
+
+    test('seeds the cache on an uncached first-mirror success', () async {
+      // N2 / ADR-0039 — with no cached host, a successful first response
+      // seeds the cache with the working mirror's bare host.
+      final adapter = _FakeAdapter(<String, int>{
+        'de1.api.radio-browser.info': 200,
+      });
+      final dio = _dioWith(adapter, cache);
+
+      final response = await dio.get<dynamic>('/json/tags');
+
+      expect(response.statusCode, 200);
+      expect(adapter.hostsTried, <String>['de1.api.radio-browser.info']);
+      verify(
+        () => cache.setLastKnownMirror('de1.api.radio-browser.info'),
+      ).called(1);
+    });
+
     test('tags an exhausted failover and caps at 6 total attempts', () async {
       final adapter = _FakeAdapter(<String, int>{
         'de1.api.radio-browser.info': 500,
@@ -184,7 +230,16 @@ void main() {
           ),
         ),
       );
-      // API_SPEC §2 — at most 6 total attempts...
+      // API_SPEC §2 — at most 6 total attempts, rotating round-robin across
+      // the whitelist and only wrapping back after every mirror is tried.
+      expect(adapter.hostsTried, <String>[
+        'de1.api.radio-browser.info',
+        'at1.api.radio-browser.info',
+        'nl1.api.radio-browser.info',
+        'fr1.api.radio-browser.info',
+        'de1.api.radio-browser.info',
+        'at1.api.radio-browser.info',
+      ]);
       expect(adapter.hostsTried, hasLength(6));
       // ...and at most 2 attempts per mirror (per-mirror cap). A faulty
       // implementation that retries the same host 6 times would still hit
