@@ -236,7 +236,7 @@ Tasks:
 
 Tasks:
 
-* [ ] Implement `StationRepositoryImpl`.
+* [x] Implement `StationRepositoryImpl`.
 * [ ] Implement `FavoritesRepositoryImpl` (ensuring missing remote stations during synchronization are marked as `lastCheckOk = false` rather than silently deleted).
 * [ ] Implement `GenresRepositoryImpl`.
 * [ ] Implement `CountriesRepositoryImpl`.
