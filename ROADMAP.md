@@ -282,7 +282,7 @@ Rules:
 
 Tasks:
 
-* [ ] Implement `RadioPlayerBloc` with full lifecycle management:
+* [x] Implement `RadioPlayerBloc` with full lifecycle management:
   * play
   * pause
   * stop
@@ -290,7 +290,7 @@ Tasks:
   * explicit `PlayerBufferingState` (per ADR-0015)
   * `PlayerPlayingState.nowPlaying` populated from
     `nowPlayingStream` (per ADR-0012)
-* [ ] Implement `StationsBloc` with:
+* [x] Implement `StationsBloc` with:
   * search (debounced 350 ms, minimum 3 chars, per ADR-0014)
   * country filter
   * tag filter
@@ -298,12 +298,12 @@ Tasks:
   * popular stations
   * trigger explicit search cancellation via `CancelSearchUseCase` when playing a station or disposing the bloc (per ADR-0014)
   * API failure mapping to UI-representable states
-* [ ] Implement `FavoritesBloc` with:
+* [x] Implement `FavoritesBloc` with:
   * toggle favorite
   * refresh favorites
   * remove favorite
   * remote and local data source interaction
-* [ ] Implement `HistoryBloc` using Hive persistence.
+* [x] Implement `HistoryBloc` using Hive persistence.
 * [ ] Implement `GenresBloc` for loading and caching genres from
   `/tags`.
 * [ ] Implement `CountriesBloc` for loading and caching countries
