@@ -304,12 +304,12 @@ Tasks:
   * remove favorite
   * remote and local data source interaction
 * [x] Implement `HistoryBloc` using Hive persistence.
-* [ ] Implement `GenresBloc` for loading and caching genres from
+* [x] Implement `GenresBloc` for loading and caching genres from
   `/tags`.
-* [ ] Implement `CountriesBloc` for loading and caching countries
+* [x] Implement `CountriesBloc` for loading and caching countries
   from `/countrycodes`.
-* [ ] Implement `ConnectivityBloc` (per ADR-0013).
-* [ ] Instrument BLoCs to fire `AnalyticsEvent`s through
+* [x] Implement `ConnectivityBloc` (per ADR-0013).
+* [x] Instrument BLoCs to fire `AnalyticsEvent`s through
   `TrackAnalyticsEventUseCase` per the instrumentation table in
   ADR-0019.
 
