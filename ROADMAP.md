@@ -242,7 +242,11 @@ Tasks:
 * [x] Implement `CountriesRepositoryImpl`.
 * [x] Implement `HistoryRepositoryImpl` (enforcing the 50-item limit and FIFO eviction policy per ADR-0021).
 * [x] Implement `PlaybackUrlRepositoryImpl`.
-* [ ] Implement `AudioPlayerRepositoryImpl`:
+* [x] Implement `AudioPlayerRepositoryImpl`:
+  * Repository + testable `AudioPlaybackDataSource` port implemented (sub-task
+    6.7); the concrete `just_audio`/`audio_service` adapter and ADR-0022
+    notification controls are deferred to composition-root wiring (untested
+    glue with no driving unit test).
   * Wraps `just_audio` + `audio_service`.
   * Exposes `nowPlayingStream` from `just_audio`'s
     `icyMetadataStream`, adapted via `icy_metadata_parser`
@@ -251,8 +255,8 @@ Tasks:
   * Listens to `ConnectivityRepository.onlineStatusStream` and
     surfaces transitions to offline during active playback as
     `PlaybackFailure` (per ADR-0013).
-* [ ] Implement `ConnectivityRepositoryImpl` (per ADR-0013).
-* [ ] Implement `NoOpAnalyticsRepositoryImpl` as the default
+* [x] Implement `ConnectivityRepositoryImpl` (per ADR-0013).
+* [x] Implement `NoOpAnalyticsRepositoryImpl` as the default
   registration in the composition root (per ADR-0019). A real
   provider adapter is out of scope until a separate ADR records the
   provider choice.
