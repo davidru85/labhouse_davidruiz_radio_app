@@ -33,6 +33,9 @@ class _RecordingAdapter implements HttpClientAdapter {
   RequestOptions? lastRequest;
   final List<Completer<void>> _gates = <Completer<void>>[];
 
+  /// The cancel token carried by each request, in dispatch order.
+  final List<CancelToken?> cancelTokens = <CancelToken?>[];
+
   /// Unblocks every held request so the test can settle.
   void releaseAll() {
     for (final gate in _gates) {
@@ -49,6 +52,7 @@ class _RecordingAdapter implements HttpClientAdapter {
     Future<void>? cancelFuture,
   ) async {
     lastRequest = options;
+    cancelTokens.add(options.cancelToken);
     if (hold) {
       final gate = Completer<void>();
       _gates.add(gate);
@@ -200,30 +204,48 @@ void main() {
     // without leaking Dio types to callers.
     group('search cancellation', () {
       test('cancels the previous search when superseded', () async {
-        final harness = _build(hold: true);
+        final harness = _build(body: _stationJson, hold: true);
         addTearDown(harness.adapter.releaseAll);
 
         final first = harness.dataSource.searchStations(query: 'jazz');
         await pumpEventQueue();
+        final firstToken = harness.adapter.cancelTokens.single;
+        expect(firstToken!.isCancelled, isFalse);
 
-        final second = harness.dataSource.searchStations(query: 'blues');
+        // The superseded request must not complete successfully with stale
+        // station data; it fails with the cancellation NetworkException
+        // (per ADR-0014). Attach the matcher before superseding so the
+        // cancellation error is never reported as unhandled.
+        final firstOutcome = expectLater(
+          first,
+          throwsA(isA<NetworkException>()),
+        );
 
-        await expectLater(first, throwsA(isA<NetworkException>()));
+        // The newer search supersedes the first; ignore its pending completion
+        // since this test only asserts on the superseded request's outcome.
+        harness.dataSource.searchStations(query: 'blues').ignore();
+        await pumpEventQueue();
 
-        harness.adapter.releaseAll();
-        expect(await second, isEmpty);
+        expect(firstToken.isCancelled, isTrue);
+        expect(harness.adapter.cancelTokens.last!.isCancelled, isFalse);
+        await firstOutcome;
       });
 
       test('cancelSearch cancels the in-flight search', () async {
-        final harness = _build(hold: true);
+        final harness = _build(body: _stationJson, hold: true);
         addTearDown(harness.adapter.releaseAll);
 
-        final first = harness.dataSource.searchStations(query: 'jazz');
+        final inFlight = harness.dataSource.searchStations(query: 'jazz');
         await pumpEventQueue();
+        final token = harness.adapter.cancelTokens.single;
+        expect(token!.isCancelled, isFalse);
 
         harness.dataSource.cancelSearch();
 
-        await expectLater(first, throwsA(isA<NetworkException>()));
+        expect(token.isCancelled, isTrue);
+        // The cancelled request cannot complete successfully with stale station
+        // data; it fails with the cancellation NetworkException (per ADR-0014).
+        await expectLater(inFlight, throwsA(isA<NetworkException>()));
       });
     });
 
