@@ -50,7 +50,8 @@ void main() {
     test('parses /json/countrycodes into domain countries', () async {
       final dataSource = _dataSource(
         _StubAdapter(
-          body: '[{"name":"ES","stationcount":540},'
+          body:
+              '[{"name":"ES","stationcount":540},'
               '{"name":"FR","stationcount":320}]',
         ),
       );
@@ -70,6 +71,33 @@ void main() {
       expect(await dataSource.getCountries(), isEmpty);
     });
 
+    test('skips non-map entries and keeps the valid countries', () async {
+      final dataSource = _dataSource(
+        _StubAdapter(
+          body:
+              '[{"name":"ES","stationcount":540},42,'
+              '{"name":"FR","stationcount":320}]',
+        ),
+      );
+
+      expect(await dataSource.getCountries(), const <Country>[
+        Country(name: 'ES', countryCode: 'ES', stationCount: 540),
+        Country(name: 'FR', countryCode: 'FR', stationCount: 320),
+      ]);
+    });
+
+    test('skips entries missing the required name field', () async {
+      final dataSource = _dataSource(
+        _StubAdapter(
+          body: '[{"stationcount":5},{"name":"FR","stationcount":320}]',
+        ),
+      );
+
+      expect(await dataSource.getCountries(), const <Country>[
+        Country(name: 'FR', countryCode: 'FR', stationCount: 320),
+      ]);
+    });
+
     test('throws NetworkException(ServerFailure) on a 5xx', () async {
       final dataSource = _dataSource(_StubAdapter(statusCode: 503));
 
@@ -85,20 +113,22 @@ void main() {
       );
     });
 
-    test('throws NetworkException(SocketFailure) on a connection error',
-        () async {
-      final dataSource = _dataSource(_StubAdapter(fail: true));
+    test(
+      'throws NetworkException(SocketFailure) on a connection error',
+      () async {
+        final dataSource = _dataSource(_StubAdapter(fail: true));
 
-      await expectLater(
-        dataSource.getCountries(),
-        throwsA(
-          isA<NetworkException>().having(
-            (NetworkException e) => e.failure,
-            'failure',
-            isA<SocketFailure>(),
+        await expectLater(
+          dataSource.getCountries(),
+          throwsA(
+            isA<NetworkException>().having(
+              (NetworkException e) => e.failure,
+              'failure',
+              isA<SocketFailure>(),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   });
 }

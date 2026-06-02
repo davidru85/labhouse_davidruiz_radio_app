@@ -50,7 +50,8 @@ void main() {
     test('parses /json/tags into domain genres', () async {
       final dataSource = _dataSource(
         _StubAdapter(
-          body: '[{"name":"jazz","stationcount":12},'
+          body:
+              '[{"name":"jazz","stationcount":12},'
               '{"name":"rock","stationcount":34}]',
         ),
       );
@@ -69,6 +70,33 @@ void main() {
       expect(await dataSource.getGenres(), isEmpty);
     });
 
+    test('skips non-map entries and keeps the valid genres', () async {
+      final dataSource = _dataSource(
+        _StubAdapter(
+          body:
+              '[{"name":"jazz","stationcount":12},42,'
+              '{"name":"rock","stationcount":34}]',
+        ),
+      );
+
+      expect(await dataSource.getGenres(), const <Genre>[
+        Genre(name: 'jazz', stationCount: 12),
+        Genre(name: 'rock', stationCount: 34),
+      ]);
+    });
+
+    test('skips entries missing the required name field', () async {
+      final dataSource = _dataSource(
+        _StubAdapter(
+          body: '[{"stationcount":5},{"name":"rock","stationcount":34}]',
+        ),
+      );
+
+      expect(await dataSource.getGenres(), const <Genre>[
+        Genre(name: 'rock', stationCount: 34),
+      ]);
+    });
+
     test('throws NetworkException(ServerFailure) on a 5xx', () async {
       final dataSource = _dataSource(_StubAdapter(statusCode: 503));
 
@@ -84,20 +112,22 @@ void main() {
       );
     });
 
-    test('throws NetworkException(SocketFailure) on a connection error',
-        () async {
-      final dataSource = _dataSource(_StubAdapter(fail: true));
+    test(
+      'throws NetworkException(SocketFailure) on a connection error',
+      () async {
+        final dataSource = _dataSource(_StubAdapter(fail: true));
 
-      await expectLater(
-        dataSource.getGenres(),
-        throwsA(
-          isA<NetworkException>().having(
-            (NetworkException e) => e.failure,
-            'failure',
-            isA<SocketFailure>(),
+        await expectLater(
+          dataSource.getGenres(),
+          throwsA(
+            isA<NetworkException>().having(
+              (NetworkException e) => e.failure,
+              'failure',
+              isA<SocketFailure>(),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   });
 }
