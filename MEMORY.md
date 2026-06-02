@@ -71,10 +71,10 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 5, Sub-task 5.1 (DTOs, mappers, and `core/utils` helpers) — RED/GREEN/REFACTOR complete on branch `feature/phase-5-sub-task-51-dtos-mappers-utils` (ADR-0032 amendment `bff37c2`, RED `95775a3`, GREEN `109868f` pushed), PR pending. `StationDto`/`GenreDto`/`CountryCodeDto` (fromJson + toEntity) + `tag_parser`/`country_name_resolver` (pure, domain-free per ADR-0017/0034). DTOs keep country name as raw ISO code (resolution deferred to presentation per ADR-0032 amended). REFACTOR had no production changes. Closes ROADMAP Phase 5 DTO + mapper tasks.
-* **Last Completed Task:** Phase 4, Sub-task 4.3 (open all Hive boxes in `main.dart`), merged via PR #25 (`00d480a`). **This closed Phase 4** (all 7 ROADMAP tasks done).
-* **Active Branch:** `feature/phase-5-sub-task-51-dtos-mappers-utils` (branched from synced `main` after PR #25 merged, per ADR-0035).
-* **Next Up (after 5.1 merges):** remainder of **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, mirror failover via `MirrorCacheDataSource`, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
+* **Current Task:** Phase 5, Sub-task 5.2 (mirror failover networking + remote list data sources) — increment C, RED on branch `feature/phase-5-sub-task-52-mirror-failover-remote-datasources`. Production under review: `RemoteGenresDataSource`/`RemoteCountriesDataSource` (Dio-based, hitting `/json/tags` and `/json/countrycodes`, parsing via `GenreDto`/`CountryCodeDto`, mapping Dio errors through `mapDioException`→`NetworkException`, and skipping malformed/non-map list entries per `API_SPEC.md` §4). Earlier increments already committed on this branch: network error mapper (`mapDioException`, `e877211`) and the mirror-failover infrastructure `DioClientFactory` + `MirrorFailoverInterceptor` (`ad00a1c`). Governed by ADR-0039 / `API_SPEC.md` §2/§4/§9 and ADR-0016/0023; remote-data-source boundary per `ARCHITECTURE.md`.
+* **Last Completed Task:** Phase 5, Sub-task 5.1 (DTOs, mappers, and `core/utils` helpers), merged via PR #26 (`65e47f0`, now the `main` tip). `StationDto`/`GenreDto`/`CountryCodeDto` (fromJson + toEntity) + `tag_parser`/`country_name_resolver` (pure, domain-free per ADR-0017/0034); country name kept as raw ISO code (resolution deferred to presentation per ADR-0032 amended).
+* **Active Branch:** `feature/phase-5-sub-task-52-mirror-failover-remote-datasources` (branched from synced `main` after PR #26 merged, per ADR-0035).
+* **Next Up (after 5.2 merges):** remainder of **Phase 5 — Remote API Data Source** (Radio Browser): `RemoteStationDataSource`/`RemoteGenresDataSource`/`RemoteCountriesDataSource`, `ConnectivityDataSource`, playback URL resolution. Re-read `API_SPEC.md`, ADR-0016/0013/0023/0032 before RED.
 
 ---
 
