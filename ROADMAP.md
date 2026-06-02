@@ -237,7 +237,7 @@ Tasks:
 Tasks:
 
 * [x] Implement `StationRepositoryImpl`.
-* [ ] Implement `FavoritesRepositoryImpl` (ensuring missing remote stations during synchronization are marked as `lastCheckOk = false` rather than silently deleted).
+* [x] Implement `FavoritesRepositoryImpl` (ensuring missing remote stations during synchronization are marked as `lastCheckOk = false` rather than silently deleted).
 * [ ] Implement `GenresRepositoryImpl`.
 * [ ] Implement `CountriesRepositoryImpl`.
 * [ ] Implement `HistoryRepositoryImpl` (enforcing the 50-item limit and FIFO eviction policy per ADR-0021).
