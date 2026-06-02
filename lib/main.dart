@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:radio_app/core/constants/hive_boxes.dart';
+import 'package:radio_app/core/di/composition_root.dart';
 import 'package:radio_app/data/models/country_hive_model.dart';
 import 'package:radio_app/data/models/genre_hive_model.dart';
 import 'package:radio_app/data/models/station_hive_model.dart';
@@ -10,6 +11,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await bootstrapLocalStorage();
+
+  await setupLocator();
+
   runApp(const MyApp());
 }
 
