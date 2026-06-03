@@ -412,6 +412,36 @@ Tasks:
 
 ---
 
+## UI Visual Polish (DESIGN.md treatment — post-functional)
+
+Phase 9 delivered the functional, adaptive UI on the stock Material 3
+light scheme. This follow-up applies the finished visual design and a
+few deferred refinements. Implemented in **one branch
+(`feature/ui-visual-polish`)** as sequential RED→GREEN→REFACTOR slices,
+verified on the Android emulator and the iOS simulator. No new ADR is
+required (all of this implements existing DESIGN.md / ADR-0004 / ADR-0006
+decisions); `cached_network_image` is already on the ADR-0018 allowlist.
+
+* [ ] **Slice 1 — Portrait-only lock (ADR-0004).** Enforce portrait
+  orientation via `SystemChrome.setPreferredOrientations` and align the
+  iOS `Info.plist` / Android manifest orientation declarations. (Closes
+  the gap found during device testing: orientation was not enforced
+  anywhere.)
+* [ ] **Slice 2 — Dark theme + Inter + glassmorphism (DESIGN.md §Theme).**
+  Apply the dark `ColorScheme` and design tokens, bundle the **Inter**
+  font locally (per TECHNICAL_SPEC §10), and add the glass treatment
+  (`backdrop-filter` blur, translucent surfaces, hairline strokes) on app
+  bars, the tab bar, the mini-player, and the full player.
+* [ ] **Slice 3 — Station artwork (`cached_network_image`).** Replace the
+  icon placeholders with the station favicon/artwork via
+  `cached_network_image`, with a graceful fallback, on favorites cards,
+  station rows, and the full player.
+* [ ] **Slice 4 — Full Player polish (DESIGN.md §3).** Large artwork, a
+  "Live Now" indicator, the mini-player progress bar on Favorites, and
+  layout refinements.
+
+---
+
 ## Phase Advancement Rule
 
 Before advancing from one phase to another:
