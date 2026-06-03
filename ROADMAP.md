@@ -360,7 +360,10 @@ Tasks:
 
 * [ ] Develop all screens implementing Material Design on Android.
 * [ ] Develop all screens implementing Cupertino on iOS.
-* [ ] Implement `AppShell` with an `IndexedStack`.
+* [x] Implement `AppShell` with an `IndexedStack`. *(Sub-task 9.3:
+  routing migrated to `StatefulShellRoute.indexedStack` with both branches
+  `preload: true`; `MyApp` now drives `MaterialApp.router` with a root
+  `RadioPlayerBloc` above the shell — per ADR-0041.)*
 * [ ] Preserve scroll state across tabs.
 * [ ] Build `MiniPlayerWidget` driven by `RadioPlayerBloc` state
   (must render the `PlayerBufferingState` distinctly from
