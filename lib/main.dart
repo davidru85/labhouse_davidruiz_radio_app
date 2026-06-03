@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:radio_app/hive_registrar.g.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/routing/app_router.dart';
+import 'package:radio_app/presentation/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,7 +88,17 @@ class MyApp extends StatelessWidget {
       create: (_) => _createPlayerBloc(),
       child: MaterialApp.router(
         title: 'RadioApp',
+        theme: AppTheme.dark(),
+        darkTheme: AppTheme.dark(),
+        themeMode: ThemeMode.dark,
         routerConfig: router,
+        // Cupertino widgets (rendered on iOS via PlatformBuilder) read their
+        // styling from the ambient CupertinoTheme, so the dark brand theme is
+        // mirrored here to keep the iOS surfaces on-brand (ADR-0042).
+        builder: (context, child) => CupertinoTheme(
+          data: AppTheme.cupertinoDark(),
+          child: child ?? const SizedBox.shrink(),
+        ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
       ),
