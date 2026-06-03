@@ -71,16 +71,16 @@ to ADRs if revisited.
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 8 **Sub-task 8.2 — Routing / go_router with AppShell setup** (`createAppRouter` factory with a `ShellRoute` wrapping `StationsScreen`/`FavoritesScreen` in `AppShell`, and a top-level `FullPlayerScreen` route outside the shell). RED→GREEN→REFACTOR complete; `flutter analyze` clean, full suite +353 passing; REFACTOR approved by user and pushed to remote (`a23f85c`, ADR-0036). Awaiting PR creation and merge.
-* **Last Completed Task:** Phase 8 **Sub-task 8.1 — Dependency Injection / composition root** (`get_it` registrations only in the composition root; register data sources, repositories, use cases, and BLoCs; keep widgets free of `GetIt`) — merged via **PR #38 (`0e67f9f`)**.
-* **Active Branch:** `feature/phase-8-sub-task-82-routing-go-router-appshell` (branched from synced `main` @ `0e67f9f`, per ADR-0033/0035).
-* **Next Up:** Create the PR for Sub-task 8.2 and wait for the user to merge it and confirm local `main` is synced (ADR-0035). That closes Phase 8; the Phase Advancement Rule then applies — present completed work + test/linter output and obtain **explicit** user approval before Phase 9, which is the UI gate.
+* **Current Task:** Phase 8 **Sub-task 8.3 — Shell BLoC scope lifecycle & disposal** (the two deferred Phase 8 items). `AppShell` gains an injected `ShellScopeBuilder`; `createAppRouter` forwards it into the `ShellRoute` so one shell-scoped BLoC instance is shared across tabs and disposed when the shell leaves the tree (incl. navigating to the out-of-shell `/player`). Mechanism only — concrete BLoC wiring deferred to Phase 9. RED→GREEN complete (RED `4151e95`, GREEN `a66ca9d`, pushed per ADR-0036); `flutter analyze` clean, full suite +358 passing. REFACTOR = completion docs. Awaiting PR creation and merge.
+* **Last Completed Task:** Phase 8 **Sub-task 8.2 — Routing / go_router with AppShell setup** (`createAppRouter` factory + `ShellRoute`; out-of-shell `/player`) — merged via **PR #39 (`b344e27`)**.
+* **Active Branch:** `feature/phase-8-sub-task-83-shell-bloc-lifecycle-disposal` (branched from synced `main` @ `b344e27`, per ADR-0033/0035).
+* **Next Up:** Create the PR for Sub-task 8.3 and wait for the user to merge it and confirm local `main` is synced (ADR-0035). That closes Phase 8; the Phase Advancement Rule then applies. Phase 9 (UI gate) is already user-approved — next is **Step 2 = 9.1–9.2** (Material + Cupertino screens).
 
 ### Phase 8 governing decisions (DI + routing)
 
 * **Routing uses a `createAppRouter({navigatorKey})` factory** (not a shared global) so each test gets an isolated `GoRouter`. `initialLocation` is `/stations`. A `ShellRoute` wraps `/stations` + `/favorites` in `AppShell`; `/player` is a **top-level route outside the shell** (full-screen player), asserted by tests (`AppShell` is `findsNothing` on `/player`).
 * **`AppShell` is intentionally a minimal passthrough** (`Scaffold(body: child)`) and the screens are minimal route-compilation placeholders — NOT a UI-gate breach, because Phase 8 mandates routing wiring and the targets must exist to compile. The real shell (bottom nav, mini-player, **`IndexedStack`**) is Phase 9 (ROADMAP §Phase 9).
-* **BLoC lifecycle management in the shell and proper disposal are DEFERRED to Phase 9**, where the real `IndexedStack` `AppShell` lands. The passthrough holds no controllers/streams, so there is nothing to dispose yet; a disposal test MUST accompany the Phase 9 shell. Recorded so the deferral is explicit, not silent.
+* **Shell BLoC lifecycle & disposal (Sub-task 8.3) are now done as a mechanism:** `AppShell` exposes an optional `ShellScopeBuilder` (`Widget Function(BuildContext, Widget child)`); when supplied it wraps `Scaffold(body: child)` so a shell-scoped `BlocProvider` is shared across tabs and **auto-disposed** when the shell leaves the tree (incl. nav to out-of-shell `/player`). The widget never touches `GetIt` — the composition root will pass the builder. **Which concrete BLoCs are shell-scoped (and the root-scoped `RadioPlayerBloc`/`ConnectivityBloc` reachable from the out-of-shell `FullPlayerScreen`/global banner) is STILL deferred to Phase 9**, wired when the real `IndexedStack` shell + screens are built.
 
 ### Phase 7 governing decisions (BLoC layer — reuse from Phase 8 on)
 
