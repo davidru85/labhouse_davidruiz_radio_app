@@ -36,11 +36,9 @@ void main() {
         infoPlist,
         'UISupportedInterfaceOrientations',
       );
-      expect(
-        phoneBlock,
-        <String>['UIInterfaceOrientationPortrait'],
-        reason: 'iPhone must support portrait only (ADR-0004)',
-      );
+      expect(phoneBlock, <String>[
+        'UIInterfaceOrientationPortrait',
+      ], reason: 'iPhone must support portrait only (ADR-0004)');
     });
 
     test('iPad orientations are portrait-only', () {
@@ -48,11 +46,9 @@ void main() {
         infoPlist,
         'UISupportedInterfaceOrientations~ipad',
       );
-      expect(
-        ipadBlock,
-        <String>['UIInterfaceOrientationPortrait'],
-        reason: 'iPad must support portrait only (ADR-0004)',
-      );
+      expect(ipadBlock, <String>[
+        'UIInterfaceOrientationPortrait',
+      ], reason: 'iPad must support portrait only (ADR-0004)');
     });
   });
 }
@@ -65,8 +61,7 @@ List<String> _supportedOrientations(String plist, String key) {
   final arrayStart = plist.indexOf('<array>', keyIndex);
   final arrayEnd = plist.indexOf('</array>', arrayStart);
   final body = plist.substring(arrayStart, arrayEnd);
-  return RegExp('<string>(.*?)</string>')
-      .allMatches(body)
-      .map((m) => m.group(1)!)
-      .toList();
+  return RegExp(
+    '<string>(.*?)</string>',
+  ).allMatches(body).map((m) => m.group(1)!).toList();
 }

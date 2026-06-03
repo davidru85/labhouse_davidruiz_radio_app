@@ -31,9 +31,6 @@ void main() {
     final orientationCall = calls.singleWhere(
       (c) => c.method == 'SystemChrome.setPreferredOrientations',
     );
-    expect(
-      orientationCall.arguments,
-      <String>['DeviceOrientation.portraitUp'],
-    );
+    expect(orientationCall.arguments, <String>['DeviceOrientation.portraitUp']);
   });
 }
