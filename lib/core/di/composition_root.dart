@@ -1,6 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:just_audio/just_audio.dart';
@@ -295,3 +297,25 @@ Future<void> setupLocator({
     audioHandler: resolvedHandler,
   );
 }
+
+/// Resolves the root [RadioPlayerBloc] from the locator.
+///
+/// `MyApp` provides this single instance above the router so both the shell
+/// (mini-player) and the out-of-shell `/player` route share one player bloc,
+/// without `MyApp` referencing `GetIt` directly (per ARCHITECTURE.md
+/// §"Dependency Injection").
+RadioPlayerBloc resolveRootPlayerBloc() => GetIt.instance<RadioPlayerBloc>();
+
+/// Builds the shell-scoped BLoC providers shared across the shell tabs.
+///
+/// Wired into `createAppRouter` as its `shellScopeBuilder` so [StationsBloc]
+/// and [FavoritesBloc] live in the routing shell and are disposed when the
+/// shell leaves the tree (the sub-task 8.3 mechanism). Resolving from the
+/// locator keeps `GetIt` confined to the composition root.
+Widget buildShellScope(BuildContext context, Widget child) => MultiBlocProvider(
+  providers: [
+    BlocProvider<StationsBloc>(create: (_) => GetIt.instance<StationsBloc>()),
+    BlocProvider<FavoritesBloc>(create: (_) => GetIt.instance<FavoritesBloc>()),
+  ],
+  child: child,
+);

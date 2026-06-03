@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:radio_app/core/constants/hive_boxes.dart';
 import 'package:radio_app/core/di/composition_root.dart';
@@ -6,6 +8,9 @@ import 'package:radio_app/data/models/country_hive_model.dart';
 import 'package:radio_app/data/models/genre_hive_model.dart';
 import 'package:radio_app/data/models/station_hive_model.dart';
 import 'package:radio_app/hive_registrar.g.dart';
+import 'package:radio_app/l10n/app_localizations.dart';
+import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
+import 'package:radio_app/presentation/routing/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +19,7 @@ Future<void> main() async {
 
   await setupLocator();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 /// Registers the Hive adapters and opens every box the app persists into,
@@ -39,15 +44,39 @@ Future<void> bootstrapLocalStorage() async {
 }
 
 /// The main application entry point widget.
+///
+/// Hosts the root [RadioPlayerBloc] above the router so both the shell
+/// (mini-player) and the out-of-shell `/player` route share one player bloc,
+/// and drives navigation through [MaterialApp.router] over [createAppRouter].
 class MyApp extends StatelessWidget {
   /// Creates a new [MyApp] instance.
-  const MyApp({super.key});
+  ///
+  /// [router] and [createPlayerBloc] are injectable seams that default to the
+  /// composition root's wiring; tests override them to avoid touching the
+  /// global locator.
+  MyApp({
+    super.key,
+    GoRouter? router,
+    RadioPlayerBloc Function()? createPlayerBloc,
+  }) : _createPlayerBloc = createPlayerBloc ?? resolveRootPlayerBloc,
+       router = router ?? createAppRouter(shellScopeBuilder: buildShellScope);
+
+  /// The router configuration driving navigation.
+  final GoRouter router;
+
+  /// Factory for the root [RadioPlayerBloc] provided above the router.
+  final RadioPlayerBloc Function() _createPlayerBloc;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'RadioApp',
-      home: Scaffold(body: Center(child: Text('RadioApp Shell'))),
+    return BlocProvider<RadioPlayerBloc>(
+      create: (_) => _createPlayerBloc(),
+      child: MaterialApp.router(
+        title: 'RadioApp',
+        routerConfig: router,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 }
