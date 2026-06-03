@@ -422,7 +422,7 @@ verified on the Android emulator and the iOS simulator. No new ADR is
 required (all of this implements existing DESIGN.md / ADR-0004 / ADR-0006
 decisions); `cached_network_image` is already on the ADR-0018 allowlist.
 
-* [ ] **Slice 1 — Portrait-only lock (ADR-0004).** Enforce portrait
+* [x] **Slice 1 — Portrait-only lock (ADR-0004).** Enforce portrait
   orientation via `SystemChrome.setPreferredOrientations` and align the
   iOS `Info.plist` / Android manifest orientation declarations. (Closes
   the gap found during device testing: orientation was not enforced
