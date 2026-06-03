@@ -4,8 +4,10 @@ import 'package:radio_app/domain/entities/now_playing_info.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
+import 'package:radio_app/presentation/theme/app_colors.dart';
 import 'package:radio_app/presentation/utils/now_playing_label.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
+import 'package:radio_app/presentation/widgets/glass_surface.dart';
 
 /// Persistent mini-player surfacing the active station above the shell.
 ///
@@ -75,46 +77,55 @@ class _MiniPlayerBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tap = onTap;
-    return Material(
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
-      child: Semantics(
-        // Interactive widgets must expose a meaningful screen-reader label
-        // (per ADR-0006 / TECHNICAL_SPEC §10). Only annotate the button role
-        // when the bar is actually tappable.
-        button: tap != null,
-        label: tap != null
-            ? AppLocalizations.of(context).miniPlayerOpenLabel
-            : null,
-        child: InkWell(
-          onTap: tap,
-          // Keep the tap target at the platform minimum touch size
-          // (kMinInteractiveDimension == 48dp, ≥ the 44pt iOS minimum), per
-          // ADR-0006 / TECHNICAL_SPEC §10.
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: kMinInteractiveDimension,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  if (isBuffering) ...[
-                    const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: AdaptiveProgressIndicator(),
+    return GlassSurface(
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      // The mini-player is a `surface-elevated/95` glass card (DESIGN.md
+      // §Mini-Player) — nearly opaque so the now-playing text stays legible.
+      color: AppColors.surfaceElevated.withValues(alpha: 0.95),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Semantics(
+          // Interactive widgets must expose a meaningful screen-reader label
+          // (per ADR-0006 / TECHNICAL_SPEC §10). Only annotate the button role
+          // when the bar is actually tappable.
+          button: tap != null,
+          label: tap != null
+              ? AppLocalizations.of(context).miniPlayerOpenLabel
+              : null,
+          child: InkWell(
+            onTap: tap,
+            // Keep the tap target at the platform minimum touch size
+            // (kMinInteractiveDimension == 48dp, ≥ the 44pt iOS minimum), per
+            // ADR-0006 / TECHNICAL_SPEC §10.
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: kMinInteractiveDimension,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: [
+                    if (isBuffering) ...[
+                      const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: AdaptiveProgressIndicator(),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                    Expanded(
+                      child: Text(
+                        nowPlayingLabel(station, nowPlaying),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
-                    const SizedBox(width: 12),
                   ],
-                  Expanded(
-                    child: Text(
-                      nowPlayingLabel(station, nowPlaying),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

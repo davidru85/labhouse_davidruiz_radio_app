@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/glass_surface.dart';
 import 'package:radio_app/presentation/widgets/mini_player.dart';
 import 'package:radio_app/presentation/widgets/offline_banner.dart';
 
@@ -93,34 +94,45 @@ class _ChromedShell extends StatelessWidget {
           MiniPlayerWidget(onTap: () => context.push('/player')),
         ],
       ),
-      bottomNavigationBar: PlatformBuilder(
-        material: (context) => BottomNavigationBar(
-          currentIndex: navigationShell.currentIndex,
-          onTap: _goBranch,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.radio),
-              label: l10n.navStations,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite),
-              label: l10n.navFavorites,
-            ),
-          ],
-        ),
-        cupertino: (context) => CupertinoTabBar(
-          currentIndex: navigationShell.currentIndex,
-          onTap: _goBranch,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(CupertinoIcons.antenna_radiowaves_left_right),
-              label: l10n.navStations,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(CupertinoIcons.heart_fill),
-              label: l10n.navFavorites,
-            ),
-          ],
+      // A fixed, translucent glass bar with a rounded top (DESIGN.md). The
+      // platform bars are made transparent so the GlassSurface provides the
+      // fill and blur.
+      bottomNavigationBar: GlassSurface(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        child: PlatformBuilder(
+          material: (context) => BottomNavigationBar(
+            currentIndex: navigationShell.currentIndex,
+            onTap: _goBranch,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.radio),
+                label: l10n.navStations,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.favorite),
+                label: l10n.navFavorites,
+              ),
+            ],
+          ),
+          cupertino: (context) => CupertinoTabBar(
+            currentIndex: navigationShell.currentIndex,
+            onTap: _goBranch,
+            backgroundColor: Colors.transparent,
+            border: null,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(CupertinoIcons.antenna_radiowaves_left_right),
+                label: l10n.navStations,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(CupertinoIcons.heart_fill),
+                label: l10n.navFavorites,
+              ),
+            ],
+          ),
         ),
       ),
     );
