@@ -155,6 +155,13 @@ When UI work is approved, the UI must be adaptive:
 * Android uses Material Design.
 * iOS uses Cupertino.
 
+> **Liquid Glass evaluated and deferred (ADR-0042).** Apple's Liquid Glass
+> material (iOS 26) was considered for the iOS build. It is not adopted in v1:
+> Flutter 3.41.6 exposes no native Liquid Glass material, it would require
+> raising the iOS floor above the documented `13.0` minimum (ADR-0002), and a
+> third-party renderer is not justified (ADR-0018). The iOS build therefore
+> uses Cupertino with the shared glassmorphic treatment below (`BackdropFilter`).
+
 Presentation logic must remain unified and shared.
 
 Screens must use adaptive components or visual factories to render the appropriate widgets based on the operating system.
