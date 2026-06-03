@@ -374,14 +374,21 @@ Tasks:
 * [x] Animate mini-player visibility for idle / buffering / playing
   states. *(Sub-task 9.6: content wrapped in an always-mounted
   `AnimatedSize` that collapses to height 0 when idle.)*
-* [ ] Navigate to `FullPlayerScreen` when the mini-player is
-  tapped.
-* [ ] Use a bottom-to-top vertical slide transition.
-* [ ] Implement tab navigation with:
+* [x] Navigate to `FullPlayerScreen` when the mini-player is
+  tapped. *(Sub-task 9.7: tappable `MiniPlayerWidget` (`Semantics`
+  "Open player" + 48dp touch target, ADR-0006) calls
+  `context.go('/player')`.)*
+* [x] Use a bottom-to-top vertical slide transition. *(Sub-task 9.8:
+  `/player` is a `CustomTransitionPage` with a `SlideTransition`
+  from `Offset(0, 1)` to `Offset.zero`.)*
+* [x] Implement tab navigation with: *(Sub-task 9.9: adaptive tab bar
+  via `PlatformBuilder` driving `StatefulNavigationShell.goBranch`.)*
   * `BottomNavigationBar`
   * `CupertinoTabBar`
-* [ ] Implement the global "You're offline" / "Back online" banner
-  driven by `ConnectivityBloc` (per ADR-0013).
+* [x] Implement the global "You're offline" / "Back online" banner
+  driven by `ConnectivityBloc` (per ADR-0013). *(Sub-task 9.10:
+  `OfflineBanner` shows the offline message, a transient 2-second
+  "Back online" on reconnection, and nothing while steadily online.)*
 * [ ] Apply per-screen offline copy and retry affordances
   (per ADR-0013).
 * [ ] Render `PlayerPlayingState.nowPlaying` (track / artist) in

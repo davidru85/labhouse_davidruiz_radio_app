@@ -25,7 +25,6 @@ GoRouter createAppRouter({
         builder: (context, state, navigationShell) => AppShell(
           scopeBuilder: shellScopeBuilder,
           navigationShell: navigationShell,
-          child: navigationShell,
         ),
         branches: [
           // Both branches preload so the IndexedStack mounts every tab up

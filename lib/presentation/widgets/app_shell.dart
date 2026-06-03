@@ -23,16 +23,24 @@ typedef ShellScopeBuilder = Widget Function(BuildContext context, Widget child);
 /// Without a [navigationShell] (the unit-test configuration) it is a plain
 /// passthrough that just hosts the BLoC scope and renders [child].
 class AppShell extends StatelessWidget {
-  /// Creates an instance of [AppShell] with the navigated [child].
+  /// Creates an instance of [AppShell].
+  ///
+  /// Supply [navigationShell] for the routed (chrome) configuration; supply
+  /// [child] for the plain passthrough configuration used by unit tests. At
+  /// least one is expected.
   const AppShell({
-    required this.child,
+    this.child,
     this.navigationShell,
     this.scopeBuilder,
     super.key,
-  });
+  }) : assert(
+         child != null || navigationShell != null,
+         'AppShell needs either a navigationShell (chrome) or a child '
+         '(passthrough).',
+       );
 
-  /// The widget corresponding to the current route.
-  final Widget child;
+  /// The passthrough body, used only when [navigationShell] is null.
+  final Widget? child;
 
   /// The stateful shell driving tab branches, when running under the router.
   final StatefulNavigationShell? navigationShell;
@@ -47,7 +55,7 @@ class AppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final shell = navigationShell;
     final content = shell == null
-        ? Scaffold(body: child)
+        ? Scaffold(body: child ?? const SizedBox.shrink())
         : _ChromedShell(navigationShell: shell);
     final builder = scopeBuilder;
     if (builder == null) {
