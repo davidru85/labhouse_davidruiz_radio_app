@@ -21,6 +21,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get genericError => 'Something went wrong';
 
   @override
+  String get favoritesTitle => 'Your Favorites';
+
+  @override
+  String get favoritesEmptyTitle => 'No favorites yet';
+
+  @override
+  String get favoritesEmptyMessage =>
+      'Your favorite stations will appear here.';
+
+  @override
+  String get favoritesExplore => 'Explore Stations';
+
+  @override
+  String get favoritesRemoveLabel => 'Remove from favorites';
+
+  @override
   String get country_DE => 'Germany';
 
   @override

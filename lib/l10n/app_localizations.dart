@@ -118,6 +118,36 @@ abstract class AppLocalizations {
   /// **'Something went wrong'**
   String get genericError;
 
+  /// Heading on the Favorites screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Favorites'**
+  String get favoritesTitle;
+
+  /// Title of the Favorites screen empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get favoritesEmptyTitle;
+
+  /// Supporting copy of the Favorites screen empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'Your favorite stations will appear here.'**
+  String get favoritesEmptyMessage;
+
+  /// Label of the button that sends the user to browse stations from the empty Favorites state.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Stations'**
+  String get favoritesExplore;
+
+  /// Accessibility label and tooltip for the favorite toggle on a favorited station card.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get favoritesRemoveLabel;
+
   /// No description provided for @country_DE.
   ///
   /// In en, this message translates to:
