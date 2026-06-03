@@ -8,6 +8,10 @@
   "@stationsEmptyResults": {
     "description": "Shown on the Stations screen when a search query returns no results."
   },
+  "stationsSearchHint": "Search stations, genres, or frequencies…",
+  "@stationsSearchHint": {
+    "description": "Placeholder text for the Stations screen search field."
+  },
   "genericError": "Something went wrong",
   "@genericError": {
     "description": "Fallback message shown when a screen fails to load its content."

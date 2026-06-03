@@ -112,6 +112,28 @@ void main() {
       expect(find.text('Jazz • Germany'), findsNWidgets(2));
     });
 
+    testWidgets('renders native Cupertino list tiles on iOS', (tester) async {
+      stub(
+        StationsState(
+          status: StationsStatus.success,
+          stations: [_station('a'), _station('b')],
+        ),
+      );
+      await tester.pumpWidget(harness(platform: TargetPlatform.iOS));
+
+      expect(find.byType(CupertinoListTile), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNothing);
+      expect(find.text('Station a'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('shows the localized search hint', (tester) async {
+      stub(const StationsState());
+      await tester.pumpWidget(harness(platform: TargetPlatform.android));
+
+      expect(find.text(l10nOf(tester).stationsSearchHint), findsOneWidget);
+    });
+
     testWidgets('shows the localized empty message when a query returns no '
         'results', (tester) async {
       stub(const StationsState(status: StationsStatus.success, query: 'nope'));

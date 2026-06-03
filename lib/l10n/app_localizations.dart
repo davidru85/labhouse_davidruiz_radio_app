@@ -106,6 +106,12 @@ abstract class AppLocalizations {
   /// **'No stations found'**
   String get stationsEmptyResults;
 
+  /// Placeholder text for the Stations screen search field.
+  ///
+  /// In en, this message translates to:
+  /// **'Search stations, genres, or frequencies…'**
+  String get stationsSearchHint;
+
   /// Fallback message shown when a screen fails to load its content.
   ///
   /// In en, this message translates to:

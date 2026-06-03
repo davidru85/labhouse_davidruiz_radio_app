@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stationsEmptyResults => 'No stations found';
 
   @override
+  String get stationsSearchHint => 'Search stations, genres, or frequencies…';
+
+  @override
   String get genericError => 'Something went wrong';
 
   @override
