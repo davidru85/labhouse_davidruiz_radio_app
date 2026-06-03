@@ -171,12 +171,14 @@ void main() {
 
     testWidgets('favorite toggle exposes a tooltip and semantic label '
         '(per TECHNICAL_SPEC.md §10)', (tester) async {
+      final handle = tester.ensureSemantics();
       stub(FavoritesLoadSuccess([_station('a')]));
       await tester.pumpWidget(harness(platform: TargetPlatform.android));
 
       final label = l10nOf(tester).favoritesRemoveLabel;
       expect(find.byTooltip(label), findsOneWidget);
       expect(find.bySemanticsLabel(label), findsOneWidget);
+      handle.dispose();
     });
 
     testWidgets('favorite toggle meets the minimum 48dp touch target on '
@@ -187,6 +189,28 @@ void main() {
       final size = tester.getSize(find.byType(IconButton));
       expect(size.width, greaterThanOrEqualTo(48));
       expect(size.height, greaterThanOrEqualTo(48));
+    });
+
+    testWidgets('Cupertino favorite toggle exposes a tooltip and semantic '
+        'label on iOS (per TECHNICAL_SPEC.md §10)', (tester) async {
+      final handle = tester.ensureSemantics();
+      stub(FavoritesLoadSuccess([_station('a')]));
+      await tester.pumpWidget(harness(platform: TargetPlatform.iOS));
+
+      final label = l10nOf(tester).favoritesRemoveLabel;
+      expect(find.byTooltip(label), findsOneWidget);
+      expect(find.bySemanticsLabel(label), findsOneWidget);
+      handle.dispose();
+    });
+
+    testWidgets('Cupertino favorite toggle meets the minimum 44pt touch target '
+        'on iOS (per TECHNICAL_SPEC.md §10)', (tester) async {
+      stub(FavoritesLoadSuccess([_station('a')]));
+      await tester.pumpWidget(harness(platform: TargetPlatform.iOS));
+
+      final size = tester.getSize(find.byType(CupertinoButton));
+      expect(size.width, greaterThanOrEqualTo(44));
+      expect(size.height, greaterThanOrEqualTo(44));
     });
 
     testWidgets('uses a CupertinoPageScaffold on iOS', (tester) async {
