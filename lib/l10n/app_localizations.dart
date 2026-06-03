@@ -202,6 +202,18 @@ abstract class AppLocalizations {
   /// **'Open player'**
   String get miniPlayerOpenLabel;
 
+  /// Full-player status line shown while a live stream is playing or paused (DESIGN.md §3).
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get playerLiveStatus;
+
+  /// Full-player status line shown while the stream is buffering (DESIGN.md §3).
+  ///
+  /// In en, this message translates to:
+  /// **'Buffering…'**
+  String get playerBufferingStatus;
+
   /// Global banner shown while the device has no network connectivity (per ADR-0013).
   ///
   /// In en, this message translates to:

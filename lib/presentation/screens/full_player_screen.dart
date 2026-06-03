@@ -7,6 +7,7 @@ import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/live_now_indicator.dart';
 import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Full-screen now-playing view reached from the mini-player (sub-task 9.7),
@@ -139,6 +140,17 @@ class _PlayerView extends StatelessWidget {
                     style: theme.textTheme.bodySmall,
                   ),
                 ],
+                const SizedBox(height: 16),
+                // Status line: a pulsing "Live" indicator while playing/paused,
+                // or the buffering status while buffering (DESIGN.md §3).
+                if (state is RadioPlayerBuffering)
+                  Text(
+                    l10n.playerBufferingStatus,
+                    style: theme.textTheme.labelLarge,
+                  )
+                else if (state is RadioPlayerPlaying ||
+                    state is RadioPlayerPaused)
+                  LiveNowIndicator(label: l10n.playerLiveStatus),
               ],
             ),
           ),

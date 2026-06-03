@@ -60,7 +60,10 @@ void main() {
     seedPlaying();
 
     await tester.pumpWidget(host(platform: TargetPlatform.android));
-    await tester.pumpAndSettle();
+    // The Live Now dot pulses indefinitely, so settle finite animations with
+    // an explicit pump rather than pumpAndSettle (which would time out).
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
 
     final artwork = tester.widget<StationArtwork>(find.byType(StationArtwork));
     expect(artwork.size, 48);
@@ -72,7 +75,10 @@ void main() {
     seedPlaying();
 
     await tester.pumpWidget(host(platform: TargetPlatform.iOS));
-    await tester.pumpAndSettle();
+    // The Live Now dot pulses indefinitely, so settle finite animations with
+    // an explicit pump rather than pumpAndSettle (which would time out).
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
 
     final artwork = tester.widget<StationArtwork>(find.byType(StationArtwork));
     expect(artwork.useCupertino, isTrue);

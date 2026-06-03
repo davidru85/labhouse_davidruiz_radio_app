@@ -45,7 +45,10 @@ void main() {
       seed(RadioPlayerPlaying(buildStation('Jazz FM'), null));
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.bySemanticsLabel(RegExp('Pause')), findsOneWidget);
     });
@@ -56,7 +59,10 @@ void main() {
       seed(RadioPlayerPlaying(buildStation('Jazz FM'), null));
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.bySemanticsLabel(RegExp('Collapse')), findsOneWidget);
     });
@@ -76,7 +82,10 @@ void main() {
       );
 
       await tester.pumpWidget(host(textScaler: const TextScaler.linear(2)));
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(tester.takeException(), isNull);
     });

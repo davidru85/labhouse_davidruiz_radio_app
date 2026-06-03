@@ -58,7 +58,10 @@ void main() {
     seed(RadioPlayerPlaying(_station('Jazz FM'), null));
 
     await tester.pumpWidget(host());
-    await tester.pumpAndSettle();
+    // The Live Now dot pulses indefinitely, so settle finite animations with
+    // an explicit pump rather than pumpAndSettle (which would time out).
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
 
     expect(find.text('Jazz FM'), findsOneWidget);
     expect(find.byType(GlassSurface), findsOneWidget);

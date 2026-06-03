@@ -36,14 +36,16 @@ void main() {
     );
 
     await tester.pumpWidget(harness.widget);
-    await tester.pumpAndSettle();
+    await tester.pump();
 
-    // Switch to the Favorites branch.
+    // Switch to the Favorites branch. (Avoid pumpAndSettle: the Live Now dot
+    // and the indeterminate progress bar animate indefinitely.)
     final bar = tester.widget<BottomNavigationBar>(
       find.byType(BottomNavigationBar),
     );
     bar.onTap!(1);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
     final miniPlayer = tester.widget<MiniPlayerWidget>(
       find.byType(MiniPlayerWidget),

@@ -91,7 +91,12 @@ class _ChromedShell extends StatelessWidget {
           Expanded(child: navigationShell),
           // Push (not go) so the full player overlays the shell and its
           // collapse control can pop back to the same tab (sub-tasks 9.7/9.8).
-          MiniPlayerWidget(onTap: () => context.push('/player')),
+          // The Favorites branch (index 1) also shows the progress bar
+          // (DESIGN.md §Mini-Player).
+          MiniPlayerWidget(
+            onTap: () => context.push('/player'),
+            showProgress: navigationShell.currentIndex == 1,
+          ),
         ],
       ),
       // A fixed, translucent glass bar with a rounded top (DESIGN.md). The

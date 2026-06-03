@@ -18,7 +18,11 @@ void main() {
       );
 
       await tester.pumpWidget(harness.widget);
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       // The shell hosts the mini-player above the tabs.
       expect(find.byType(MiniPlayerWidget), findsOneWidget);
@@ -36,7 +40,11 @@ void main() {
       );
 
       await tester.pumpWidget(harness.widget);
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.bySemanticsLabel(RegExp('Open player')), findsOneWidget);
     });
@@ -50,7 +58,11 @@ void main() {
       );
 
       await tester.pumpWidget(harness.widget);
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       final inkWell = find.descendant(
         of: find.byType(MiniPlayerWidget),
@@ -69,10 +81,18 @@ void main() {
       );
 
       await tester.pumpWidget(harness.widget);
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       await tester.tap(find.byType(MiniPlayerWidget));
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.byType(FullPlayerScreen), findsOneWidget);
     });
@@ -88,7 +108,11 @@ void main() {
       );
 
       await tester.pumpWidget(harness.widget);
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       harness.router.go('/player');
       await tester.pump(); // start the route transition
@@ -111,7 +135,11 @@ void main() {
       );
       expect(slide.position.value.dx, 0);
 
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so advance finite animations
+      // (and route transitions) with an explicit pump rather than
+      // pumpAndSettle, which would time out on the never-settling pulse.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
       expect(find.byType(FullPlayerScreen), findsOneWidget);
     });
   });
