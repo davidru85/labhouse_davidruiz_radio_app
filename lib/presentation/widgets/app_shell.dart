@@ -1,4 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:radio_app/l10n/app_localizations.dart';
+import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/mini_player.dart';
+import 'package:radio_app/presentation/widgets/offline_banner.dart';
 
 /// Wraps the shell [child] in a BLoC scope owned by the routing shell.
 ///
@@ -6,18 +12,30 @@ import 'package:flutter/material.dart';
 /// dispose its scoped BLoCs without the widget touching `GetIt` directly.
 typedef ShellScopeBuilder = Widget Function(BuildContext context, Widget child);
 
-/// Persistent shell that wraps tab-based screens.
+/// Persistent shell that wraps the tab-based screens.
 ///
-/// In Phase 9 this will evolve into the full AppShell with bottom navigation,
-/// mini-player, and an IndexedStack. For now it owns the BLoC scope shared by
-/// its tabs (via [scopeBuilder]) and otherwise passes the route [child]
-/// through.
+/// When a [navigationShell] is supplied (the routed configuration) the shell
+/// renders the full app chrome: a global [OfflineBanner], the tab content kept
+/// alive in the `StatefulShellRoute` IndexedStack, a [MiniPlayerWidget] that
+/// navigates to the full player on tap, and a platform-adaptive tab bar
+/// (`BottomNavigationBar` on Android, `CupertinoTabBar` on iOS).
+///
+/// Without a [navigationShell] (the unit-test configuration) it is a plain
+/// passthrough that just hosts the BLoC scope and renders [child].
 class AppShell extends StatelessWidget {
   /// Creates an instance of [AppShell] with the navigated [child].
-  const AppShell({required this.child, this.scopeBuilder, super.key});
+  const AppShell({
+    required this.child,
+    this.navigationShell,
+    this.scopeBuilder,
+    super.key,
+  });
 
   /// The widget corresponding to the current route.
   final Widget child;
+
+  /// The stateful shell driving tab branches, when running under the router.
+  final StatefulNavigationShell? navigationShell;
 
   /// Builds the BLoC scope owned by the shell and shared across its tabs.
   ///
@@ -27,11 +45,74 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = Scaffold(body: child);
+    final shell = navigationShell;
+    final content = shell == null
+        ? Scaffold(body: child)
+        : _ChromedShell(navigationShell: shell);
     final builder = scopeBuilder;
     if (builder == null) {
       return content;
     }
     return builder(context, content);
+  }
+}
+
+/// The full app chrome around the tab content: offline banner, mini-player,
+/// and the platform-adaptive tab bar.
+class _ChromedShell extends StatelessWidget {
+  const _ChromedShell({required this.navigationShell});
+
+  final StatefulNavigationShell navigationShell;
+
+  void _goBranch(int index) {
+    navigationShell.goBranch(
+      index,
+      // Re-tapping the active tab pops it to its initial location.
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Scaffold(
+      body: Column(
+        children: [
+          const OfflineBanner(),
+          Expanded(child: navigationShell),
+          MiniPlayerWidget(onTap: () => context.go('/player')),
+        ],
+      ),
+      bottomNavigationBar: PlatformBuilder(
+        material: (context) => BottomNavigationBar(
+          currentIndex: navigationShell.currentIndex,
+          onTap: _goBranch,
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.radio),
+              label: l10n.navStations,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.favorite),
+              label: l10n.navFavorites,
+            ),
+          ],
+        ),
+        cupertino: (context) => CupertinoTabBar(
+          currentIndex: navigationShell.currentIndex,
+          onTap: _goBranch,
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.antenna_radiowaves_left_right),
+              label: l10n.navStations,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.heart_fill),
+              label: l10n.navFavorites,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

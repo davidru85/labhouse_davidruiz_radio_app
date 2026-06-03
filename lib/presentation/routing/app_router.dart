@@ -22,8 +22,11 @@ GoRouter createAppRouter({
     initialLocation: '/stations',
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) =>
-            AppShell(scopeBuilder: shellScopeBuilder, child: navigationShell),
+        builder: (context, state, navigationShell) => AppShell(
+          scopeBuilder: shellScopeBuilder,
+          navigationShell: navigationShell,
+          child: navigationShell,
+        ),
         branches: [
           // Both branches preload so the IndexedStack mounts every tab up
           // front, keeping their navigators (and scroll state) alive from the
@@ -50,7 +53,18 @@ GoRouter createAppRouter({
       ),
       GoRoute(
         path: '/player',
-        builder: (context, state) => const FullPlayerScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: const FullPlayerScreen(),
+          // Bottom-to-top vertical slide for the full player (sub-task 9.8).
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final position = Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.easeOut)).animate(animation);
+            return SlideTransition(position: position, child: child);
+          },
+        ),
       ),
     ],
   );

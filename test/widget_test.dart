@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:radio_app/main.dart';
+import 'package:radio_app/presentation/blocs/connectivity/connectivity_bloc.dart';
 import 'package:radio_app/presentation/blocs/favorites/favorites_bloc.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
@@ -16,6 +17,10 @@ class _FakeFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
 
 class _FakeRadioPlayerBloc extends MockBloc<RadioPlayerEvent, RadioPlayerState>
     implements RadioPlayerBloc {}
+
+class _FakeConnectivityBloc
+    extends MockBloc<ConnectivityEvent, ConnectivityState>
+    implements ConnectivityBloc {}
 
 void main() {
   testWidgets('App loads successfully into the shell', (tester) async {
@@ -37,6 +42,12 @@ void main() {
       const Stream<RadioPlayerState>.empty(),
       initialState: const RadioPlayerInitial(),
     );
+    final connectivityBloc = _FakeConnectivityBloc();
+    whenListen(
+      connectivityBloc,
+      const Stream<ConnectivityState>.empty(),
+      initialState: const ConnectivityOnline(),
+    );
 
     await tester.pumpWidget(
       MyApp(
@@ -45,6 +56,7 @@ void main() {
             providers: [
               BlocProvider<StationsBloc>.value(value: stationsBloc),
               BlocProvider<FavoritesBloc>.value(value: favoritesBloc),
+              BlocProvider<ConnectivityBloc>.value(value: connectivityBloc),
             ],
             child: child,
           ),

@@ -37,6 +37,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get favoritesRemoveLabel => 'Remove from favorites';
 
   @override
+  String get navStations => 'Stations';
+
+  @override
+  String get navFavorites => 'Favorites';
+
+  @override
+  String get miniPlayerOpenLabel => 'Open player';
+
+  @override
+  String get offlineBanner => 'You\'re offline';
+
+  @override
+  String get backOnlineBanner => 'Back online';
+
+  @override
   String get country_DE => 'Germany';
 
   @override

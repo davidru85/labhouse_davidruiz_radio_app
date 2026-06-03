@@ -27,6 +27,38 @@ void main() {
       expect(find.byType(FullPlayerScreen), findsNothing);
     });
 
+    testWidgets('the interactive mini-player exposes a screen-reader label '
+        '(per ADR-0006 / TECHNICAL_SPEC §10)', (tester) async {
+      final station = buildStation('Jazz FM');
+      final harness = buildShellChromeHarness(
+        routerFactory: createAppRouter,
+        playerState: RadioPlayerPlaying(station, null),
+      );
+
+      await tester.pumpWidget(harness.widget);
+      await tester.pumpAndSettle();
+
+      expect(find.bySemanticsLabel(RegExp('Open player')), findsOneWidget);
+    });
+
+    testWidgets('the mini-player tap target meets the 48dp minimum touch '
+        'size (per ADR-0006 / TECHNICAL_SPEC §10)', (tester) async {
+      final station = buildStation('Jazz FM');
+      final harness = buildShellChromeHarness(
+        routerFactory: createAppRouter,
+        playerState: RadioPlayerPlaying(station, null),
+      );
+
+      await tester.pumpWidget(harness.widget);
+      await tester.pumpAndSettle();
+
+      final inkWell = find.descendant(
+        of: find.byType(MiniPlayerWidget),
+        matching: find.byType(InkWell),
+      );
+      expect(tester.getSize(inkWell).height, greaterThanOrEqualTo(48));
+    });
+
     testWidgets('tapping the mini-player navigates to the FullPlayerScreen', (
       tester,
     ) async {

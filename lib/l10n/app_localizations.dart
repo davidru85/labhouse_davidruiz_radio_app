@@ -148,6 +148,36 @@ abstract class AppLocalizations {
   /// **'Remove from favorites'**
   String get favoritesRemoveLabel;
 
+  /// Bottom navigation tab label for the Stations browse/search screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Stations'**
+  String get navStations;
+
+  /// Bottom navigation tab label for the Favorites screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get navFavorites;
+
+  /// Screen-reader label for the tappable mini-player that opens the full player (per ADR-0006 / TECHNICAL_SPEC §10).
+  ///
+  /// In en, this message translates to:
+  /// **'Open player'**
+  String get miniPlayerOpenLabel;
+
+  /// Global banner shown while the device has no network connectivity (per ADR-0013).
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline'**
+  String get offlineBanner;
+
+  /// Transient global banner shown for two seconds after connectivity is restored (per ADR-0013).
+  ///
+  /// In en, this message translates to:
+  /// **'Back online'**
+  String get backOnlineBanner;
+
   /// No description provided for @country_DE.
   ///
   /// In en, this message translates to:

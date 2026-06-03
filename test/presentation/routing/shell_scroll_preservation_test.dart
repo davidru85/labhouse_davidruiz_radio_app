@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
+import 'package:radio_app/presentation/blocs/connectivity/connectivity_bloc.dart';
 import 'package:radio_app/presentation/blocs/favorites/favorites_bloc.dart';
+import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 import 'package:radio_app/presentation/routing/app_router.dart';
 
@@ -13,6 +15,13 @@ class _FakeStationsBloc extends MockBloc<StationsEvent, StationsState>
 
 class _FakeFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
     implements FavoritesBloc {}
+
+class _FakeRadioPlayerBloc extends MockBloc<RadioPlayerEvent, RadioPlayerState>
+    implements RadioPlayerBloc {}
+
+class _FakeConnectivityBloc
+    extends MockBloc<ConnectivityEvent, ConnectivityState>
+    implements ConnectivityBloc {}
 
 RadioStation _station(int i) => RadioStation(
   stationUuid: 'uuid-$i',
@@ -55,11 +64,26 @@ void main() {
         initialState: const FavoritesLoadSuccess([]),
       );
 
+      final playerBloc = _FakeRadioPlayerBloc();
+      whenListen(
+        playerBloc,
+        const Stream<RadioPlayerState>.empty(),
+        initialState: const RadioPlayerInitial(),
+      );
+      final connectivityBloc = _FakeConnectivityBloc();
+      whenListen(
+        connectivityBloc,
+        const Stream<ConnectivityState>.empty(),
+        initialState: const ConnectivityOnline(),
+      );
+
       final router = createAppRouter(
         shellScopeBuilder: (context, child) => MultiBlocProvider(
           providers: [
             BlocProvider<StationsBloc>.value(value: stationsBloc),
             BlocProvider<FavoritesBloc>.value(value: favoritesBloc),
+            BlocProvider<RadioPlayerBloc>.value(value: playerBloc),
+            BlocProvider<ConnectivityBloc>.value(value: connectivityBloc),
           ],
           child: child,
         ),
