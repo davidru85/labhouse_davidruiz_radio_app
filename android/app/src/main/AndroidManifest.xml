@@ -1,12 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- Required by audio_service for background media playback (per ADR-0022). -->
+    <!-- Required by audio_service for background media playback (per ADR-0022).
+         WAKE_LOCK keeps the CPU alive so audio keeps streaming with the screen
+         off; without it just_audio/audio_service throws a SecurityException. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
     <application
         android:label="RadioApp"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
+        <!-- Public radio streams are frequently plain HTTP; Android 9+ blocks
+             cleartext by default, so it MUST be allowed app-wide to play them
+             (per ADR-0030). iOS has the matching ATS allowance in Info.plist. -->
         <activity
             android:name=".MainActivity"
             android:exported="true"

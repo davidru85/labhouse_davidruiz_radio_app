@@ -53,6 +53,15 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<!-- Public radio streams are frequently plain HTTP; iOS App Transport
+	     Security blocks cleartext by default, so arbitrary loads MUST be
+	     allowed to play them (per ADR-0030). Android has the matching
+	     android:usesCleartextTraffic allowance in AndroidManifest.xml. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
