@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
+import 'package:radio_app/presentation/blocs/connectivity/connectivity_bloc.dart';
+import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 import 'package:radio_app/presentation/utils/station_subtitle.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
@@ -61,14 +63,70 @@ class StationsScreen extends StatelessWidget {
     );
   }
 
-  /// Shared body layout: a padded [searchField] above the station list.
+  /// Shared body layout: while offline, a dedicated offline message with a
+  /// retry affordance (per ADR-0013); otherwise a padded [searchField] above
+  /// the station list.
   Widget _content({required Widget searchField, required bool useCupertino}) {
+    return BlocBuilder<ConnectivityBloc, ConnectivityState>(
+      builder: (context, connectivity) {
+        if (connectivity is ConnectivityOffline) {
+          return _OfflineView(useCupertino: useCupertino);
+        }
+        return SafeArea(
+          child: Column(
+            children: [
+              Padding(padding: const EdgeInsets.all(16), child: searchField),
+              Expanded(child: _StationsBody(useCupertino: useCupertino)),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Offline state for the Stations (discovery) surface: a clear message plus a
+/// retry affordance that re-runs the current query (per ADR-0013).
+class _OfflineView extends StatelessWidget {
+  const _OfflineView({required this.useCupertino});
+
+  final bool useCupertino;
+
+  void _retry(BuildContext context) {
+    final bloc = context.read<StationsBloc>();
+    bloc.add(StationsSearchChanged(bloc.state.query));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SafeArea(
-      child: Column(
-        children: [
-          Padding(padding: const EdgeInsets.all(16), child: searchField),
-          Expanded(child: _StationsBody(useCupertino: useCupertino)),
-        ],
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                useCupertino ? CupertinoIcons.wifi_slash : Icons.wifi_off,
+                size: 64,
+              ),
+              const SizedBox(height: 16),
+              Text(l10n.stationsOfflineMessage, textAlign: TextAlign.center),
+              const SizedBox(height: 24),
+              if (useCupertino)
+                CupertinoButton.filled(
+                  onPressed: () => _retry(context),
+                  child: Text(l10n.retryLabel),
+                )
+              else
+                FilledButton(
+                  onPressed: () => _retry(context),
+                  child: Text(l10n.retryLabel),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -132,6 +190,7 @@ class _StationRow extends StatelessWidget {
         leading: const Icon(CupertinoIcons.antenna_radiowaves_left_right),
         title: title,
         subtitle: subtitleText,
+        onTap: () => _play(context),
       );
     }
 
@@ -139,6 +198,12 @@ class _StationRow extends StatelessWidget {
       leading: const Icon(Icons.radio),
       title: title,
       subtitle: subtitleText,
+      onTap: () => _play(context),
     );
+  }
+
+  /// Requests playback of this row's station (play-on-tap).
+  void _play(BuildContext context) {
+    context.read<RadioPlayerBloc>().add(RadioPlayerPlayRequested(station));
   }
 }

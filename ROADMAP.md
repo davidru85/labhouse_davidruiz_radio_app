@@ -389,14 +389,26 @@ Tasks:
   driven by `ConnectivityBloc` (per ADR-0013). *(Sub-task 9.10:
   `OfflineBanner` shows the offline message, a transient 2-second
   "Back online" on reconnection, and nothing while steadily online.)*
-* [ ] Apply per-screen offline copy and retry affordances
-  (per ADR-0013).
-* [ ] Render `PlayerPlayingState.nowPlaying` (track / artist) in
+* [x] Apply per-screen offline copy and retry affordances
+  (per ADR-0013). *(Sub-task 9.11: `StationsScreen` shows the offline
+  message + a Retry button while `ConnectivityBloc` is offline; Retry
+  re-runs the current query. Play-on-tap was also wired: a station row
+  dispatches `RadioPlayerPlayRequested`.)*
+* [x] Render `PlayerPlayingState.nowPlaying` (track / artist) in
   the `MiniPlayer` and `FullPlayer` when present, falling back to
-  station name when absent (per ADR-0012).
+  station name when absent (per ADR-0012). *(Sub-task 9.12: shared
+  `nowPlayingLabel` helper for the mini-player ("artist - track" only
+  when both present, else station name) and a real adaptive
+  `FullPlayerScreen` showing track/artist/station name as separate
+  collapsing elements with an 80dp play/pause transport.)*
 * [ ] Run the visual accessibility checklist defined in ADR-0006:
   contrast ratios, TalkBack and VoiceOver walkthroughs, focus
-  traversal.
+  traversal. *(Sub-task 9.13: automated coverage SHIPPED — Semantics
+  labels on every interactive control + no-overflow at textScaler 2.0
+  (tests). The manual on-device contrast / TalkBack / VoiceOver / focus
+  walkthrough is tracked as PENDING in
+  `docs/accessibility-checklist-phase9.md` — a release-gate manual task,
+  not a code task.)*
 
 ---
 

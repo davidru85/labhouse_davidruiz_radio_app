@@ -88,7 +88,9 @@ class _ChromedShell extends StatelessWidget {
         children: [
           const OfflineBanner(),
           Expanded(child: navigationShell),
-          MiniPlayerWidget(onTap: () => context.go('/player')),
+          // Push (not go) so the full player overlays the shell and its
+          // collapse control can pop back to the same tab (sub-tasks 9.7/9.8).
+          MiniPlayerWidget(onTap: () => context.push('/player')),
         ],
       ),
       bottomNavigationBar: PlatformBuilder(

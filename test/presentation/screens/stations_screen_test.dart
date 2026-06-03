@@ -6,11 +6,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
+import 'package:radio_app/presentation/blocs/connectivity/connectivity_bloc.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 import 'package:radio_app/presentation/screens/stations_screen.dart';
 
 class _MockStationsBloc extends MockBloc<StationsEvent, StationsState>
     implements StationsBloc {}
+
+class _MockConnectivityBloc
+    extends MockBloc<ConnectivityEvent, ConnectivityState>
+    implements ConnectivityBloc {}
 
 /// Fixture whose raw [RadioStation.country] deliberately differs from the
 /// localized name resolved from [RadioStation.countryCode], so the subtitle
@@ -39,8 +44,13 @@ RadioStation _station(String uuid, {List<String> tags = const ['Jazz']}) =>
 
 void main() {
   late _MockStationsBloc bloc;
+  late _MockConnectivityBloc connectivityBloc;
 
-  setUp(() => bloc = _MockStationsBloc());
+  setUp(() {
+    bloc = _MockStationsBloc();
+    connectivityBloc = _MockConnectivityBloc();
+    when(() => connectivityBloc.state).thenReturn(const ConnectivityOnline());
+  });
 
   void stub(StationsState state) {
     when(() => bloc.state).thenReturn(state);
@@ -56,8 +66,11 @@ void main() {
       supportedLocales: AppLocalizations.supportedLocales,
       home: MediaQuery(
         data: MediaQueryData(textScaler: textScaler),
-        child: BlocProvider<StationsBloc>.value(
-          value: bloc,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<StationsBloc>.value(value: bloc),
+            BlocProvider<ConnectivityBloc>.value(value: connectivityBloc),
+          ],
           child: const StationsScreen(),
         ),
       ),

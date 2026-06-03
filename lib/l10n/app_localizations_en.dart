@@ -43,6 +43,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navFavorites => 'Favorites';
 
   @override
+  String get stationsOfflineMessage =>
+      'You\'re offline. Connect to discover stations. Your favorites and history remain available.';
+
+  @override
+  String get retryLabel => 'Retry';
+
+  @override
+  String get playerNowPlaying => 'Now Playing';
+
+  @override
+  String get playerPlayLabel => 'Play';
+
+  @override
+  String get playerPauseLabel => 'Pause';
+
+  @override
+  String get playerCollapseLabel => 'Collapse player';
+
+  @override
   String get miniPlayerOpenLabel => 'Open player';
 
   @override

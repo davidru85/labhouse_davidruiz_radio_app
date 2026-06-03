@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:radio_app/domain/entities/now_playing_info.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
+import 'package:radio_app/presentation/utils/now_playing_label.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 
 /// Persistent mini-player surfacing the active station above the shell.
@@ -36,11 +38,13 @@ class MiniPlayerWidget extends StatelessWidget {
               isBuffering: true,
               onTap: onTap,
             ),
-            RadioPlayerPlaying(:final station) => _MiniPlayerBar(
-              station: station,
-              isBuffering: false,
-              onTap: onTap,
-            ),
+            RadioPlayerPlaying(:final station, :final nowPlaying) =>
+              _MiniPlayerBar(
+                station: station,
+                isBuffering: false,
+                nowPlaying: nowPlaying,
+                onTap: onTap,
+              ),
             RadioPlayerPaused(:final station) => _MiniPlayerBar(
               station: station,
               isBuffering: false,
@@ -59,11 +63,13 @@ class _MiniPlayerBar extends StatelessWidget {
   const _MiniPlayerBar({
     required this.station,
     required this.isBuffering,
+    this.nowPlaying,
     this.onTap,
   });
 
   final RadioStation station;
   final bool isBuffering;
+  final NowPlayingInfo? nowPlaying;
   final VoidCallback? onTap;
 
   @override
@@ -102,7 +108,7 @@ class _MiniPlayerBar extends StatelessWidget {
                   ],
                   Expanded(
                     child: Text(
-                      station.name,
+                      nowPlayingLabel(station, nowPlaying),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium,

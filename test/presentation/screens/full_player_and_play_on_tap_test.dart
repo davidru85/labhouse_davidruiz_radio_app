@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:radio_app/domain/entities/now_playing_info.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
+import 'package:radio_app/presentation/blocs/connectivity/connectivity_bloc.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 import 'package:radio_app/presentation/screens/full_player_screen.dart';
@@ -17,6 +18,10 @@ class _FakeStationsBloc extends MockBloc<StationsEvent, StationsState>
 
 class _FakeRadioPlayerBloc extends MockBloc<RadioPlayerEvent, RadioPlayerState>
     implements RadioPlayerBloc {}
+
+class _FakeConnectivityBloc
+    extends MockBloc<ConnectivityEvent, ConnectivityState>
+    implements ConnectivityBloc {}
 
 void main() {
   setUpAll(() {
@@ -44,6 +49,12 @@ void main() {
         const Stream<RadioPlayerState>.empty(),
         initialState: const RadioPlayerInitial(),
       );
+      final connectivityBloc = _FakeConnectivityBloc();
+      whenListen(
+        connectivityBloc,
+        const Stream<ConnectivityState>.empty(),
+        initialState: const ConnectivityOnline(),
+      );
 
       await tester.pumpWidget(
         MaterialApp(
@@ -53,6 +64,7 @@ void main() {
             providers: [
               BlocProvider<StationsBloc>.value(value: stationsBloc),
               BlocProvider<RadioPlayerBloc>.value(value: playerBloc),
+              BlocProvider<ConnectivityBloc>.value(value: connectivityBloc),
             ],
             child: const StationsScreen(),
           ),

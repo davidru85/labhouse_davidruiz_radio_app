@@ -160,6 +160,42 @@ abstract class AppLocalizations {
   /// **'Favorites'**
   String get navFavorites;
 
+  /// Stations screen copy shown while the device is offline (per ADR-0013).
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline. Connect to discover stations. Your favorites and history remain available.'**
+  String get stationsOfflineMessage;
+
+  /// Label for the retry button shown on offline/failed surfaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryLabel;
+
+  /// Header label on the full player screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Now Playing'**
+  String get playerNowPlaying;
+
+  /// Accessibility label for the full player play control.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get playerPlayLabel;
+
+  /// Accessibility label for the full player pause control.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get playerPauseLabel;
+
+  /// Accessibility label for the full player collapse/dismiss control.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse player'**
+  String get playerCollapseLabel;
+
   /// Screen-reader label for the tappable mini-player that opens the full player (per ADR-0006 / TECHNICAL_SPEC §10).
   ///
   /// In en, this message translates to:
