@@ -70,6 +70,9 @@ class _PlayerView extends StatelessWidget {
     final station = _station;
     final nowPlaying = _nowPlaying;
 
+    // The full player renders track, artist and station name as separate
+    // collapsing elements (ADR-0012 §"UI projection"), so it does not reuse the
+    // single-line `nowPlayingLabel` helper the mini-player uses.
     final track = nowPlaying?.track;
     final primary = (track != null && track.isNotEmpty)
         ? track
@@ -150,8 +153,9 @@ class _TopBar extends StatelessWidget {
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
-        // Balances the leading collapse button so the title stays centered.
-        const SizedBox(width: 48),
+        // Balances the leading collapse button (one touch-target wide) so the
+        // title stays centered.
+        const SizedBox(width: kMinInteractiveDimension),
       ],
     );
   }
