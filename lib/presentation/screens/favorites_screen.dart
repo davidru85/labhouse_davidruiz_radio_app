@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:radio_app/core/utils/country_name_resolver.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/favorites/favorites_bloc.dart';
-import 'package:radio_app/presentation/l10n/country_name_lookup.dart';
+import 'package:radio_app/presentation/utils/station_subtitle.dart';
+import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
 
 /// Active-favorite heart colour from DESIGN.md (`favorite-active`).
@@ -64,11 +64,7 @@ class _FavoritesBody extends StatelessWidget {
         switch (state) {
           case FavoritesInitial():
           case FavoritesLoadInProgress():
-            return Center(
-              child: useCupertino
-                  ? const CupertinoActivityIndicator()
-                  : const CircularProgressIndicator(),
-            );
+            return const AdaptiveProgressIndicator();
           case FavoritesLoadFailure():
             return Center(child: Text(l10n.genericError));
           case FavoritesLoadSuccess(:final stations):
@@ -155,14 +151,7 @@ class _FavoriteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final country = resolveCountryName(
-      station.countryCode,
-      countryNameLookup(l10n),
-    );
-    final primaryTag = station.tagList.isNotEmpty
-        ? station.tagList.first
-        : null;
-    final subtitle = primaryTag == null ? country : '$primaryTag • $country';
+    final subtitle = stationSubtitle(station, l10n);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

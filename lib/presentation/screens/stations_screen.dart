@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:radio_app/core/utils/country_name_resolver.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
-import 'package:radio_app/presentation/l10n/country_name_lookup.dart';
+import 'package:radio_app/presentation/utils/station_subtitle.dart';
+import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
 
 /// Browse-and-search list of radio stations.
@@ -87,11 +87,7 @@ class _StationsBody extends StatelessWidget {
       builder: (context, state) {
         switch (state.status) {
           case StationsStatus.loading:
-            return Center(
-              child: useCupertino
-                  ? const CupertinoActivityIndicator()
-                  : const CircularProgressIndicator(),
-            );
+            return const AdaptiveProgressIndicator();
           case StationsStatus.failure:
             return Center(child: Text(l10n.genericError));
           case StationsStatus.initial:
@@ -126,14 +122,7 @@ class _StationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final country = resolveCountryName(
-      station.countryCode,
-      countryNameLookup(AppLocalizations.of(context)),
-    );
-    final primaryTag = station.tagList.isNotEmpty
-        ? station.tagList.first
-        : null;
-    final subtitle = primaryTag == null ? country : '$primaryTag • $country';
+    final subtitle = stationSubtitle(station, AppLocalizations.of(context));
 
     final title = Text(station.name, overflow: TextOverflow.ellipsis);
     final subtitleText = Text(subtitle, overflow: TextOverflow.ellipsis);
