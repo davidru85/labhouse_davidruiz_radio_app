@@ -48,6 +48,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          key: const ValueKey('ios'),
           theme: ThemeData(platform: TargetPlatform.iOS),
           home: Builder(
             builder: (context) {
@@ -60,6 +61,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          key: const ValueKey('android'),
           theme: ThemeData(platform: TargetPlatform.android),
           home: Builder(
             builder: (context) {

@@ -1,8 +1,12 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 /// Visual factory that renders platform-appropriate widgets.
 ///
-/// Stub implementation — intentionally incomplete to drive the RED phase.
+/// Selects the [cupertino] builder on Apple platforms (iOS, macOS) and the
+/// [material] builder everywhere else, based on `Theme.of(context).platform`.
+/// This keeps presentation logic unified while letting each screen render the
+/// native Material or Cupertino widget tree (see DESIGN.md, "Adaptive Design
+/// Requirements").
 class PlatformBuilder extends StatelessWidget {
   /// Creates an instance of [PlatformBuilder].
   const PlatformBuilder({
@@ -18,8 +22,16 @@ class PlatformBuilder extends StatelessWidget {
   final WidgetBuilder cupertino;
 
   /// Whether the host platform should render Cupertino widgets.
-  static bool isCupertino(BuildContext context) => false;
+  ///
+  /// Resolves from `Theme.of(context).platform` so widget tests can override
+  /// the platform via [ThemeData.platform].
+  static bool isCupertino(BuildContext context) {
+    final platform = Theme.of(context).platform;
+    return platform == TargetPlatform.iOS || platform == TargetPlatform.macOS;
+  }
 
   @override
-  Widget build(BuildContext context) => material(context);
+  Widget build(BuildContext context) {
+    return isCupertino(context) ? cupertino(context) : material(context);
+  }
 }
