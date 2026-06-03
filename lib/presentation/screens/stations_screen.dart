@@ -33,23 +33,16 @@ class StationsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.appTitle)),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: TextField(
-                onChanged: (value) => _onQueryChanged(context, value),
-                decoration: InputDecoration(
-                  hintText: l10n.stationsSearchHint,
-                  prefixIcon: const Icon(Icons.search),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-            ),
-            const Expanded(child: _StationsBody(useCupertino: false)),
-          ],
+      body: _content(
+        searchField: TextField(
+          onChanged: (value) => _onQueryChanged(context, value),
+          decoration: InputDecoration(
+            hintText: l10n.stationsSearchHint,
+            prefixIcon: const Icon(Icons.search),
+            border: const OutlineInputBorder(),
+          ),
         ),
+        useCupertino: false,
       ),
     );
   }
@@ -58,19 +51,24 @@ class StationsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(middle: Text(l10n.appTitle)),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: CupertinoSearchTextField(
-                placeholder: l10n.stationsSearchHint,
-                onChanged: (value) => _onQueryChanged(context, value),
-              ),
-            ),
-            const Expanded(child: _StationsBody(useCupertino: true)),
-          ],
+      child: _content(
+        searchField: CupertinoSearchTextField(
+          placeholder: l10n.stationsSearchHint,
+          onChanged: (value) => _onQueryChanged(context, value),
         ),
+        useCupertino: true,
+      ),
+    );
+  }
+
+  /// Shared body layout: a padded [searchField] above the station list.
+  Widget _content({required Widget searchField, required bool useCupertino}) {
+    return SafeArea(
+      child: Column(
+        children: [
+          Padding(padding: const EdgeInsets.all(16), child: searchField),
+          Expanded(child: _StationsBody(useCupertino: useCupertino)),
+        ],
       ),
     );
   }
