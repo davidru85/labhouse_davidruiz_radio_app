@@ -9,13 +9,21 @@ import 'package:radio_app/presentation/widgets/app_shell.dart';
 ///
 /// Using a factory avoids sharing a single stateful router across tests and
 /// allows callers to inject a [navigatorKey] when needed (e.g. for testing).
-GoRouter createAppRouter({GlobalKey<NavigatorState>? navigatorKey}) {
+///
+/// [shellScopeBuilder] lets the composition root install the BLoC scope owned
+/// by the shell; the shell disposes it when navigating to an out-of-shell
+/// route such as `/player`.
+GoRouter createAppRouter({
+  GlobalKey<NavigatorState>? navigatorKey,
+  ShellScopeBuilder? shellScopeBuilder,
+}) {
   return GoRouter(
     navigatorKey: navigatorKey,
     initialLocation: '/stations',
     routes: [
       ShellRoute(
-        builder: (context, state, child) => AppShell(child: child),
+        builder: (context, state, child) =>
+            AppShell(scopeBuilder: shellScopeBuilder, child: child),
         routes: [
           GoRoute(
             path: '/stations',

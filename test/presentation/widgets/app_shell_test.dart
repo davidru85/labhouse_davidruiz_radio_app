@@ -10,7 +10,7 @@ class _ProbeCubit extends Cubit<int> {
 
 void main() {
   group('AppShell', () {
-    testWidgets('renders the child inside a Scaffold when no scope is injected', (
+    testWidgets('renders the child inside a Scaffold when no scope injected', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -31,10 +31,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: AppShell(
-            scopeBuilder: (context, child) => BlocProvider<_ProbeCubit>.value(
-              value: probe,
-              child: child,
-            ),
+            scopeBuilder: (context, child) =>
+                BlocProvider<_ProbeCubit>.value(value: probe, child: child),
             child: Builder(
               builder: (context) {
                 resolved = context.read<_ProbeCubit>();
@@ -58,6 +56,7 @@ void main() {
           home: AppShell(
             scopeBuilder: (context, child) => BlocProvider<_ProbeCubit>(
               create: (_) => probe,
+              lazy: false,
               child: child,
             ),
             child: const SizedBox.shrink(),

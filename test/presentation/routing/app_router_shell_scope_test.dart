@@ -20,10 +20,8 @@ void main() {
       addTearDown(probe.close);
 
       final router = createAppRouter(
-        shellScopeBuilder: (context, child) => BlocProvider<_ProbeCubit>.value(
-          value: probe,
-          child: child,
-        ),
+        shellScopeBuilder: (context, child) =>
+            BlocProvider<_ProbeCubit>.value(value: probe, child: child),
       );
 
       await tester.pumpWidget(MaterialApp.router(routerConfig: router));
