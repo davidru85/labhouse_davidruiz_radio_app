@@ -44,6 +44,30 @@
   "@navFavorites": {
     "description": "Bottom navigation tab label for the Favorites screen."
   },
+  "stationsOfflineMessage": "You're offline. Connect to discover stations. Your favorites and history remain available.",
+  "@stationsOfflineMessage": {
+    "description": "Stations screen copy shown while the device is offline (per ADR-0013)."
+  },
+  "retryLabel": "Retry",
+  "@retryLabel": {
+    "description": "Label for the retry button shown on offline/failed surfaces."
+  },
+  "playerNowPlaying": "Now Playing",
+  "@playerNowPlaying": {
+    "description": "Header label on the full player screen."
+  },
+  "playerPlayLabel": "Play",
+  "@playerPlayLabel": {
+    "description": "Accessibility label for the full player play control."
+  },
+  "playerPauseLabel": "Pause",
+  "@playerPauseLabel": {
+    "description": "Accessibility label for the full player pause control."
+  },
+  "playerCollapseLabel": "Collapse player",
+  "@playerCollapseLabel": {
+    "description": "Accessibility label for the full player collapse/dismiss control."
+  },
   "miniPlayerOpenLabel": "Open player",
   "@miniPlayerOpenLabel": {
     "description": "Screen-reader label for the tappable mini-player that opens the full player (per ADR-0006 / TECHNICAL_SPEC §10)."
