@@ -36,6 +36,26 @@
   "@favoritesRemoveLabel": {
     "description": "Accessibility label and tooltip for the favorite toggle on a favorited station card."
   },
+  "navStations": "Stations",
+  "@navStations": {
+    "description": "Bottom navigation tab label for the Stations browse/search screen."
+  },
+  "navFavorites": "Favorites",
+  "@navFavorites": {
+    "description": "Bottom navigation tab label for the Favorites screen."
+  },
+  "miniPlayerOpenLabel": "Open player",
+  "@miniPlayerOpenLabel": {
+    "description": "Screen-reader label for the tappable mini-player that opens the full player (per ADR-0006 / TECHNICAL_SPEC §10)."
+  },
+  "offlineBanner": "You're offline",
+  "@offlineBanner": {
+    "description": "Global banner shown while the device has no network connectivity (per ADR-0013)."
+  },
+  "backOnlineBanner": "Back online",
+  "@backOnlineBanner": {
+    "description": "Transient global banner shown for two seconds after connectivity is restored (per ADR-0013)."
+  },
   "country_DE": "Germany",
   "country_AT": "Austria",
   "country_NL": "Netherlands",

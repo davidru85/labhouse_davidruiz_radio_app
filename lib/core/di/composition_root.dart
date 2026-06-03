@@ -308,14 +308,19 @@ RadioPlayerBloc resolveRootPlayerBloc() => GetIt.instance<RadioPlayerBloc>();
 
 /// Builds the shell-scoped BLoC providers shared across the shell tabs.
 ///
-/// Wired into `createAppRouter` as its `shellScopeBuilder` so [StationsBloc]
-/// and [FavoritesBloc] live in the routing shell and are disposed when the
-/// shell leaves the tree (the sub-task 8.3 mechanism). Resolving from the
-/// locator keeps `GetIt` confined to the composition root.
+/// Wired into `createAppRouter` as its `shellScopeBuilder` so [StationsBloc],
+/// [FavoritesBloc] and [ConnectivityBloc] live in the routing shell and are
+/// disposed when the shell leaves the tree (the sub-task 8.3 mechanism).
+/// [ConnectivityBloc] sits here so the global offline banner reacts to it at
+/// the app-shell level without per-screen wiring (per ADR-0013). Resolving from
+/// the locator keeps `GetIt` confined to the composition root.
 Widget buildShellScope(BuildContext context, Widget child) => MultiBlocProvider(
   providers: [
     BlocProvider<StationsBloc>(create: (_) => GetIt.instance<StationsBloc>()),
     BlocProvider<FavoritesBloc>(create: (_) => GetIt.instance<FavoritesBloc>()),
+    BlocProvider<ConnectivityBloc>(
+      create: (_) => GetIt.instance<ConnectivityBloc>(),
+    ),
   ],
   child: child,
 );

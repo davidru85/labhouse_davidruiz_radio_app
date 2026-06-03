@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
+import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 
@@ -12,7 +13,13 @@ import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indica
 /// visibility change via an always-mounted [AnimatedSize] (sub-task 9.6).
 class MiniPlayerWidget extends StatelessWidget {
   /// Creates an instance of [MiniPlayerWidget].
-  const MiniPlayerWidget({super.key});
+  ///
+  /// [onTap] is invoked when the bar is tapped; the shell wires it to navigate
+  /// to the full player (sub-task 9.7). When null the bar is non-interactive.
+  const MiniPlayerWidget({this.onTap, super.key});
+
+  /// Called when the visible mini-player bar is tapped.
+  final VoidCallback? onTap;
 
   /// Duration of the show/hide collapse animation.
   static const Duration _animationDuration = Duration(milliseconds: 200);
@@ -27,14 +34,17 @@ class MiniPlayerWidget extends StatelessWidget {
             RadioPlayerBuffering(:final station) => _MiniPlayerBar(
               station: station,
               isBuffering: true,
+              onTap: onTap,
             ),
             RadioPlayerPlaying(:final station) => _MiniPlayerBar(
               station: station,
               isBuffering: false,
+              onTap: onTap,
             ),
             RadioPlayerPaused(:final station) => _MiniPlayerBar(
               station: station,
               isBuffering: false,
+              onTap: onTap,
             ),
             _ => const SizedBox.shrink(),
           },
@@ -46,36 +56,62 @@ class MiniPlayerWidget extends StatelessWidget {
 
 /// The visible mini-player content for an active [station].
 class _MiniPlayerBar extends StatelessWidget {
-  const _MiniPlayerBar({required this.station, required this.isBuffering});
+  const _MiniPlayerBar({
+    required this.station,
+    required this.isBuffering,
+    this.onTap,
+  });
 
   final RadioStation station;
   final bool isBuffering;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final tap = onTap;
     return Material(
       color: Theme.of(context).colorScheme.surfaceContainerHighest,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-          children: [
-            if (isBuffering) ...[
-              const SizedBox(
-                width: 24,
-                height: 24,
-                child: AdaptiveProgressIndicator(),
-              ),
-              const SizedBox(width: 12),
-            ],
-            Expanded(
-              child: Text(
-                station.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleMedium,
+      child: Semantics(
+        // Interactive widgets must expose a meaningful screen-reader label
+        // (per ADR-0006 / TECHNICAL_SPEC §10). Only annotate the button role
+        // when the bar is actually tappable.
+        button: tap != null,
+        label: tap != null
+            ? AppLocalizations.of(context).miniPlayerOpenLabel
+            : null,
+        child: InkWell(
+          onTap: tap,
+          // Keep the tap target at the platform minimum touch size
+          // (kMinInteractiveDimension == 48dp, ≥ the 44pt iOS minimum), per
+          // ADR-0006 / TECHNICAL_SPEC §10.
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: kMinInteractiveDimension,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  if (isBuffering) ...[
+                    const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: AdaptiveProgressIndicator(),
+                    ),
+                    const SizedBox(width: 12),
+                  ],
+                  Expanded(
+                    child: Text(
+                      station.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
