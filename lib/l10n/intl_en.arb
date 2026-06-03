@@ -1,5 +1,17 @@
 {
   "@@locale": "en",
+  "appTitle": "Labhouse David Radio",
+  "@appTitle": {
+    "description": "Application wordmark shown in screen app bars."
+  },
+  "stationsEmptyResults": "No stations found",
+  "@stationsEmptyResults": {
+    "description": "Shown on the Stations screen when a search query returns no results."
+  },
+  "genericError": "Something went wrong",
+  "@genericError": {
+    "description": "Fallback message shown when a screen fails to load its content."
+  },
   "country_DE": "Germany",
   "country_AT": "Austria",
   "country_NL": "Netherlands",

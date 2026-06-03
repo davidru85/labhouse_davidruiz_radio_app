@@ -9,6 +9,15 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get appTitle => 'Labhouse David Radio';
+
+  @override
+  String get stationsEmptyResults => 'No stations found';
+
+  @override
+  String get genericError => 'Something went wrong';
+
+  @override
   String get country_DE => 'Germany';
 
   @override

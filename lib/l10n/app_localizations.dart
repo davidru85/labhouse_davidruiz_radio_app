@@ -94,6 +94,24 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
+  /// Application wordmark shown in screen app bars.
+  ///
+  /// In en, this message translates to:
+  /// **'Labhouse David Radio'**
+  String get appTitle;
+
+  /// Shown on the Stations screen when a search query returns no results.
+  ///
+  /// In en, this message translates to:
+  /// **'No stations found'**
+  String get stationsEmptyResults;
+
+  /// Fallback message shown when a screen fails to load its content.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get genericError;
+
   /// No description provided for @country_DE.
   ///
   /// In en, this message translates to:
