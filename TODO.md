@@ -92,6 +92,14 @@ polish phase, see `MEMORY.md` §Pending Questions instead.
 - **Next and Previous station controls in the player.** Skip to the next or previous station in the active list (e.g. from Favorites or search results) directly from the player interface. Deferred to avoid queue synchronization complexity and high network load on rapid skipping in v1.
   Source: [ADR-0022](docs/adr/0022-background-playback-controls.md).
 
+## User interface
+
+- **Local "Search your favorites" field.** `DESIGN.md` §Favorites shows a
+  search field on the Favorites screen, but `FavoritesBloc` exposes no
+  filtering event, so client-side filtering of the favorites grid is deferred
+  to a later sub-task (it needs a new BLoC event or local filter state).
+  Source: [ADR-0040](docs/adr/0040-favorites-local-search-deferral.md).
+
 ## Analytics
 
 - **Choose analytics provider.** Candidates include Firebase

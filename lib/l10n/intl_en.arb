@@ -1,5 +1,41 @@
 {
   "@@locale": "en",
+  "appTitle": "Labhouse David Radio",
+  "@appTitle": {
+    "description": "Application wordmark shown in screen app bars."
+  },
+  "stationsEmptyResults": "No stations found",
+  "@stationsEmptyResults": {
+    "description": "Shown on the Stations screen when a search query returns no results."
+  },
+  "stationsSearchHint": "Search stations, genres, or frequencies…",
+  "@stationsSearchHint": {
+    "description": "Placeholder text for the Stations screen search field."
+  },
+  "genericError": "Something went wrong",
+  "@genericError": {
+    "description": "Fallback message shown when a screen fails to load its content."
+  },
+  "favoritesTitle": "Your Favorites",
+  "@favoritesTitle": {
+    "description": "Heading on the Favorites screen."
+  },
+  "favoritesEmptyTitle": "No favorites yet",
+  "@favoritesEmptyTitle": {
+    "description": "Title of the Favorites screen empty state."
+  },
+  "favoritesEmptyMessage": "Your favorite stations will appear here.",
+  "@favoritesEmptyMessage": {
+    "description": "Supporting copy of the Favorites screen empty state."
+  },
+  "favoritesExplore": "Explore Stations",
+  "@favoritesExplore": {
+    "description": "Label of the button that sends the user to browse stations from the empty Favorites state."
+  },
+  "favoritesRemoveLabel": "Remove from favorites",
+  "@favoritesRemoveLabel": {
+    "description": "Accessibility label and tooltip for the favorite toggle on a favorited station card."
+  },
   "country_DE": "Germany",
   "country_AT": "Austria",
   "country_NL": "Netherlands",

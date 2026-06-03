@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:radio_app/presentation/routing/app_router.dart';
 import 'package:radio_app/presentation/screens/favorites_screen.dart';
 import 'package:radio_app/presentation/screens/stations_screen.dart';
+import '../../support/router_test_harness.dart';
 
 /// Minimal cubit used to observe that the shell scope is owned by the routing
 /// shell and shared across its tabs.
@@ -24,7 +24,7 @@ void main() {
             BlocProvider<_ProbeCubit>.value(value: probe, child: child),
       );
 
-      await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+      await tester.pumpWidget(buildRouterHarness(router));
       await tester.pumpAndSettle();
 
       final onStations = tester

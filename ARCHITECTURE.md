@@ -50,9 +50,17 @@ lib/
     usecases/
   presentation/
     blocs/
+    l10n/        # presentation-bound localization lookups
+    routing/     # go_router configuration
     screens/
+    utils/       # presentation-bound stateless helpers (consume presentation types, e.g. AppLocalizations)
     widgets/
 ```
+
+> `presentation/utils/` holds stateless helpers that depend on presentation
+> types (such as `AppLocalizations`) and therefore MUST NOT live in
+> `core/utils/` (per ADR-0017 and ADR-0034). Helpers with no presentation
+> dependency still belong in `core/utils/`.
 
 ---
 

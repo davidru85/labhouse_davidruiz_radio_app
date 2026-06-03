@@ -66,15 +66,16 @@ to ADRs if revisited.
 | [0037](docs/adr/0037-hive-persistence-model-design.md) | Hive persistence model design: `*HiveModel` naming, append-only `typeId` registry (0 Station, 1 Genre, 2 Country), one `StationHiveModel` for favorites+history, data sources expose domain entities | 2026-06-01 |
 | [0038](docs/adr/0038-adopt-hive-community-edition.md) | Adopt Hive Community Edition (`hive_ce`/`hive_ce_flutter`/`hive_ce_generator`), replacing `hive_flutter`/`hive_generator` and removing the `analyzer ^6.4.1` override; supersedes ADR-0018 in part (unmaintained `hive_generator` is incompatible with the current Dart SDK) | 2026-06-01 |
 | [0039](docs/adr/0039-mirror-failover-and-remote-error-mapping.md) | Mirror failover networking: `MirrorFailoverInterceptor` + async `DioClientFactory` (initial mirror from `MirrorCacheDataSource`, retry on connection/5xx, caps 2/mirror & 6 total, write-back on success); `mapDioException`→`Failure`; remote data sources throw `NetworkException(failure)` and repositories convert to `Result` in Phase 6 | 2026-06-01 |
+| [0040](docs/adr/0040-favorites-local-search-deferral.md) | Defer the `DESIGN.md`-specified "Search your favorites" field from the Phase 9 FavoritesScreen slice (FavoritesBloc has no filter event); reintroduction is additive via a filter event/state or local filter + tests | 2026-06-03 |
 
 ---
 
 ## Current Progress Tracker
  
-* **Current Task:** Phase 8 **Sub-task 8.3 — Shell BLoC scope lifecycle & disposal** (the two deferred Phase 8 items). `AppShell` gains an injected `ShellScopeBuilder`; `createAppRouter` forwards it into the `ShellRoute` so one shell-scoped BLoC instance is shared across tabs and disposed when the shell leaves the tree (incl. navigating to the out-of-shell `/player`). Mechanism only — concrete BLoC wiring deferred to Phase 9. RED→GREEN complete (RED `4151e95`, GREEN `a66ca9d`, pushed per ADR-0036); `flutter analyze` clean, full suite +358 passing. REFACTOR = completion docs. Awaiting PR creation and merge.
-* **Last Completed Task:** Phase 8 **Sub-task 8.2 — Routing / go_router with AppShell setup** (`createAppRouter` factory + `ShellRoute`; out-of-shell `/player`) — merged via **PR #39 (`b344e27`)**.
-* **Active Branch:** `feature/phase-8-sub-task-83-shell-bloc-lifecycle-disposal` (branched from synced `main` @ `b344e27`, per ADR-0033/0035).
-* **Next Up:** Create the PR for Sub-task 8.3 and wait for the user to merge it and confirm local `main` is synced (ADR-0035). That closes Phase 8; the Phase Advancement Rule then applies. Phase 9 (UI gate) is already user-approved — next is **Step 2 = 9.1–9.2** (Material + Cupertino screens).
+* **Current Task:** Phase 9 **Sub-task 9.1–9.2 — Material & Cupertino screens** (Step 2 of the Phase 9 plan). Building the adaptive screens that render the shared BLoC states with Material on Android and Cupertino on iOS via a `PlatformBuilder` visual factory (per DESIGN.md / ADR-0005 / ADR-0032). Slices: (1) `PlatformBuilder` foundation — RED→GREEN done (RED `b188c51`, GREEN `3b5d0ff`, pushed); (2) `StationsScreen` — RED `ceb90c1`, GREEN `9bf4141` (pushed), REFACTOR in progress; (3) `FavoritesScreen`; (4) `FullPlayerScreen`. Shell/`IndexedStack`, mini-player, tab bars, transitions, offline banner, now-playing fallback and the a11y checklist stay in Steps 3–5.
+* **Last Completed Task:** Phase 8 **Sub-task 8.3 — Shell BLoC scope lifecycle & disposal** — merged via **PR #40 (`382b2e2`)**. Closed Phase 8 (DI + routing).
+* **Active Branch:** `feature/phase-9-sub-task-91-92-material-cupertino-screens` (branched from synced `main` @ `382b2e2`, per ADR-0033/0035).
+* **Next Up:** Finish the `StationsScreen` RED→GREEN→REFACTOR slice, then the `FavoritesScreen` and `FullPlayerScreen` slices, then open the PR for Step 2 (user owns the merge).
 
 ### Phase 8 governing decisions (DI + routing)
 

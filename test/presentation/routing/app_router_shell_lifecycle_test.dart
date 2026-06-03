@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:radio_app/presentation/routing/app_router.dart';
+import '../../support/router_test_harness.dart';
 
 /// Minimal cubit used to observe that the routing shell disposes its scope.
 class _ProbeCubit extends Cubit<int> {
@@ -22,7 +22,7 @@ void main() {
         ),
       );
 
-      await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+      await tester.pumpWidget(buildRouterHarness(router));
       await tester.pumpAndSettle();
 
       expect(probe.isClosed, isFalse);

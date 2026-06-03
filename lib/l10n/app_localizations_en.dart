@@ -9,6 +9,34 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get appTitle => 'Labhouse David Radio';
+
+  @override
+  String get stationsEmptyResults => 'No stations found';
+
+  @override
+  String get stationsSearchHint => 'Search stations, genres, or frequencies…';
+
+  @override
+  String get genericError => 'Something went wrong';
+
+  @override
+  String get favoritesTitle => 'Your Favorites';
+
+  @override
+  String get favoritesEmptyTitle => 'No favorites yet';
+
+  @override
+  String get favoritesEmptyMessage =>
+      'Your favorite stations will appear here.';
+
+  @override
+  String get favoritesExplore => 'Explore Stations';
+
+  @override
+  String get favoritesRemoveLabel => 'Remove from favorites';
+
+  @override
   String get country_DE => 'Germany';
 
   @override
