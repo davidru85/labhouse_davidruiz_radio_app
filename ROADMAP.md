@@ -340,12 +340,14 @@ Tasks:
   * `StationsScreen` *(in shell)*
   * `FavoritesScreen` *(in shell)*
   * `FullPlayerScreen` *(top-level, outside the shell)*
-* [ ] Ensure BLoC lifecycle management within the routing shell.
-  *(Deferred to Phase 9 with the `IndexedStack` `AppShell`; the Phase 8
-  passthrough holds no BLoC providers.)*
-* [ ] Ensure proper disposal. *(Deferred to Phase 9; no controllers/streams
-  in the passthrough shell yet — a disposal test MUST accompany the Phase 9
-  shell.)*
+* [x] Ensure BLoC lifecycle management within the routing shell. *(Sub-task
+  8.3: `AppShell` owns an injected `ShellScopeBuilder`; `createAppRouter`
+  forwards it into the `ShellRoute` so one shell-scoped BLoC instance is
+  shared across tabs. Mechanism only — concrete BLoC wiring lands in Phase 9
+  with the real `IndexedStack` shell.)*
+* [x] Ensure proper disposal. *(Sub-task 8.3: the shell scope is disposed
+  automatically when `AppShell` leaves the tree, including navigation to the
+  out-of-shell `/player`; covered by widget + router lifecycle tests.)*
 
 ---
 
