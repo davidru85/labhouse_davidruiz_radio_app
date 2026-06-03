@@ -7,6 +7,7 @@ import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Full-screen now-playing view reached from the mini-player (sub-task 9.7),
 /// presented as a bottom-to-top slide (sub-task 9.8).
@@ -88,6 +89,29 @@ class _PlayerView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (station != null)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 32),
+                      child: ConstrainedBox(
+                        // Hero artwork up to 320dp square (DESIGN.md §3); it
+                        // shrinks via Flexible so large text never overflows.
+                        constraints: const BoxConstraints(
+                          maxWidth: 320,
+                          maxHeight: 320,
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: StationArtwork(
+                            station: station,
+                            borderRadius: BorderRadius.circular(24),
+                            iconSize: 96,
+                            useCupertino: useCupertino,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 Text(
                   primary,
                   textAlign: TextAlign.center,

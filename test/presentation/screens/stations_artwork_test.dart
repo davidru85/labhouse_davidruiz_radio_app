@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -67,15 +68,34 @@ void main() {
     ),
   );
 
-  testWidgets('renders artwork on each Material row', (tester) async {
+  testWidgets('renders 64dp Material artwork on each row', (tester) async {
     await tester.pumpWidget(harness(TargetPlatform.android));
 
-    expect(find.byType(StationArtwork), findsNWidgets(2));
+    final artworks = tester.widgetList<StationArtwork>(
+      find.byType(StationArtwork),
+    );
+    expect(artworks, hasLength(2));
+    for (final artwork in artworks) {
+      expect(artwork.size, 64);
+      expect(artwork.useCupertino, isFalse);
+    }
   });
 
-  testWidgets('renders artwork on each Cupertino row', (tester) async {
+  testWidgets('renders 64dp Cupertino artwork on each row', (tester) async {
     await tester.pumpWidget(harness(TargetPlatform.iOS));
 
-    expect(find.byType(StationArtwork), findsNWidgets(2));
+    final artworks = tester.widgetList<StationArtwork>(
+      find.byType(StationArtwork),
+    );
+    expect(artworks, hasLength(2));
+    for (final artwork in artworks) {
+      expect(artwork.size, 64);
+      expect(artwork.useCupertino, isTrue);
+    }
+    // The favicon is null, so each row shows the native Cupertino fallback.
+    expect(
+      find.byIcon(CupertinoIcons.antenna_radiowaves_left_right),
+      findsNWidgets(2),
+    );
   });
 }

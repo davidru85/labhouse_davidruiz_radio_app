@@ -89,4 +89,36 @@ void main() {
 
     expect(find.byType(ClipRRect), findsWidgets);
   });
+
+  testWidgets('renders a fixed square for the given size', (tester) async {
+    await tester.pumpWidget(
+      host(StationArtwork(station: _station(), size: 64)),
+    );
+
+    final box = tester.widget<SizedBox>(
+      find
+          .descendant(
+            of: find.byType(StationArtwork),
+            matching: find.byType(SizedBox),
+          )
+          .first,
+    );
+    expect(box.width, 64);
+    expect(box.height, 64);
+  });
+
+  testWidgets('expands to fill when no size is given', (tester) async {
+    await tester.pumpWidget(
+      host(
+        SizedBox(
+          width: 200,
+          height: 120,
+          child: StationArtwork(station: _station()),
+        ),
+      ),
+    );
+
+    // With no size the artwork takes the constraints handed down by its parent.
+    expect(tester.getSize(find.byType(StationArtwork)), const Size(200, 120));
+  });
 }

@@ -7,7 +7,9 @@ import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart
 import 'package:radio_app/presentation/theme/app_colors.dart';
 import 'package:radio_app/presentation/utils/now_playing_label.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
+import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
 import 'package:radio_app/presentation/widgets/glass_surface.dart';
+import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Persistent mini-player surfacing the active station above the shell.
 ///
@@ -108,6 +110,17 @@ class _MiniPlayerBar extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
+                    StationArtwork(
+                      station: station,
+                      size: 48,
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      // The mini-player is Material chrome, but its
+                      // sub-elements are platform-variant (like
+                      // AdaptiveProgressIndicator); keep the fallback icon
+                      // native on iOS too.
+                      useCupertino: PlatformBuilder.isCupertino(context),
+                    ),
+                    const SizedBox(width: 12),
                     if (isBuffering) ...[
                       const SizedBox(
                         width: 24,

@@ -31,7 +31,8 @@ RadioStation _station() => const RadioStation(
   isHLS: false,
 );
 
-/// Slice 4 — the full player shows a large hero artwork (DESIGN.md §3).
+/// Slices 3–4 (combined) — the full player shows its hero artwork; the
+/// large-artwork sizing is the Slice 4 polish (DESIGN.md §3).
 void main() {
   Widget harness(TargetPlatform platform, RadioPlayerState state) {
     final bloc = _FakeRadioPlayerBloc();

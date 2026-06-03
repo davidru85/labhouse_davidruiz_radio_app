@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,7 +38,8 @@ void main() {
 
   setUp(() => bloc = _FakeRadioPlayerBloc());
 
-  Widget host() => MaterialApp(
+  Widget host({TargetPlatform? platform}) => MaterialApp(
+    theme: platform == null ? null : ThemeData(platform: platform),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: Scaffold(
@@ -48,16 +50,35 @@ void main() {
     ),
   );
 
-  testWidgets('shows artwork while a station is playing', (tester) async {
-    whenListen(
-      bloc,
-      const Stream<RadioPlayerState>.empty(),
-      initialState: RadioPlayerPlaying(_station(), null),
-    );
+  void seedPlaying() => whenListen(
+    bloc,
+    const Stream<RadioPlayerState>.empty(),
+    initialState: RadioPlayerPlaying(_station(), null),
+  );
 
-    await tester.pumpWidget(host());
+  testWidgets('shows 48dp artwork while a station is playing', (tester) async {
+    seedPlaying();
+
+    await tester.pumpWidget(host(platform: TargetPlatform.android));
     await tester.pumpAndSettle();
 
-    expect(find.byType(StationArtwork), findsOneWidget);
+    final artwork = tester.widget<StationArtwork>(find.byType(StationArtwork));
+    expect(artwork.size, 48);
+    expect(artwork.useCupertino, isFalse);
+    expect(find.byIcon(Icons.radio), findsOneWidget);
+  });
+
+  testWidgets('uses the native Cupertino fallback on iOS', (tester) async {
+    seedPlaying();
+
+    await tester.pumpWidget(host(platform: TargetPlatform.iOS));
+    await tester.pumpAndSettle();
+
+    final artwork = tester.widget<StationArtwork>(find.byType(StationArtwork));
+    expect(artwork.useCupertino, isTrue);
+    expect(
+      find.byIcon(CupertinoIcons.antenna_radiowaves_left_right),
+      findsOneWidget,
+    );
   });
 }

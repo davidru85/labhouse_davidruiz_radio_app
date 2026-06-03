@@ -7,6 +7,7 @@ import 'package:radio_app/presentation/blocs/favorites/favorites_bloc.dart';
 import 'package:radio_app/presentation/utils/station_subtitle.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Active-favorite heart colour from DESIGN.md (`favorite-active`).
 const _favoriteActive = Color(0xFFFF2D55);
@@ -159,21 +160,11 @@ class _FavoriteCard extends StatelessWidget {
         Expanded(
           child: Stack(
             children: [
-              // TODO(phase9): replace this placeholder with
-              // cached_network_image square artwork + the translucent blurred
-              // chip behind the favorite icon, and theme the fallback colour
-              // from the Material ColorScheme on Android (DESIGN.md §2).
               Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Icon(
-                    useCupertino
-                        ? CupertinoIcons.antenna_radiowaves_left_right
-                        : Icons.radio,
-                  ),
+                child: StationArtwork(
+                  station: station,
+                  borderRadius: BorderRadius.circular(16),
+                  useCupertino: useCupertino,
                 ),
               ),
               Positioned(

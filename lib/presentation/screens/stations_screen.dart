@@ -9,6 +9,7 @@ import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 import 'package:radio_app/presentation/utils/station_subtitle.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Browse-and-search list of radio stations.
 ///
@@ -185,9 +186,15 @@ class _StationRow extends StatelessWidget {
     final title = Text(station.name, overflow: TextOverflow.ellipsis);
     final subtitleText = Text(subtitle, overflow: TextOverflow.ellipsis);
 
+    final artwork = StationArtwork(
+      station: station,
+      size: 64,
+      useCupertino: useCupertino,
+    );
+
     if (useCupertino) {
       return CupertinoListTile(
-        leading: const Icon(CupertinoIcons.antenna_radiowaves_left_right),
+        leading: artwork,
         title: title,
         subtitle: subtitleText,
         onTap: () => _play(context),
@@ -195,7 +202,7 @@ class _StationRow extends StatelessWidget {
     }
 
     return ListTile(
-      leading: const Icon(Icons.radio),
+      leading: artwork,
       title: title,
       subtitle: subtitleText,
       onTap: () => _play(context),
