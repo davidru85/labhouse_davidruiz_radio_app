@@ -66,7 +66,7 @@ to ADRs if revisited.
 | [0037](docs/adr/0037-hive-persistence-model-design.md) | Hive persistence model design: `*HiveModel` naming, append-only `typeId` registry (0 Station, 1 Genre, 2 Country), one `StationHiveModel` for favorites+history, data sources expose domain entities | 2026-06-01 |
 | [0038](docs/adr/0038-adopt-hive-community-edition.md) | Adopt Hive Community Edition (`hive_ce`/`hive_ce_flutter`/`hive_ce_generator`), replacing `hive_flutter`/`hive_generator` and removing the `analyzer ^6.4.1` override; supersedes ADR-0018 in part (unmaintained `hive_generator` is incompatible with the current Dart SDK) | 2026-06-01 |
 | [0039](docs/adr/0039-mirror-failover-and-remote-error-mapping.md) | Mirror failover networking: `MirrorFailoverInterceptor` + async `DioClientFactory` (initial mirror from `MirrorCacheDataSource`, retry on connection/5xx, caps 2/mirror & 6 total, write-back on success); `mapDioException`→`Failure`; remote data sources throw `NetworkException(failure)` and repositories convert to `Result` in Phase 6 | 2026-06-01 |
-| [0040](docs/adr/0040-favorites-local-search-deferral.md) | Defer the `DESIGN.md`-specified "Search your favorites" field from the Phase 9 FavoritesScreen slice (FavoritesBloc has no filter event); reintroduction is additive via a filter event/state or local filter + tests (Proposed, pending user acceptance) | 2026-06-03 |
+| [0040](docs/adr/0040-favorites-local-search-deferral.md) | Defer the `DESIGN.md`-specified "Search your favorites" field from the Phase 9 FavoritesScreen slice (FavoritesBloc has no filter event); reintroduction is additive via a filter event/state or local filter + tests | 2026-06-03 |
 
 ---
 

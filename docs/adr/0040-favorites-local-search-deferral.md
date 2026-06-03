@@ -1,6 +1,6 @@
 # ADR-0040 — Defer the Favorites local search field
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-06-03
 - **Deciders:** David Ruiz
 - **Related:** `DESIGN.md` §Favorites, ADR-0014, ADR-0031, `TODO.md` §User interface
