@@ -21,17 +21,30 @@ GoRouter createAppRouter({
     navigatorKey: navigatorKey,
     initialLocation: '/stations',
     routes: [
-      ShellRoute(
-        builder: (context, state, child) =>
-            AppShell(scopeBuilder: shellScopeBuilder, child: child),
-        routes: [
-          GoRoute(
-            path: '/stations',
-            builder: (context, state) => const StationsScreen(),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            AppShell(scopeBuilder: shellScopeBuilder, child: navigationShell),
+        branches: [
+          // Both branches preload so the IndexedStack mounts every tab up
+          // front, keeping their navigators (and scroll state) alive from the
+          // first frame rather than only after a tab is first visited.
+          StatefulShellBranch(
+            preload: true,
+            routes: [
+              GoRoute(
+                path: '/stations',
+                builder: (context, state) => const StationsScreen(),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/favorites',
-            builder: (context, state) => const FavoritesScreen(),
+          StatefulShellBranch(
+            preload: true,
+            routes: [
+              GoRoute(
+                path: '/favorites',
+                builder: (context, state) => const FavoritesScreen(),
+              ),
+            ],
           ),
         ],
       ),

@@ -360,13 +360,20 @@ Tasks:
 
 * [ ] Develop all screens implementing Material Design on Android.
 * [ ] Develop all screens implementing Cupertino on iOS.
-* [ ] Implement `AppShell` with an `IndexedStack`.
-* [ ] Preserve scroll state across tabs.
-* [ ] Build `MiniPlayerWidget` driven by `RadioPlayerBloc` state
+* [x] Implement `AppShell` with an `IndexedStack`. *(Sub-task 9.3:
+  routing migrated to `StatefulShellRoute.indexedStack` with both branches
+  `preload: true`; `MyApp` now drives `MaterialApp.router` with a root
+  `RadioPlayerBloc` above the shell — per ADR-0041.)*
+* [x] Preserve scroll state across tabs. *(Sub-task 9.4: guarded by a
+  cross-tab test; satisfied by the `StatefulShellRoute.indexedStack`
+  keep-alive from 9.3 — per ADR-0041.)*
+* [x] Build `MiniPlayerWidget` driven by `RadioPlayerBloc` state
   (must render the `PlayerBufferingState` distinctly from
-  `PlayerPlayingState`).
-* [ ] Animate mini-player visibility for idle / buffering / playing
-  states.
+  `PlayerPlayingState`). *(Sub-task 9.5: `MiniPlayerWidget` shows the
+  `AdaptiveProgressIndicator` only while buffering — per ADR-0015.)*
+* [x] Animate mini-player visibility for idle / buffering / playing
+  states. *(Sub-task 9.6: content wrapped in an always-mounted
+  `AnimatedSize` that collapses to height 0 when idle.)*
 * [ ] Navigate to `FullPlayerScreen` when the mini-player is
   tapped.
 * [ ] Use a bottom-to-top vertical slide transition.
