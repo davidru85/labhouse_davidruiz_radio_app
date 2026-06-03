@@ -427,11 +427,14 @@ decisions); `cached_network_image` is already on the ADR-0018 allowlist.
   iOS `Info.plist` / Android manifest orientation declarations. (Closes
   the gap found during device testing: orientation was not enforced
   anywhere.)
-* [ ] **Slice 2 — Dark theme + Inter + glassmorphism (DESIGN.md §Theme).**
-  Apply the dark `ColorScheme` and design tokens, bundle the **Inter**
-  font locally (per TECHNICAL_SPEC §10), and add the glass treatment
-  (`backdrop-filter` blur, translucent surfaces, hairline strokes) on app
-  bars, the tab bar, the mini-player, and the full player.
+* [x] **Slice 2 — Dark theme + Inter + glassmorphism (DESIGN.md §Theme).**
+  Applied the dark `ColorScheme` and design tokens, bundled the **Inter**
+  font locally (per TECHNICAL_SPEC §10), and added the `GlassSurface`
+  treatment (`BackdropFilter` blur, translucent surfaces, hairline strokes)
+  on the tab bar and the mini-player. Platform-adaptive Material/Cupertino
+  with the glassmorphic treatment, per ADR-0042 (Liquid Glass deferred). The
+  glass on the app bars and the full player is applied within Slice 4, where
+  the full player is rebuilt.
 * [ ] **Slice 3 — Station artwork (`cached_network_image`).** Replace the
   icon placeholders with the station favicon/artwork via
   `cached_network_image`, with a graceful fallback, on favorites cards,
