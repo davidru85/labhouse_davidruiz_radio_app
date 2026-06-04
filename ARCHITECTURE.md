@@ -53,8 +53,9 @@ lib/
     l10n/        # presentation-bound localization lookups
     routing/     # go_router configuration
     screens/
+    theme/       # brand color tokens + Material/Cupertino dark themes (DESIGN.md, ADR-0042)
     utils/       # presentation-bound stateless helpers (consume presentation types, e.g. AppLocalizations)
-    widgets/
+    widgets/     # shared UI widgets (e.g. GlassSurface, StationArtwork, LiveNowIndicator, glassAppBar)
 ```
 
 > `presentation/utils/` holds stateless helpers that depend on presentation

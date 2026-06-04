@@ -14,8 +14,17 @@ maintained API.
 
 ---
 
+## Demo
+
+A screen recording of the app running on a device (dark theme, glassmorphic
+chrome, station artwork, mini-player and full player) is available at
+[`extras/recording.mov`](extras/recording.mov) — download the file to play it.
+
+---
+
 ## Quick links
 
+- [`extras/recording.mov`](extras/recording.mov) — screen recording of the app in action.
 - [`CONTEXT.md`](CONTEXT.md) — what we are building and why.
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — Clean Architecture layout,
   repository contracts, native config.

@@ -99,6 +99,12 @@ polish phase, see `MEMORY.md` §Pending Questions instead.
   filtering event, so client-side filtering of the favorites grid is deferred
   to a later sub-task (it needs a new BLoC event or local filter state).
   Source: [ADR-0040](docs/adr/0040-favorites-local-search-deferral.md).
+- **Apple Liquid Glass (iOS 26) styling.** The iOS build uses Cupertino with
+  the shared glassmorphic treatment instead of Apple's native Liquid Glass
+  material: Flutter 3.41 ships no native Liquid Glass, and adopting it would
+  require raising the iOS floor above the ADR-0002 minimum and/or a new
+  dependency. Revisit when Flutter exposes it natively and the floor allows.
+  Source: [ADR-0042](docs/adr/0042-platform-adaptive-theming-liquid-glass-deferred.md).
 
 ## Analytics
 
