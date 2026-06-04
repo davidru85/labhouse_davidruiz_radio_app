@@ -435,13 +435,15 @@ decisions); `cached_network_image` is already on the ADR-0018 allowlist.
   with the glassmorphic treatment, per ADR-0042 (Liquid Glass deferred). The
   glass on the app bars and the full player is applied within Slice 4, where
   the full player is rebuilt.
-* [ ] **Slice 3 — Station artwork (`cached_network_image`).** Replace the
-  icon placeholders with the station favicon/artwork via
-  `cached_network_image`, with a graceful fallback, on favorites cards,
-  station rows, and the full player.
-* [ ] **Slice 4 — Full Player polish (DESIGN.md §3).** Large artwork, a
-  "Live Now" indicator, the mini-player progress bar on Favorites, and
-  layout refinements.
+* [x] **Slice 3 — Station artwork (`cached_network_image`).** Added the
+  `StationArtwork` widget (favicon via `cached_network_image` with a
+  platform-adaptive icon fallback) on station rows (64dp), favorites cards,
+  the mini-player (48dp), and the full-player hero.
+* [x] **Slice 4 — Full Player polish (DESIGN.md §3).** Large hero artwork, a
+  pulsing "Live Now" indicator + Live/Buffering status line, the
+  primary-colored mini-player progress bar on Favorites, glass app bars,
+  favorite glass chips, and the full-player atmospheric background + glass
+  transport panel. Implemented together with Slice 3 on this branch.
 
 ---
 
