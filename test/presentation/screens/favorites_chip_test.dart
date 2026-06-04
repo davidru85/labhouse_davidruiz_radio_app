@@ -53,7 +53,14 @@ void main() {
       ),
     );
 
-    // One glass chip behind the heart on each of the two cards.
-    expect(find.byType(GlassSurface), findsNWidgets(2));
+    // One glass chip behind the heart on each of the two cards. (Scope to the
+    // hearts so the glass app bar's own GlassSurface is not counted.)
+    expect(
+      find.ancestor(
+        of: find.byIcon(Icons.favorite),
+        matching: find.byType(GlassSurface),
+      ),
+      findsNWidgets(2),
+    );
   });
 }

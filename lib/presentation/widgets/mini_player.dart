@@ -178,7 +178,13 @@ class _MiniPlayerBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         card,
-        const SizedBox(height: 2, child: LinearProgressIndicator(minHeight: 2)),
+        const SizedBox(
+          height: 2,
+          child: LinearProgressIndicator(
+            minHeight: 2,
+            color: AppColors.primary,
+          ),
+        ),
       ],
     );
   }

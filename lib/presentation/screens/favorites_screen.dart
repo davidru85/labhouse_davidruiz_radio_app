@@ -7,6 +7,8 @@ import 'package:radio_app/presentation/blocs/favorites/favorites_bloc.dart';
 import 'package:radio_app/presentation/utils/station_subtitle.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/glass_app_bar.dart';
+import 'package:radio_app/presentation/widgets/glass_surface.dart';
 import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Active-favorite heart colour from DESIGN.md (`favorite-active`).
@@ -34,7 +36,7 @@ class FavoritesScreen extends StatelessWidget {
   Widget _buildMaterial(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.favoritesTitle)),
+      appBar: glassAppBar(title: Text(l10n.favoritesTitle)),
       body: _FavoritesBody(useCupertino: false, onExplore: onExplore),
     );
   }
@@ -168,12 +170,16 @@ class _FavoriteCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 0,
-                right: 0,
-                child: _FavoriteToggle(
-                  station: station,
-                  useCupertino: useCupertino,
-                  label: l10n.favoritesRemoveLabel,
+                top: 8,
+                right: 8,
+                // The toggle sits on a blurred translucent chip (DESIGN.md §2);
+                // GlassSurface's default 24px radius makes a pill-like chip.
+                child: GlassSurface(
+                  child: _FavoriteToggle(
+                    station: station,
+                    useCupertino: useCupertino,
+                    label: l10n.favoritesRemoveLabel,
+                  ),
                 ),
               ),
             ],

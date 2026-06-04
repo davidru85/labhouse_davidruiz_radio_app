@@ -5,8 +5,10 @@ import 'package:radio_app/domain/entities/now_playing_info.dart';
 import 'package:radio_app/domain/entities/radio_station.dart';
 import 'package:radio_app/l10n/app_localizations.dart';
 import 'package:radio_app/presentation/blocs/radio_player/radio_player_bloc.dart';
+import 'package:radio_app/presentation/theme/app_colors.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/glass_surface.dart';
 import 'package:radio_app/presentation/widgets/live_now_indicator.dart';
 import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
@@ -30,17 +32,44 @@ class FullPlayerScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMaterial(BuildContext context) =>
-      Scaffold(body: SafeArea(child: _body(context, useCupertino: false)));
+  Widget _buildMaterial(BuildContext context) => Scaffold(
+    body: _AtmosphericBackground(
+      child: SafeArea(child: _body(context, useCupertino: false)),
+    ),
+  );
 
   Widget _buildCupertino(BuildContext context) => CupertinoPageScaffold(
-    child: SafeArea(child: _body(context, useCupertino: true)),
+    child: _AtmosphericBackground(
+      child: SafeArea(child: _body(context, useCupertino: true)),
+    ),
   );
 
   Widget _body(BuildContext context, {required bool useCupertino}) {
     return BlocBuilder<RadioPlayerBloc, RadioPlayerState>(
       builder: (context, state) =>
           _PlayerView(state: state, useCupertino: useCupertino),
+    );
+  }
+}
+
+/// Atmospheric layered backdrop: a top-down gradient from a dim
+/// `primary-container/20` glow into the app background (DESIGN.md §3).
+class _AtmosphericBackground extends StatelessWidget {
+  const _AtmosphericBackground({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0x333E90FF), AppColors.background],
+        ),
+      ),
+      child: child,
     );
   }
 }
@@ -156,7 +185,10 @@ class _PlayerView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32),
-            child: _Transport(state: state, useCupertino: useCupertino),
+            child: GlassSurface.panel(
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+              child: _Transport(state: state, useCupertino: useCupertino),
+            ),
           ),
         ],
       ),

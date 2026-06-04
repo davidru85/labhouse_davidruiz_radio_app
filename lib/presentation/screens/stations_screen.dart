@@ -9,6 +9,7 @@ import 'package:radio_app/presentation/blocs/stations/stations_bloc.dart';
 import 'package:radio_app/presentation/utils/station_subtitle.dart';
 import 'package:radio_app/presentation/widgets/adaptive/adaptive_progress_indicator.dart';
 import 'package:radio_app/presentation/widgets/adaptive/platform_builder.dart';
+import 'package:radio_app/presentation/widgets/glass_app_bar.dart';
 import 'package:radio_app/presentation/widgets/station_artwork.dart';
 
 /// Browse-and-search list of radio stations.
@@ -35,7 +36,7 @@ class StationsScreen extends StatelessWidget {
   Widget _buildMaterial(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.appTitle)),
+      appBar: glassAppBar(title: Text(l10n.appTitle)),
       body: _content(
         searchField: TextField(
           onChanged: (value) => _onQueryChanged(context, value),
