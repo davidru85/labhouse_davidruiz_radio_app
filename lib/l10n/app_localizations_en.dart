@@ -65,6 +65,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get miniPlayerOpenLabel => 'Open player';
 
   @override
+  String get playerLiveStatus => 'Live';
+
+  @override
+  String get playerBufferingStatus => 'Buffering…';
+
+  @override
   String get offlineBanner => 'You\'re offline';
 
   @override

@@ -58,3 +58,4 @@ decisions made for RadioApp.
 | 0039 | [Mirror failover networking architecture and remote error mapping](0039-mirror-failover-and-remote-error-mapping.md) | Accepted | 2026-06-01 |
 | 0040 | [Defer the Favorites local search field](0040-favorites-local-search-deferral.md) | Accepted | 2026-06-03 |
 | 0041 | [Routing shell via `StatefulShellRoute.indexedStack`](0041-stateful-shell-route-indexed-stack.md) | Accepted | 2026-06-03 |
+| 0042 | [Platform-adaptive theming (Material/Cupertino); Liquid Glass deferred](0042-platform-adaptive-theming-liquid-glass-deferred.md) | Accepted | 2026-06-04 |

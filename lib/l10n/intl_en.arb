@@ -72,6 +72,14 @@
   "@miniPlayerOpenLabel": {
     "description": "Screen-reader label for the tappable mini-player that opens the full player (per ADR-0006 / TECHNICAL_SPEC §10)."
   },
+  "playerLiveStatus": "Live",
+  "@playerLiveStatus": {
+    "description": "Full-player status line shown while a live stream is playing or paused (DESIGN.md §3)."
+  },
+  "playerBufferingStatus": "Buffering…",
+  "@playerBufferingStatus": {
+    "description": "Full-player status line shown while the stream is buffering (DESIGN.md §3)."
+  },
   "offlineBanner": "You're offline",
   "@offlineBanner": {
     "description": "Global banner shown while the device has no network connectivity (per ADR-0013)."

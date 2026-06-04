@@ -412,6 +412,41 @@ Tasks:
 
 ---
 
+## UI Visual Polish (DESIGN.md treatment — post-functional)
+
+Phase 9 delivered the functional, adaptive UI on the stock Material 3
+light scheme. This follow-up applies the finished visual design and a
+few deferred refinements. Implemented in **one branch
+(`feature/ui-visual-polish`)** as sequential RED→GREEN→REFACTOR slices,
+verified on the Android emulator and the iOS simulator. No new ADR is
+required (all of this implements existing DESIGN.md / ADR-0004 / ADR-0006
+decisions); `cached_network_image` is already on the ADR-0018 allowlist.
+
+* [x] **Slice 1 — Portrait-only lock (ADR-0004).** Enforce portrait
+  orientation via `SystemChrome.setPreferredOrientations` and align the
+  iOS `Info.plist` / Android manifest orientation declarations. (Closes
+  the gap found during device testing: orientation was not enforced
+  anywhere.)
+* [x] **Slice 2 — Dark theme + Inter + glassmorphism (DESIGN.md §Theme).**
+  Applied the dark `ColorScheme` and design tokens, bundled the **Inter**
+  font locally (per TECHNICAL_SPEC §10), and added the `GlassSurface`
+  treatment (`BackdropFilter` blur, translucent surfaces, hairline strokes)
+  on the tab bar and the mini-player. Platform-adaptive Material/Cupertino
+  with the glassmorphic treatment, per ADR-0042 (Liquid Glass deferred). The
+  glass on the app bars and the full player is applied within Slice 4, where
+  the full player is rebuilt.
+* [x] **Slice 3 — Station artwork (`cached_network_image`).** Added the
+  `StationArtwork` widget (favicon via `cached_network_image` with a
+  platform-adaptive icon fallback) on station rows (64dp), favorites cards,
+  the mini-player (48dp), and the full-player hero.
+* [x] **Slice 4 — Full Player polish (DESIGN.md §3).** Large hero artwork, a
+  pulsing "Live Now" indicator + Live/Buffering status line, the
+  primary-colored mini-player progress bar on Favorites, glass app bars,
+  favorite glass chips, and the full-player atmospheric background + glass
+  transport panel. Implemented together with Slice 3 on this branch.
+
+---
+
 ## Phase Advancement Rule
 
 Before advancing from one phase to another:

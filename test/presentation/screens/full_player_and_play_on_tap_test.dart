@@ -114,7 +114,10 @@ void main() {
       );
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.text('Around the World'), findsOneWidget);
       expect(find.text('Daft Punk'), findsOneWidget);
@@ -126,7 +129,10 @@ void main() {
       seed(RadioPlayerPlaying(buildStation('Jazz FM'), null));
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.text('Jazz FM'), findsOneWidget);
     });
@@ -137,7 +143,10 @@ void main() {
       seed(RadioPlayerPlaying(buildStation('Jazz FM'), null));
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       await tester.tap(find.byIcon(Icons.pause));
       await tester.pump();
@@ -152,7 +161,10 @@ void main() {
       seed(RadioPlayerPaused(station));
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pump();
@@ -175,7 +187,10 @@ void main() {
       seed(RadioPlayerPlaying(buildStation('Jazz FM'), null));
 
       await tester.pumpWidget(host());
-      await tester.pumpAndSettle();
+      // The Live Now dot pulses indefinitely, so settle finite animations
+      // with an explicit pump rather than pumpAndSettle (which would time out).
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.byIcon(Icons.expand_more), findsOneWidget);
     });
